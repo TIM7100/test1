@@ -1,0 +1,171 @@
+#ifndef COMMANDLIST
+#define COMMANDLIST
+
+/*CommandCodeExplain   0xAABBCCDD */
+/*0xAA   命令类型: 大小板通信(A0)、小板解锁(A1)、小板烧录(A2)、小板检测(A3)*/
+/*0xBB   命令类型取反: 排除大小板通信口意外发生错误的情况*/
+/*0xCC   HP系列芯片(仅对烧录、检测功能有效) HP252系列(10) 其他命令默认为05*/
+/*0xDD   芯片型号识别序号*/
+
+/*----------------------------------------------*/
+/*大小板通信*/
+#define  SLAVE_RECEIVE_DATA               0xA05F1501
+#define  SLAVE_RESPOND_STATUS             0xA05F1502
+#define  SLAVE_VERSION_REPLY              0xA05F1503
+#define  SLAVE_SN_NUM_REPLY               0xA05F1504
+#define  SLAVE_RECEIVE_SNDATA             0xA05F1505
+#define  SECURITYCHIP_VERSION             0xA05F1506
+#define  SLVAE_RESPOND_SCPVERSION         0xA05F1507
+
+
+/*----------------------------------------------*/
+/*小板解锁*/
+#define  REMOVE_SECURITY_CODE             0xA15E1501
+
+/*----------------------------------------------*/
+/*小板烧录HP*/
+
+
+#define   BURN_NPG83_K_AS_71K             0xA25D1100
+#define   BURN_NPG83_C_AS_60K             0xA25D1101
+#define   BURN_NPG83_M_AS_60K             0xA25D1102
+#define   BURN_NPG83_Y_AS_60K             0xA25D1103
+#define   BURN_NPG83L_C_AS_26K            0xA25D1104
+#define   BURN_NPG83L_M_AS_26K            0xA25D1105
+#define   BURN_NPG83L_Y_AS_26K            0xA25D1106
+#define   BURN_GPR61_BK_US_71K            0xA25D1107
+#define   BURN_GPR61_C_US_60K             0xA25D1108
+#define   BURN_GPR61_M_US_60K             0xA25D1109
+#define   BURN_GPR61_Y_US_60K             0xA25D110A
+#define   BURN_GPR61L_C_US_26K            0xA25D110B
+#define   BURN_GPR61L_M_US_26K            0xA25D110C
+#define   BURN_GPR61L_Y_US_26K            0xA25D110D
+#define   BURN_CEXV58_K_EU_71K            0xA25D110E
+#define   BURN_CEXV58_C_EU_60K            0xA25D110F
+#define   BURN_CEXV58_M_EU_60K            0xA25D1110
+#define   BURN_CEXV58_Y_EU_60K            0xA25D1111
+#define   BURN_CEXV58L_C_EU_26K           0xA25D1112
+#define   BURN_CEXV58L_M_EU_26K           0xA25D1113
+#define   BURN_CEXV58L_Y_EU_26K           0xA25D1114
+#define   BURN_NPG85_K_AS_71_5K           0xA25D1115
+#define   BURN_GPR63_K_US_71_5K           0xA25D1116
+#define   BURN_CEXV61_K_EU_71_5K          0xA25D1117
+
+#define   BURN_CEXV65_BK_EU_17_5K         0xA25D1118
+#define   BURN_CEXV65_C_EU_11K            0xA25D1119
+#define   BURN_CEXV65_M_EU_11K            0xA25D111A
+#define   BURN_CEXV65_Y_EU_11K            0xA25D111B
+
+#define   BURN_CEXV64_BK_EU_38K           0xA25D111C
+#define   BURN_CEXV64_C_EU_25_5K          0xA25D111D
+#define   BURN_CEXV64_M_EU_25_5K          0xA25D111E
+#define   BURN_CEXV64_Y_EU_25_5K          0xA25D111F
+#define   BURN_CEXV66_BK_EU_44_5K         0xA25D1120
+
+#define   BURN_GPR67_K_US_44_5K           0xA25D1121
+#define   BURN_GPR66_BK_US_38K            0xA25D1122
+#define   BURN_GPR66_C_US_25_5K           0xA25D1123
+#define   BURN_GPR66_M_US_25_5K           0xA25D1124
+#define   BURN_GPR66_Y_US_25_5K           0xA25D1125
+
+#define   BURN_NPG83_DRUM_K_AS_477K       0xA25D1126
+#define   BURN_NPG83_DRUM_C_AS_404K       0xA25D1127
+#define   BURN_NPG83_DRUM_M_AS_404K       0xA25D1128
+#define   BURN_NPG83_DRUM_Y_AS_404K       0xA25D1129
+#define   BURN_NPG85_DRUM_K_AS_480K       0xA25D112A
+
+/*********9.27新增***************/
+#define	BURN_CEXV67_K_EU_33K              0xA25D112B      
+#define	BURN_GPR66L_C_US_11K              0xA25D112C
+#define	BURN_GPR66L_M_US_11K              0xA25D112D
+#define	BURN_GPR66L_Y_US_11K              0xA25D112E    
+#define	BURN_NPG88_K_AP_38K               0xA25D112F
+#define	BURN_NPG88_K_AP_25_5K             0xA25D1120
+#define	BURN_NPG88_K_AP_25_5K             0xA25D1131
+#define	BURN_NPG88_K_AP_25_5K             0xA25D1132
+#define	BURN_NPG88L_K_AS                  0xA25D1133
+#define	BURN_NPG88L_C_AS_4K               0xA25D1134
+#define	BURN_NPG88L_M_AS_4K               0xA25D1135
+#define	BURN_NPG88L_Y_AS_4K               0xA25D1136
+#define	BURN_NPG89_K_AS_44_5K             0xA25D1137
+#define	BURN_NPG90L_K_AS_6_5K             0xA25D1138
+#define	BURN_NPG90_K_AS_33K               0xA25D1139
+
+
+/*----------------------------------------------*/
+
+#define   TEST_NPG83_K_AS_71K             0xA35C1100
+#define   TEST_NPG83_C_AS_60K             0xA35C1101
+#define   TEST_NPG83_M_AS_60K             0xA35C1102
+#define   TEST_NPG83_Y_AS_60K             0xA35C1103
+#define   TEST_NPG83L_C_AS_26K            0xA35C1104
+#define   TEST_NPG83L_M_AS_26K            0xA35C1105
+#define   TEST_NPG83L_Y_AS_26K            0xA35C1106
+#define   TEST_GPR61_BK_US_71K            0xA35C1107
+#define   TEST_GPR61_C_US_60K             0xA35C1108
+#define   TEST_GPR61_M_US_60K             0xA35C1109
+#define   TEST_GPR61_Y_US_60K             0xA35C110A
+#define   TEST_GPR61L_C_US_26K            0xA35C110B
+#define   TEST_GPR61L_M_US_26K            0xA35C110C
+#define   TEST_GPR61L_Y_US_26K            0xA35C110D
+#define   TEST_CEXV58_K_EU_71K            0xA35C110E
+#define   TEST_CEXV58_C_EU_60K            0xA35C110F
+#define   TEST_CEXV58_M_EU_60K            0xA35C1110
+#define   TEST_CEXV58_Y_EU_60K            0xA35C1111
+#define   TEST_CEXV58L_C_EU_26K           0xA35C1112
+#define   TEST_CEXV58L_M_EU_26K           0xA35C1113
+#define   TEST_CEXV58L_Y_EU_26K           0xA35C1114
+#define   TEST_NPG85_K_AS_71_5K           0xA35C1115
+#define   TEST_GPR63_K_US_71_5K           0xA35C1116
+#define   TEST_CEXV61_K_EU_71_5K          0xA35C1117
+
+#define   TEST_CEXV65_BK_EU_17_5K         0xA35C1118
+#define   TEST_CEXV65_C_EU_11K            0xA35C1119
+#define   TEST_CEXV65_M_EU_11K            0xA35C111A
+#define   TEST_CEXV65_Y_EU_11K            0xA35C111B
+
+#define   TEST_CEXV64_BK_EU_38K           0xA35C111C
+#define   TEST_CEXV64_C_EU_25_5K          0xA35C111D
+#define   TEST_CEXV64_M_EU_25_5K          0xA35C111E
+#define   TEST_CEXV64_Y_EU_25_5K          0xA35C111F
+#define   TEST_CEXV66_BK_EU_44_5K         0xA35C1120
+
+#define   TEST_GPR67_K_US_44_5K           0xA35C1121
+#define   TEST_GPR66_BK_US_38K            0xA35C1122
+#define   TEST_GPR66_C_US_25_5K           0xA35C1123
+#define   TEST_GPR66_M_US_25_5K           0xA35C1124
+#define   TEST_GPR66_Y_US_25_5K           0xA35C1125
+
+#define   TEST_NPG83_DRUM_K_AS_477K       0xA35C1126
+#define   TEST_NPG83_DRUM_C_AS_404K       0xA35C1127
+#define   TEST_NPG83_DRUM_M_AS_404K       0xA35C1128
+#define   TEST_NPG83_DRUM_Y_AS_404K       0xA35C1129
+#define   TEST_NPG85_DRUM_K_AS_480K       0xA35C112A
+
+/*********9.27新增***************/
+
+#define	TEST_CEXV67_K_EU_33K              0xA35C112B             
+#define	TEST_GPR66L_C_US_11K              0xA35C112C
+#define	TEST_GPR66L_M_US_11K              0xA35C112D
+#define	TEST_GPR66L_Y_US_11K              0xA35C112E         
+#define	TEST_NPG88_K_AP_38K               0xA35C112F
+#define	TEST_NPG88_K_AP_25_5K             0xA35C1120
+#define	TEST_NPG88_K_AP_25_5K             0xA35C1131
+#define	TEST_NPG88_K_AP_25_5K             0xA35C1132          
+#define	TEST_NPG88L_K_AS                  0xA35C1133
+#define	TEST_NPG88L_C_AS_4K               0xA35C1134
+#define	TEST_NPG88L_M_AS_4K               0xA35C1135
+#define	TEST_NPG88L_Y_AS_4K               0xA35C1136
+#define	TEST_NPG89_K_AS_44_5K             0xA35C1137
+#define	TEST_NPG90L_K_AS_6_5K             0xA35C1138
+#define	TEST_NPG90_K_AS_33K               0xA35C1139
+                                  
+// #define		TEST_NPG88L_K_AS                0xA35C112B 
+// #define		TEST_NPG88L_C_AS                0xA35C112C
+// #define		TEST_NPG88L_M_AS                0xA35C112D
+// #define		TEST_NPG88L_Y_AS                0xA35C112E
+// #define		TEST_NPG89_K_AS                 0xA35C112F
+// #define		TEST_NPG90_K_AS                 0xA35C1130
+
+#endif
+/**/

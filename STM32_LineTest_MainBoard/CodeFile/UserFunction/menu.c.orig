@@ -1,0 +1,299 @@
+/*---------------------------------------------------------------------------------------------------------*/
+/* Includes of local headers                                                                               */
+/*---------------------------------------------------------------------------------------------------------*/
+#include "menu.h"
+
+const u8 EmptyHex[2] = {0x00, 0x00}; /* 空的Hex */
+
+struct MenuItem NullMenuItem;       /* 空的Menu */
+
+/* 第一级Menu */
+struct MenuItem MainMenu[5] =
+{
+    /*MenuCount         DisplayString                          ChildrenMenus            ParentMenus          AreaCode          VolumeSort                      Command*/
+    {5,                   "01.NPG 烧录",                       ProMenu,                &NullMenuItem,          0xFF,               0xFF,                       CMD_RESERVE},
+    {5,                   "02.NPG 检测",                       TestMenu,               &NullMenuItem,          0xFF,               0xFF,                       CMD_RESERVE},
+    {5,                   "03.NPG 解锁",                       ClearMenu,              &NullMenuItem,          0xFF,               0xFF,                       CMD_RESERVE},
+    {5,                   "04.显示系统版本",                   ShowVersionMenu,        &NullMenuItem,          0xFF,               0xFF,                       CMD_RESERVE},
+    {5,                   "05.RTC时间",                        RTC_Time_Menu,          &NullMenuItem,          0xFF,               0xFF,                       CMD_RESERVE},
+
+};
+
+/********************************       烧录        ********************************/
+
+struct MenuItem ProMenu[5] = /* 烧录原装型号菜单 */
+{
+    /*MenuCount         DisplayString                          ChildrenMenus               ParentMenus          AreaCode           VolumeSort                      Command*/
+    {5,                   "01.NPG",                            NPGProMenu,                  MainMenu,           0xFF,               0xFF,                       CMD_RESERVE},
+    {5,                   "02.GPR",                            GPRProMenu,                  MainMenu,           0xFF,               0xFF,                       CMD_RESERVE},
+    {5,                   "03.CEXV",                           CEXVProMenu,                 MainMenu,           0xFF,               0xFF,                       CMD_RESERVE},
+    {5,                   "04.XT",                             XTProMenu,                   MainMenu,           0xFF,               0xFF,                       CMD_RESERVE},
+    {5,                   "05.3001",                           _3001ProMenu,                MainMenu,           0xFF,               0xFF,                       CMD_RESERVE},
+};
+
+
+struct MenuItem NPGProMenu[] = /*NPG烧录菜单*/
+{
+    /*MenuCount         DisplayString                            ChildrenMenus                    ParentMenus                 AreaCode            VolumeSort                            Command*/
+    {28,                 "01.NPG83-K-AS-71K-P",                  &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG83_K_AS_71K},
+    {28,                 "02.NPG83-C-AS-60K-P",                  &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG83_C_AS_60K},
+    {28,                 "03.NPG83-M-AS-60K-P",                  &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG83_M_AS_60K},
+    {28,                 "04.NPG83-Y-AS-60K-P",                  &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG83_Y_AS_60K},
+    {28,                 "05.NPG83L-C-AS-26K-P",                 &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG83L_C_AS_26K},
+    {28,                 "06.NPG83L-M-AS-26K-P",                 &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG83L_M_AS_26K},
+    {28,                 "07.NPG83L-Y-AS-26K-P",                 &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG83L_Y_AS_26K},
+    {28,                 "08.NPG85-K-AS-71.5K-P",                &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG85_K_AS_71_5K},
+    {28,                 "09.NPG83-DRUM-K-AS-477-P",             &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG83_DRUM_K_AS_477K},
+    {28,                 "10.NPG83-DRUM-C-AS-404K-P",            &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG83_DRUM_C_AS_404K},
+    {28,                 "11.NPG83-DRUM-M-AS-404K-P",            &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG83_DRUM_M_AS_404K},
+    {28,                 "12.NPG83-DRUM-Y-AS-404K-P",            &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG83_DRUM_Y_AS_404K},
+    {28,                 "13.NPG85-DRUM-K-AS-480K-P",            &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG85_DRUM_K_AS_480K},
+    {28,                 "14.NPG88-K-AS-38K-P",                  &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG88_K_AS_38K  },
+    {28,                 "15.NPG88-C-AS-25-5K-P",                &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG88_C_AS_25_5K},
+    {28,                 "16.NPG88-M-AS-25-5K-P",                &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG88_M_AS_25_5K},
+    {28,                 "17.NPG88-Y-AS-25-5K-P",                &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG88_Y_AS_25_5K},
+    {28,                 "18.NPG88L-K-AS-P",                     &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG88L_K_AS     },
+    {28,                 "19.NPG88L-C-AS-4K-P",                  &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG88L_C_AS_4K  },
+    {28,                 "20.NPG88L-M-AS-4K-P",                  &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG88L_M_AS_4K  },
+    {28,                 "21.NPG88L-Y-AS-4K-P",                  &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG88L_Y_AS_4K  },
+    {28,                 "22.NPG89-K-AS-44-5K-P",                &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG89_K_AS_44_5K},
+    {28,                 "23.NPG90L-K-AS-6-5K-P",                &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG90L_K_AS_6_5K},
+    {28,                 "24.NPG90-K-AS-33K-P",                  &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG90_K_AS_33K  },
+		
+		//260227ADD
+		{28,                 "25.NPG1001-K-AS-63K-P",                &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG1001_K_AS_63K  },
+		{28,                 "26.NPG1001-C-AS-54-5K-P",              &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG1001_C_AS_54_5K  },
+ 		{28,                 "27.NPG1001-M-AS-54-5K-P",              &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG1001_M_AS_54_5K  },
+ 		{28,                 "28.NPG1001-Y-AS-54-5K-P",              &NullMenuItem,                   ProMenu,                   0x00,               0xFF,                               BURPROGRAM_NPG1001_Y_AS_54_5K  },
+ 
+};
+
+struct MenuItem GPRProMenu[] = /*GPR烧录菜单*/
+{
+    /*MenuCount         DisplayString                            ChildrenMenus                    ParentMenus                 AreaCode            VolumeSort                            Command*/
+    {16,                 "01.GPR61-BK-US-71K-P",                 &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR61_BK_US_71K},
+    {16,                 "02.GPR61-C-US-60K-P",                  &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR61_C_US_60K},
+    {16,                 "03.GPR61-M-US-60K-P",                  &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR61_M_US_60K},
+    {16,                 "04.GPR61-Y-US-60K-P",                  &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR61_Y_US_60K},
+    {16,                 "05.GPR61L-C-US-26K-P",                 &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR61L_C_US_26K},
+    {16,                 "06.GPR61L-M-US-26K-P",                 &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR61L_M_US_26K},
+    {16,                 "07.GPR61L-Y-US-26K-P",                 &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR61L_Y_US_26K},
+    {16,                 "08.GPR63-K-US-71.5K-P",                &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR63_K_US_71_5K},
+    {16,                 "09.GPR67-K-US-44.5K-P",                &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR67_K_US_44_5K},
+    {16,                 "10.GPR66-BK-US-38K-P",                 &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR66_BK_US_38K},
+    {16,                 "11.GPR66-C-US-25.5K-P",                &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR66_C_US_25_5K},
+    {16,                 "12.GPR66-M-US-25.5K-P",                &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR66_M_US_25_5K},
+    {16,                 "13.GPR66-Y-US-25.5K-P",                &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR66_Y_US_25_5K},
+    {16,                 "14.GPR66L-C-US-11K-P",                 &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR66L_C_US_11K},
+    {16,                 "15.GPR66L-M-US-11K-P",                 &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR66L_M_US_11K},
+    {16,                 "16.GPR66L-Y-US-11K-P",                 &NullMenuItem,                   ProMenu,                     0x01,               0xFF,                               BURPROGRAM_GPR66L_Y_US_11K},
+};
+
+struct MenuItem CEXVProMenu[] = /*CEXV烧录菜单*/
+{
+    /*MenuCount         DisplayString                            ChildrenMenus                    ParentMenus                 AreaCode            VolumeSort                            Command*/
+    {26,                  "01.CEXV58-K-EU-71K-P",                 &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV58_K_EU_71K},
+    {26,                  "02.CEXV58-C-EU-60K-P",                 &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV58_C_EU_60K},
+    {26,                  "03.CEXV58-M-EU-60K-P",                 &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV58_M_EU_60K},
+    {26,                  "04.CEXV58-Y-EU-60K-P",                 &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV58_Y_EU_60K},
+    {26,                  "05.CEXV58L-C-EU-26K-P",                &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV58L_C_EU_26K},
+    {26,                  "06.CEXV58L-M-EU-26K-P",                &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV58L_M_EU_26K},
+    {26,                  "07.CEXV58L-Y-EU-26K-P",                &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV58L_Y_EU_26K},
+    {26,                  "08.CEXV61-K-EU-71.5K-P",               &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV61_K_EU_71_5K},
+    {26,                  "09.CEXV65-BK-EU-17.5K-P",              &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV65_BK_EU_17_5K},
+    {26,                  "10.CEXV65-C-EU-11K-P",                 &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV65_C_EU_11K},
+    {26,                  "11.CEXV65-M-EU-11K-P",                 &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV65_M_EU_11K},
+    {26,                  "12.CEXV65-Y-EU-11K-P",                 &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV65_Y_EU_11K},
+    {26,                  "13.CEXV64-BK-EU-38K-P",                &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV64_BK_EU_38K},
+    {26,                  "14.CEXV64-C-EU-25.5K-P",               &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV64_C_EU_25_5K},
+    {26,                  "15.CEXV64-M-EU-25.5K-P",               &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV64_M_EU_25_5K},
+    {26,                  "16.CEXV64-Y-EU-25.5K-P",               &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV64_Y_EU_25_5K},
+    {26,                  "17.CEXV66-BK-EU-44.5K-P",              &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV66_BK_EU_44_5K},
+    {26,                  "18.CEXV67-K-EU-33K-P",                 &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV67_K_EU_33K},
+    {26,                  "19.CEXV1002-65.5K-P",                  &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV1002_K},
+//20251219ADD
+    {26,                  "20.CEXV1001-BK-EU-63K-P",              &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV1001_K_EU_63K},
+    {26,                  "21.CEXV1001-C-EU-54.5K-P",             &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV1001_C_EU_54_5K},
+    {26,                  "22.CEXV1001-M-EU-54.5K-P",             &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV1001_M_EU_54_5K},
+    {26,                  "23.CEXV1001-Y-EU-54.5K-P",             &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV1001_Y_EU_54_5K},
+    {26,                  "24.CEXV1001L-C-EU-24K-P",              &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV1001L_C_EU_24K},
+    {26,                  "25.CEXV1001L-M-EU-24K-P",              &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV1001L_M_EU_24K},
+    {26,                  "26.CEXV1001L-Y-EU-24K-P",              &NullMenuItem,                   ProMenu,                     0x02,               0xFF,                               BURPROGRAM_CEXV1001L_Y_EU_24K},
+
+
+};
+
+//20240719 add
+struct MenuItem XTProMenu[] = /*CEXV烧录菜单*/
+{
+    /*MenuCount         DisplayString                            ChildrenMenus                    ParentMenus                 AreaCode            VolumeSort                            Command*/
+    {5,                  "01.XT88K-U-CN-P",                     &NullMenuItem,                   ProMenu,                     0x00,               0xFF,                               BURPROGRAM_XT88K_U},
+    {5,                  "02.XT88C_U-CN-P",                     &NullMenuItem,                   ProMenu,                     0x00,               0xFF,                               BURPROGRAM_XT88C_U},
+    {5,                  "03.XT88M_U-CN-P",                     &NullMenuItem,                   ProMenu,                     0x00,               0xFF,                               BURPROGRAM_XT88M_U},
+    {5,                  "04.XT88Y_U-CN-P",                     &NullMenuItem,                   ProMenu,                     0x00,               0xFF,                               BURPROGRAM_XT88Y_U},
+    {5,                  "05.XT89K-U-CN-P",                     &NullMenuItem,                   ProMenu,                     0x00,               0xFF,                               BURPROGRAM_XT89K_U},
+
+};
+
+//20241226 add
+struct MenuItem _3001ProMenu[] = /*3001烧录菜单*/
+{
+    /*MenuCount         DisplayString                            ChildrenMenus                    ParentMenus                 AreaCode            VolumeSort                            Command*/
+    {4,                  "01.3001K-P",                           &NullMenuItem,                   ProMenu,                     0x00,               0xFF,                               BURPROGRAM_3001K},
+    {4,                  "02.3001C-P",                           &NullMenuItem,                   ProMenu,                     0x00,               0xFF,                               BURPROGRAM_3001C},
+    {4,                  "03.3001M-P",                           &NullMenuItem,                   ProMenu,                     0x00,               0xFF,                               BURPROGRAM_3001M},
+    {4,                  "04.3001Y-P",                           &NullMenuItem,                   ProMenu,                     0x00,               0xFF,                               BURPROGRAM_3001Y},
+
+};
+
+// ----------------    program     END--------------------------------------------------------------------------------
+
+/********************************       测试        ********************************/
+
+struct MenuItem TestMenu[] = /* 测试原装菜单 */
+{
+    /*MenuCount           DisplayString              ChildrenMenus                    ParentMenus                AreaCode             VolumeSort                          Command*/
+    {5,                  "01.NPG",                   NPGTestMenu,                    MainMenu,                   0xFF,               0xFF,                               CMD_RESERVE},
+    {5,                  "02.GPR",                   GPRTestMenu,                    MainMenu,                   0xFF,               0xFF,                               CMD_RESERVE},
+    {5,                  "03.CEXV",                  CEXVTestMenu,                   MainMenu,                   0xFF,               0xFF,                               CMD_RESERVE},
+    {5,                  "04.XT",                    XTTestMenu,                     MainMenu,                   0xFF,               0xFF,                               CMD_RESERVE},
+    {5,                  "05.3001",                  _3001TestMenu,                  MainMenu,                   0xFF,               0xFF,                               CMD_RESERVE},
+};
+
+struct MenuItem NPGTestMenu[] = /* NPG测试菜单 */
+{
+    /*MenuCount           DisplayString                          ChildrenMenus                    ParentMenus                AreaCode             VolumeSort                          Command*/
+    {28,                  "01.NPG83-K-AS-71K-T",                  &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG83_K_AS_71K},
+    {28,                  "02.NPG83-C-AS-60K-T",                  &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG83_C_AS_60K},
+    {28,                  "03.NPG83-M-AS-60K-T",                  &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG83_M_AS_60K},
+    {28,                  "04.NPG83-Y-AS-60K-T",                  &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG83_Y_AS_60K},
+    {28,                  "05.NPG83L-C-AS-26K-T",                 &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG83L_C_AS_26K},
+    {28,                  "06.NPG83L-M-AS-26K-T",                 &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG83L_M_AS_26K},
+    {28,                  "07.NPG83L-Y-AS-26K-T",                 &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG83L_Y_AS_26K},
+    {28,                  "08.NPG85-K-AS-71.5K-T",                &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG85_K_AS_71_5K},
+    {28,                  "09.NPG83-DRUM-K-AS-477-T",             &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG83_DRUM_K_AS_477K},
+    {28,                  "10.NPG83-DRUM-C-AS-404K-T",            &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG83_DRUM_C_AS_404K},
+    {28,                  "11.NPG83-DRUM-M-AS-404K-T",            &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG83_DRUM_M_AS_404K},
+    {28,                  "12.NPG83-DRUM-Y-AS-404K-T",            &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG83_DRUM_Y_AS_404K},
+    {28,                  "13.NPG85-DRUM-K-AS-480K-T",            &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG85_DRUM_K_AS_480K},
+    {28,                  "14.NPG88_K_AS_38K-T",                  &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG88_K_AS_38K  },
+    {28,                  "15.NPG88_C_AS_25_5K-T",                &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG88_C_AS_25_5K},
+    {28,                  "16.NPG88_M_AS_25_5K-T",                &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG88_M_AS_25_5K},
+    {28,                  "17.NPG88_Y_AS_25_5K-T",                &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG88_Y_AS_25_5K},
+    {28,                  "18.NPG88L_K_AS-T",                     &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG88L_K_AS     },
+    {28,                  "19.NPG88L_C_AS_4K-T",                  &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG88L_C_AS_4K  },
+    {28,                  "20.NPG88L_M_AS_4K-T",                  &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG88L_M_AS_4K  },
+    {28,                  "21.NPG88L_Y_AS_4K-T",                  &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG88L_Y_AS_4K  },
+    {28,                  "22.NPG89_K_AS_44_5K-T",                &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG89_K_AS_44_5K},
+    {28,                  "23.NPG90L_K_AS_6_5K-T",                &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG90L_K_AS_6_5K},
+    {28,                  "24.NPG90_K_AS_33K-T",                  &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG90_K_AS_33K  },
+		
+				//260227ADD
+		{28,                 "25.NPG1001-K-AS-63K-T",                 &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG1001_K_AS_63K  },
+		{28,                 "26.NPG1001-C-AS-54-5K-T",               &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG1001_C_AS_54_5K  },
+ 		{28,                 "27.NPG1001-M-AS-54-5K-T",               &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG1001_M_AS_54_5K  },
+ 		{28,                 "28.NPG1001-Y-AS-54-5K-T",               &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_NPG1001_Y_AS_54_5K  },
+};
+
+struct MenuItem GPRTestMenu[] = /* GPR测试菜单 */
+{
+    /*MenuCount           DisplayString                          ChildrenMenus                    ParentMenus                AreaCode             VolumeSort                          Command*/
+    {16,                  "01.GPR61-K-US-71K-T",                  &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR61_BK_US_71K},
+    {16,                  "02.GPR61-C-US-60K-T",                  &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR61_C_US_60K},
+    {16,                  "03.GPR61-M-US-60K-T",                  &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR61_M_US_60K},
+    {16,                  "04.GPR61-Y-US-60K-T",                  &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR61_Y_US_60K},
+    {16,                  "05.GPR61L-C-US-26K-T",                 &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR61L_C_US_26K},
+    {16,                  "06.GPR61L-M-US-26K-T",                 &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR61L_M_US_26K},
+    {16,                  "07.GPR61L-Y-US-26K-T",                 &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR61L_Y_US_26K},
+    {16,                  "08.GPR63-K-US-71.5K-T",                &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR63_K_US_71_5K},
+    {16,                  "09.GPR67-K-US-44.5K-T",                &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR67_K_US_44_5K},
+    {16,                  "10.GPR66-BK-US-38K-T",                 &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR66_BK_US_38K },
+    {16,                  "11.GPR66-C-US-25.5K-T",                &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR66_C_US_25_5K},
+    {16,                  "12.GPR66-M-US-25.5K-T",                &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR66_M_US_25_5K},
+    {16,                  "13.GPR66-Y-US-25.5K-T",                &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR66_Y_US_25_5K},
+    {16,                  "14.GPR66L-C-US-11K-T",                 &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR66L_C_US_11K},
+    {16,                  "15.GPR66L-M-US-11K-T",                 &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR66L_M_US_11K},
+    {16,                  "16.GPR66L-Y-US-11K-T",                 &NullMenuItem,                   TestMenu,                   0x01,               0xFF,                               TESTCHIP_GPR66L_Y_US_11K},
+
+};
+
+struct MenuItem CEXVTestMenu[] = /* CEXV测试菜单 */
+{
+    /*MenuCount           DisplayString                          ChildrenMenus                    ParentMenus                AreaCode             VolumeSort                          Command*/
+    {26,                  "01.CEXV58-K-EU-71K-T",                 &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV58_K_EU_71K},
+    {26,                  "02.CEXV58-C-EU-60K-T",                 &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV58_C_EU_60K},
+    {26,                  "03.CEXV58-M-EU-60K-T",                 &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV58_M_EU_60K},
+    {26,                  "04.CEXV58-Y-EU-60K-T",                 &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV58_Y_EU_60K},
+    {26,                  "05.CEXV58L-C-EU-26K-T",                &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV58L_C_EU_26K},
+    {26,                  "06.CEXV58L-M-EU-26K-T",                &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV58L_M_EU_26K},
+    {26,                  "07.CEXV58L-Y-EU-26K-T",                &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV58L_Y_EU_26K},
+    {26,                  "08.CEXV61-K-EU-71.5K-T",               &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV61_K_EU_71_5K},
+    {26,                  "09.CEXV65-BK-EU-17.5K-T",              &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV65_BK_EU_17_5K},
+    {26,                  "10.CEXV65-C-EU-11K-T",                 &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV65_C_EU_11K},
+    {26,                  "11.CEXV65-M-EU-11K-T",                 &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV65_M_EU_11K},
+    {26,                  "12.CEXV65-Y-EU-11K-T",                 &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV65_Y_EU_11K},
+    {26,                  "13.CEXV64-BK-EU-38K-T",                &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV64_BK_EU_38K},
+    {26,                  "14.CEXV64-C-EU-25.5K-T",               &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV64_C_EU_25_5K},
+    {26,                  "15.CEXV64-M-EU-25.5K-T",               &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV64_M_EU_25_5K},
+    {26,                  "16.CEXV64-Y-EU-25.5K-T",               &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV64_Y_EU_25_5K},
+    {26,                  "17.CEXV66-BK-EU-44.5K-T",              &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV66_BK_EU_44_5K},
+    {26,                  "18.CEXV67-K-EU-33K-T",                 &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV67_K_EU_33K},
+    {26,                  "19.CEXV1002-65.5K-T",                  &NullMenuItem,                   TestMenu,                   0x02,               0xFF,                               TESTCHIP_CEXV1002_K},
+//20251219ADD
+    {26,                  "20.CEXV1001-BK-EU-63K-T",              &NullMenuItem,                   TestMenu,                     0x02,               0xFF,                             TESTCHIP_CEXV1001_K_EU_63K},
+    {26,                  "21.CEXV1001-C-EU-54.5K-T",             &NullMenuItem,                   TestMenu,                     0x02,               0xFF,                             TESTCHIP_CEXV1001_C_EU_54_5K},
+    {26,                  "22.CEXV1001-M-EU-54.5K-T",             &NullMenuItem,                   TestMenu,                     0x02,               0xFF,                             TESTCHIP_CEXV1001_M_EU_54_5K},
+    {26,                  "23.CEXV1001-Y-EU-54.5K-T",             &NullMenuItem,                   TestMenu,                     0x02,               0xFF,                             TESTCHIP_CEXV1001_Y_EU_54_5K},
+    {26,                  "24.CEXV1001L-C-EU-24K-T",              &NullMenuItem,                   TestMenu,                     0x02,               0xFF,                             TESTCHIP_CEXV1001L_C_EU_24K},
+    {26,                  "25.CEXV1001L-M-EU-24K-T",              &NullMenuItem,                   TestMenu,                     0x02,               0xFF,                             TESTCHIP_CEXV1001L_M_EU_24K},
+    {26,                  "26.CEXV1001L-Y-EU-24K-T",              &NullMenuItem,                   TestMenu,                     0x02,               0xFF,                             TESTCHIP_CEXV1001L_Y_EU_24K},
+};
+
+struct MenuItem XTTestMenu[] = /* CEXV测试菜单 */
+{
+    /*MenuCount           DisplayString                          ChildrenMenus                    ParentMenus                AreaCode             VolumeSort                          Command*/
+    {5,                  "01.XT88K-U-CN-T",                     &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_XT88K_U},
+    {5,                  "02.XT88C-U-CN-T",                     &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_XT88C_U},
+    {5,                  "03.XT88M-U-CN-T",                     &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_XT88M_U},
+    {5,                  "04.XT88Y-U-CN-T",                     &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_XT88Y_U},
+    {5,                  "05.XT89K-U-CN-T",                     &NullMenuItem,                   TestMenu,                   0x00,               0xFF,                               TESTCHIP_XT89K_U},
+};
+
+//20241226 add
+struct MenuItem _3001TestMenu[] = /*3001测试菜单*/
+{
+    /*MenuCount         DisplayString                            ChildrenMenus                    ParentMenus                 AreaCode            VolumeSort                            Command*/
+    {4,                  "01.3001K-T",                           &NullMenuItem,                   TestMenu,                     0x00,               0xFF,                               TESTCHIP_3001K},
+    {4,                  "02.3001C-T",                           &NullMenuItem,                   TestMenu,                     0x00,               0xFF,                               TESTCHIP_3001C},
+    {4,                  "03.3001M-T",                           &NullMenuItem,                   TestMenu,                     0x00,               0xFF,                               TESTCHIP_3001M},
+    {4,                  "04.3001Y-T",                           &NullMenuItem,                   TestMenu,                     0x00,               0xFF,                               TESTCHIP_3001Y},
+
+};
+
+// ----------------    test     END--------------------------------------------------------------------------------
+
+struct MenuItem ClearMenu[1] = /* 清除菜单 */
+{
+    /*MenuCount         DisplayString                         ChildrenMenus       ParentMenus                   AreaCode     VolumeSort                     Command*/
+    {1,            "01.Clear Security",                 &NullMenuItem,               MainMenu,                       0xFF,            0xFF,                              CLEARSECURITYCODE},
+};
+
+struct MenuItem ShowVersionMenu[1] =  /* 显示时间菜单 */
+{
+    /*MenuCount         DisplayString                         ChildrenMenus       ParentMenus                   AreaCode     VolumeSort                     Command*/
+    {1,             "01.Show Version Select",             &NullMenuItem,        MainMenu,                       0xFF,        0xFF,                              SHOWVERSIONSELECT},
+};
+
+struct MenuItem RTC_Time_Menu[2] = /* 打开烧录总数计数器 */
+{
+    /*MenuCount         DisplayString                         ChildrenMenus       ParentMenus                   AreaCode     VolumeSort                     Command*/
+    {2,             "01.Set RTC Time",                          &NullMenuItem,      MainMenu,                       0xFF,        0xFF,                              RTC_TIME_SET},
+    {2,             "02.View RTC Time",                         &NullMenuItem,      MainMenu,                       0xFF,        0xFF,                              RTC_TIME_VIWE}
+};
+
+
+void NullSubs(void)  /* 空函数 */
+{
+
+}
+

@@ -1,0 +1,24 @@
+#include "user_OS.h"
+#include "user_system_init.h"
+#include "crc.h"
+#include "MainSlaveInterface.h"
+#include "Timer3.h"
+
+const u8 Main_Board_Version[16] = {"2602271641NPG83M"};
+
+int main(void)
+{
+    SystemDrvInit();							//配置系统时钟，大小板的接口，初始化
+
+    SystemInformationInit();			//获取flash中的烧录次数，flash中的表头
+
+
+    ShowSystemStartupInformation();		//开机主界面功能
+
+    /* 主循环,每检测到key按下循环一次，相当于是事件触发 */
+    while (1)
+		{
+        OperatingSystem();
+    }
+}
+

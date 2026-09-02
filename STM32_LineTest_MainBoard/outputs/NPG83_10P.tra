@@ -1,0 +1,54 @@
+*** Creating Trace Output File '..\outputs\NPG83_10P.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '"..\outputs\startup_stm32f10x_xl.o"'
+### List of Objects: adding '"..\outputs\core_cm3.o"'
+### List of Objects: adding '"..\outputs\misc.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_crc.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_dac.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_flash.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_fsmc.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_gpio.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_i2c.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_it.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_pwr.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_rcc.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_rtc.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_sdio.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_spi.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_tim.o"'
+### List of Objects: adding '"..\outputs\system_stm32f10x.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_usart.o"'
+### List of Objects: adding '"..\outputs\stm32f10x_bkp.o"'
+### List of Objects: adding '"..\outputs\mainslaveinterface.o"'
+### List of Objects: adding '"..\outputs\checkfunction.o"'
+### List of Objects: adding '"..\outputs\clearfunction.o"'
+### List of Objects: adding '"..\outputs\main.o"'
+### List of Objects: adding '"..\outputs\menu.o"'
+### List of Objects: adding '"..\outputs\userfunctioninterface.o"'
+### List of Objects: adding '"..\outputs\commonfunction.o"'
+### List of Objects: adding '"..\outputs\crc.o"'
+### List of Objects: adding '"..\outputs\usart_lcd.o"'
+### List of Objects: adding '"..\outputs\user_os.o"'
+### List of Objects: adding '"..\outputs\flash.o"'
+### List of Objects: adding '"..\outputs\rtc.o"'
+### List of Objects: adding '"..\outputs\timer0.o"'
+### List of Objects: adding '"..\outputs\user_peripheral.o"'
+### List of Objects: adding '"..\outputs\user_system_init.o"'
+### List of Objects: adding '"..\outputs\w25qxx.o"'
+### List of Objects: adding '"..\outputs\timer3.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 "..\outputs\startup_stm32f10x_xl.o" "..\outputs\core_cm3.o" "..\outputs\misc.o" "..\outputs\stm32f10x_crc.o" "..\outputs\stm32f10x_dac.o" "..\outputs\stm32f10x_flash.o" "..\outputs\stm32f10x_fsmc.o" "..\outputs\stm32f10x_gpio.o" "..\outputs\stm32f10x_i2c.o" "..\outputs\stm32f10x_it.o" "..\outputs\stm32f10x_pwr.o" "..\outputs\stm32f10x_rcc.o" "..\outputs\stm32f10x_rtc.o" "..\outputs\stm32f10x_sdio.o" "..\outputs\stm32f10x_spi.o" "..\outputs\stm32f10x_tim.o" "..\outputs\system_stm32f10x.o" "..\outputs\stm32f10x_usart.o" "..\outputs\stm32f10x_bkp.o" "..\outputs\mainslaveinterface.o" "..\outputs\checkfunction.o" "..\outputs\clearfunction.o" "..\outputs\main.o" "..\outputs\menu.o" "..\outputs\userfunctioninterface.o" "..\outputs\commonfunction.o" "..\outputs\crc.o" "..\outputs\usart_lcd.o" "..\outputs\user_os.o" "..\outputs\flash.o" "..\outputs\rtc.o" "..\outputs\timer0.o" "..\outputs\user_peripheral.o" "..\outputs\user_system_init.o" "..\outputs\w25qxx.o" "..\outputs\timer3.o" --strict --scatter "..\outputs\NPG83_10P.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list "..\outputs\NPG83_10P.map" -o "..\outputs\NPG83_10P.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '..\outputs\NPG83_10P.axf'
+### ADS-LD Command File: '..\outputs\NPG83_10P.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '..\outputs\NPG83_10P.lnp', Handle=0x00000B58
+### Writing '.lnp' file
+### ADS-LD Command file '..\outputs\NPG83_10P.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

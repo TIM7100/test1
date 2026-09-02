@@ -1,0 +1,778 @@
+#include "stm32f10x.h"
+#include "stm32f10x_conf.h"
+#include "commandlist_NPG83_10P.h"
+#include "menu.h"
+#include "user_OS.h"
+#include "w25qxx.h"
+#include "user_Peripheral.h"
+#include "BurnFunction.h"
+#include "CheckFunction.h"
+#include "ClearFunction.h"
+#include "UserFunctionInterface.h"
+#include "stm32f10x.h"
+
+FlashTable_Type FlashTable;
+
+/*---------------------------------------------------------------------------------------------------------*/
+/* Function:     basicUserInterface                                                                        */
+/*                                                                                                         */
+/* Parameter:                                                                                              */
+/*               None                                                                                      */
+/* Returns:                                                                                                */
+/*               None                                                                                      */
+/* Description:                                                                                            */
+/*               基础用户界面                                                                              */
+/*---------------------------------------------------------------------------------------------------------*/
+void UserFunctionInterface(void)
+{
+    u8 AreaCodeSel;
+    u16 KeyPressed;
+
+    Confirm_Selection(MenuPoint[UserChoose].DisplayString);
+
+    while (1)  /*  基础用户界面循环,只接受Enter键(执行命令)和Esc键(返回父目录) */
+    {
+        KeyPressed = 0x0000;
+        KeyPressed = AutoKeyScan();
+
+        if (KeyPressed == Key_Enter)             /* 执行对应命令 */
+        {
+            AreaCodeSel = MenuPoint[UserChoose].AreaCode; //烧录区域
+//                      VolumeSortSel   =   MenuPoint[UserChoose].VolumeSort;//打印容量
+
+            switch (MenuPoint[UserChoose].Command)
+            {
+            case    CLEARSECURITYCODE:                              /* 解锁清除函数功能 */
+                ClearSecurityCodeInterface(AreaCodeSel);
+                break;
+            case    SHOWVERSIONSELECT:                              /* 显示版本功能 */
+                GetVersionScreen();
+                ShowVersionInterface();
+                break;
+            case    RTC_TIME_SET:                                           /* 设置当前RTC时间 */
+                UserSetRtcTime();
+                return;
+            case    RTC_TIME_VIWE:                                      /* 显示当前RTC时间 */
+                ShowRtcTime();
+                break;
+
+            }
+
+//-------------------------------  开始判断command  ---------------------------------------------
+            switch (MenuPoint[UserChoose].Command)
+            {
+            /********************************       烧录      ********************************/
+
+            //NPG83_K_AS_71K
+            case    BURPROGRAM_NPG83_K_AS_71K:
+                BurnInterface(NPG83_K_AS_71K, BURN_NPG83_K_AS_71K, AreaCodeSel);
+                break;
+
+            //NPG83_C_AS_60K
+            case    BURPROGRAM_NPG83_C_AS_60K:
+                BurnInterface(NPG83_C_AS_60K, BURN_NPG83_C_AS_60K, AreaCodeSel);
+                break;
+
+            //NPG83_M_AS_60K
+            case    BURPROGRAM_NPG83_M_AS_60K:
+                BurnInterface(NPG83_M_AS_60K, BURN_NPG83_M_AS_60K, AreaCodeSel);
+                break;
+
+            //NPG83_Y_AS_60K
+            case    BURPROGRAM_NPG83_Y_AS_60K:
+                BurnInterface(NPG83_Y_AS_60K, BURN_NPG83_Y_AS_60K, AreaCodeSel);
+                break;
+
+            //NPG83L_C_AS_26K
+            case    BURPROGRAM_NPG83L_C_AS_26K:
+                BurnInterface(NPG83L_C_AS_26K, BURN_NPG83L_C_AS_26K, AreaCodeSel);
+                break;
+
+            //NPG83L_M_AS_26K
+            case    BURPROGRAM_NPG83L_M_AS_26K:
+                BurnInterface(NPG83L_M_AS_26K, BURN_NPG83L_M_AS_26K, AreaCodeSel);
+                break;
+
+            //NPG83L_Y_AS_26K
+            case    BURPROGRAM_NPG83L_Y_AS_26K:
+                BurnInterface(NPG83L_Y_AS_26K, BURN_NPG83L_Y_AS_26K, AreaCodeSel);
+                break;
+
+            //GPR61_K_US_71K
+            case    BURPROGRAM_GPR61_BK_US_71K:
+                BurnInterface(GPR61_BK_US_71K, BURN_GPR61_BK_US_71K, AreaCodeSel);
+                break;
+
+            //GPR61_C_US_60K
+            case    BURPROGRAM_GPR61_C_US_60K:
+                BurnInterface(GPR61_C_US_60K, BURN_GPR61_C_US_60K, AreaCodeSel);
+                break;
+
+            //GPR61_M_US_60K
+            case    BURPROGRAM_GPR61_M_US_60K:
+                BurnInterface(GPR61_M_US_60K, BURN_GPR61_M_US_60K, AreaCodeSel);
+                break;
+
+            //GPR61_Y_US_60K
+            case    BURPROGRAM_GPR61_Y_US_60K:
+                BurnInterface(GPR61_Y_US_60K, BURN_GPR61_Y_US_60K, AreaCodeSel);
+                break;
+
+            //GPR61L_C_US_26K
+            case    BURPROGRAM_GPR61L_C_US_26K:
+                BurnInterface(GPR61L_C_US_26K, BURN_GPR61L_C_US_26K, AreaCodeSel);
+                break;
+
+            //GPR61L_M_US_26K
+            case    BURPROGRAM_GPR61L_M_US_26K:
+                BurnInterface(GPR61L_M_US_26K, BURN_GPR61L_M_US_26K, AreaCodeSel);
+                break;
+
+            //GPR61L_Y_US_26K
+            case    BURPROGRAM_GPR61L_Y_US_26K:
+                BurnInterface(GPR61L_Y_US_26K, BURN_GPR61L_Y_US_26K, AreaCodeSel);
+                break;
+
+            //CEXV58_K_EU_71K
+            case    BURPROGRAM_CEXV58_K_EU_71K:
+                BurnInterface(CEXV58_K_EU_71K, BURN_CEXV58_K_EU_71K, AreaCodeSel);
+                break;
+
+            //CEXV58_C_EU_60K
+            case    BURPROGRAM_CEXV58_C_EU_60K:
+                BurnInterface(CEXV58_C_EU_60K, BURN_CEXV58_C_EU_60K, AreaCodeSel);
+                break;
+
+            //CEXV58_M_EU_60K
+            case    BURPROGRAM_CEXV58_M_EU_60K:
+                BurnInterface(CEXV58_M_EU_60K, BURN_CEXV58_M_EU_60K, AreaCodeSel);
+                break;
+
+            //CEXV58_Y_EU_60K
+            case    BURPROGRAM_CEXV58_Y_EU_60K:
+                BurnInterface(CEXV58_Y_EU_60K, BURN_CEXV58_Y_EU_60K, AreaCodeSel);
+                break;
+
+            //CEXV58L_C_EU_26K
+            case    BURPROGRAM_CEXV58L_C_EU_26K:
+                BurnInterface(CEXV58L_C_EU_26K, BURN_CEXV58L_C_EU_26K, AreaCodeSel);
+                break;
+
+            //CEXV58L_M_EU_26K
+            case    BURPROGRAM_CEXV58L_M_EU_26K:
+                BurnInterface(CEXV58L_M_EU_26K, BURN_CEXV58L_M_EU_26K, AreaCodeSel);
+                break;
+
+            //CEXV58L_Y_EU_26K
+            case    BURPROGRAM_CEXV58L_Y_EU_26K:
+                BurnInterface(CEXV58L_Y_EU_26K, BURN_CEXV58L_Y_EU_26K, AreaCodeSel);
+                break;
+
+            //NPG85_K_AS_71_5K
+            case    BURPROGRAM_NPG85_K_AS_71_5K:
+                BurnInterface(NPG85_K_AS_71_5K, BURN_NPG85_K_AS_71_5K, AreaCodeSel);
+                break;
+
+            //GPR63_K_US_71_5K
+            case    BURPROGRAM_GPR63_K_US_71_5K:
+                BurnInterface(GPR63_K_US_71_5K, BURN_GPR63_K_US_71_5K, AreaCodeSel);
+                break;
+
+            //CEXV61_K_EU_71_5K
+            case    BURPROGRAM_CEXV61_K_EU_71_5K:
+                BurnInterface(CEXV61_K_EU_71_5K, BURN_CEXV61_K_EU_71_5K, AreaCodeSel);
+                break;
+
+//新增9.4
+            //CEXV65_BK_EU_17_5K
+            case    BURPROGRAM_CEXV65_BK_EU_17_5K:
+                BurnInterface(CEXV65_BK_EU_17_5K, BURN_CEXV65_BK_EU_17_5K, AreaCodeSel);
+                break;
+
+            //CEXV65_C_EU_11K
+            case    BURPROGRAM_CEXV65_C_EU_11K:
+                BurnInterface(CEXV65_C_EU_11K, BURN_CEXV65_C_EU_11K, AreaCodeSel);
+                break;
+
+            //CEXV65_M_EU_11K
+            case    BURPROGRAM_CEXV65_M_EU_11K:
+                BurnInterface(CEXV65_M_EU_11K, BURN_CEXV65_M_EU_11K, AreaCodeSel);
+                break;
+
+            //CEXV65_Y_EU_11K
+            case    BURPROGRAM_CEXV65_Y_EU_11K:
+                BurnInterface(CEXV65_Y_EU_11K, BURN_CEXV65_Y_EU_11K, AreaCodeSel);
+                break;
+
+            //CEXV64_BK_EU_38K
+            case    BURPROGRAM_CEXV64_BK_EU_38K:
+                BurnInterface(CEXV64_BK_EU_38K, BURN_CEXV64_BK_EU_38K, AreaCodeSel);
+                break;
+
+            //CEXV64_C_EU_25_5K
+            case    BURPROGRAM_CEXV64_C_EU_25_5K:
+                BurnInterface(CEXV64_C_EU_25_5K, BURN_CEXV64_C_EU_25_5K, AreaCodeSel);
+                break;
+
+            //CEXV64_M_EU_25_5K
+            case    BURPROGRAM_CEXV64_M_EU_25_5K:
+                BurnInterface(CEXV64_M_EU_25_5K, BURN_CEXV64_M_EU_25_5K, AreaCodeSel);
+                break;
+
+            //CEXV64_Y_EU_25_5K
+            case    BURPROGRAM_CEXV64_Y_EU_25_5K:
+                BurnInterface(CEXV64_Y_EU_25_5K, BURN_CEXV64_Y_EU_25_5K, AreaCodeSel);
+                break;
+
+            //CEXV66_BK_EU_44_5K
+            case    BURPROGRAM_CEXV66_BK_EU_44_5K:
+                BurnInterface(CEXV66_BK_EU_44_5K, BURN_CEXV66_BK_EU_44_5K, AreaCodeSel);
+                break;
+
+            //GPR67_K_US_44_5K
+            case    BURPROGRAM_GPR67_K_US_44_5K:
+                BurnInterface(GPR67_K_US_44_5K, BURN_GPR67_K_US_44_5K, AreaCodeSel);
+                break;
+
+            //GPR66_BK_US_38K
+            case    BURPROGRAM_GPR66_BK_US_38K:
+                BurnInterface(GPR66_BK_US_38K, BURN_GPR66_BK_US_38K, AreaCodeSel);
+                break;
+
+            //GPR66_C_US_25_5K
+            case    BURPROGRAM_GPR66_C_US_25_5K:
+                BurnInterface(GPR66_C_US_25_5K, BURN_GPR66_C_US_25_5K, AreaCodeSel);
+                break;
+
+            //GPR66_M_US_25_5K
+            case    BURPROGRAM_GPR66_M_US_25_5K:
+                BurnInterface(GPR66_M_US_25_5K, BURN_GPR66_M_US_25_5K, AreaCodeSel);
+                break;
+
+            //GPR66_Y_US_25_5K
+            case    BURPROGRAM_GPR66_Y_US_25_5K:
+                BurnInterface(GPR66_Y_US_25_5K, BURN_GPR66_Y_US_25_5K, AreaCodeSel);
+                break;
+
+            //NPG83_DRUM_K_AS_477K
+            case    BURPROGRAM_NPG83_DRUM_K_AS_477K:
+                BurnInterface(NPG83_DRUM_K_AS_477K, BURN_NPG83_DRUM_K_AS_477K, AreaCodeSel);
+                break;
+
+            //NPG83_DRUM_C_AS_404K
+            case    BURPROGRAM_NPG83_DRUM_C_AS_404K:
+                BurnInterface(NPG83_DRUM_C_AS_404K, BURN_NPG83_DRUM_C_AS_404K, AreaCodeSel);
+                break;
+
+            //NPG83_DRUM_M_AS_404K
+            case    BURPROGRAM_NPG83_DRUM_M_AS_404K:
+                BurnInterface(NPG83_DRUM_M_AS_404K, BURN_NPG83_DRUM_M_AS_404K, AreaCodeSel);
+                break;
+
+            //NPG83_DRUM_Y_AS_404K
+            case    BURPROGRAM_NPG83_DRUM_Y_AS_404K:
+                BurnInterface(NPG83_DRUM_Y_AS_404K, BURN_NPG83_DRUM_Y_AS_404K, AreaCodeSel);
+                break;
+
+            //NPG85_DRUM_K_AS_480K
+            case    BURPROGRAM_NPG85_DRUM_K_AS_480K:
+                BurnInterface(NPG85_DRUM_K_AS_480K, BURN_NPG85_DRUM_K_AS_480K, AreaCodeSel);
+                break;
+
+//9.27  新增
+            //   CEXV67_K_EU_33K,
+            case    BURPROGRAM_CEXV67_K_EU_33K:
+                BurnInterface(CEXV67_K_EU_33K, BURN_CEXV67_K_EU_33K, AreaCodeSel);
+                break;
+            //   GPR66L_C_US_11K,
+            case    BURPROGRAM_GPR66L_C_US_11K:
+                BurnInterface(GPR66L_C_US_11K, BURN_GPR66L_C_US_11K, AreaCodeSel);
+                break;
+            //   GPR66L_M_US_11K,
+            case    BURPROGRAM_GPR66L_M_US_11K:
+                BurnInterface(GPR66L_M_US_11K, BURN_GPR66L_M_US_11K, AreaCodeSel);
+                break;
+            //   GPR66L_Y_US_11K,
+            case    BURPROGRAM_GPR66L_Y_US_11K:
+                BurnInterface(GPR66L_Y_US_11K, BURN_GPR66L_Y_US_11K, AreaCodeSel);
+                break;
+            //   NPG88_K_AS_38K,
+            case    BURPROGRAM_NPG88_K_AS_38K:
+                BurnInterface(NPG88_K_AS_38K, BURN_NPG88_K_AP_38K, AreaCodeSel);
+                break;
+            //   NPG88_C_AS_25_5K,
+            case    BURPROGRAM_NPG88_C_AS_25_5K:
+                BurnInterface(NPG88_C_AS_25_5K, BURN_NPG88_C_AP_25_5K, AreaCodeSel);
+                break;
+            //   NPG88_M_AS_25_5K,
+            case    BURPROGRAM_NPG88_M_AS_25_5K:
+                BurnInterface(NPG88_M_AS_25_5K, BURN_NPG88_M_AP_25_5K, AreaCodeSel);
+                break;
+            //   NPG88_Y_AS_25_5K,
+            case    BURPROGRAM_NPG88_Y_AS_25_5K:
+                BurnInterface(NPG88_Y_AS_25_5K, BURN_NPG88_Y_AP_25_5K, AreaCodeSel);
+                break;
+            //   NPG88L_K_AS,
+            case    BURPROGRAM_NPG88L_K_AS:
+                BurnInterface(NPG88L_K_AS, BURN_NPG88L_K_AS, AreaCodeSel);
+                break;
+            //   NPG88L_C_AS_4K,
+            case    BURPROGRAM_NPG88L_C_AS_4K:
+                BurnInterface(NPG88L_C_AS_4K, BURN_NPG88L_C_AS_4K, AreaCodeSel);
+                break;
+            //   NPG88L_M_AS_4K,
+            case    BURPROGRAM_NPG88L_M_AS_4K:
+                BurnInterface(NPG88L_M_AS_4K, BURN_NPG88L_M_AS_4K, AreaCodeSel);
+                break;
+            //   NPG88L_Y_AS_4K,
+            case    BURPROGRAM_NPG88L_Y_AS_4K:
+                BurnInterface(NPG88L_Y_AS_4K, BURN_NPG88L_Y_AS_4K, AreaCodeSel);
+                break;
+            //   NPG89_K_AS_44_5K,
+            case    BURPROGRAM_NPG89_K_AS_44_5K:
+                BurnInterface(NPG89_K_AS_44_5K, BURN_NPG89_K_AS_44_5K, AreaCodeSel);
+                break;
+            //   NPG90L_K_AS_6_5K,
+            case    BURPROGRAM_NPG90L_K_AS_6_5K:
+                BurnInterface(NPG90L_K_AS_6_5K, BURN_NPG90L_K_AS_6_5K, AreaCodeSel);
+                break;
+            //   NPG90_K_AS_33K,
+            case    BURPROGRAM_NPG90_K_AS_33K:
+                BurnInterface(NPG90_K_AS_33K, BURN_NPG90_K_AS_33K, AreaCodeSel);
+                break;
+
+            //   XT88K_U,
+            case    BURPROGRAM_XT88K_U:
+                BurnInterface(XT88K_U, BURN_XT88K_U, AreaCodeSel);
+                break;
+
+            //   XT88C_U,
+            case    BURPROGRAM_XT88C_U:
+                BurnInterface(XT88C_U, BURN_XT88C_U, AreaCodeSel);
+                break;
+
+            //   XT88M_U,
+            case    BURPROGRAM_XT88M_U:
+                BurnInterface(XT88M_U, BURN_XT88M_U, AreaCodeSel);
+                break;
+
+            //   XT88Y_U,
+            case    BURPROGRAM_XT88Y_U:
+                BurnInterface(XT88Y_U, BURN_XT88Y_U, AreaCodeSel);
+                break;
+
+            //   XT89K_U,
+            case    BURPROGRAM_XT89K_U:
+                BurnInterface(XT89K_U, BURN_XT89K_U, AreaCodeSel);
+                break;
+
+            //3001K 20241226 ADD
+            case    BURPROGRAM_3001K:
+                BurnInterface(_3001K, BURN_3001K, AreaCodeSel);
+                break;
+
+            //3001C 20241226 ADD
+            case    BURPROGRAM_3001C:
+                BurnInterface(_3001C, BURN_3001C, AreaCodeSel);
+                break;
+
+            //3001M 20241226 ADD
+            case    BURPROGRAM_3001M:
+                BurnInterface(_3001M, BURN_3001M, AreaCodeSel);
+                break;
+
+            //3001Y 20241226 ADD
+            case    BURPROGRAM_3001Y:
+                BurnInterface(_3001Y, BURN_3001Y, AreaCodeSel);
+                break;
+
+            //CEXV1002 20250908 ADD
+            case    BURPROGRAM_CEXV1002_K:
+                BurnInterface(CEXV1002, BURN_CEXV1002_K, AreaCodeSel);
+                break;
+
+//251219新增
+            case    BURPROGRAM_CEXV1001_K_EU_63K:
+                BurnInterface(CEXV1001_K_EU_63K, BURN_CEXV1001_K, AreaCodeSel);
+                break;
+            case    BURPROGRAM_CEXV1001_K_EU_63K:
+                BurnInterface(CEXV1001_K_EU_63K, BURN_CEXV1001_K, AreaCodeSel);
+                break;
+						            case    BURPROGRAM_CEXV1001_K_EU_63K:
+                BurnInterface(CEXV1001_K_EU_63K, BURN_CEXV1001_K, AreaCodeSel);
+                break;
+												            case    BURPROGRAM_CEXV1001_K_EU_63K:
+                BurnInterface(CEXV1001_K_EU_63K, BURN_CEXV1001_K, AreaCodeSel);
+                break;
+																		            case    BURPROGRAM_CEXV1001_K_EU_63K:
+                BurnInterface(CEXV1001_K_EU_63K, BURN_CEXV1001_K, AreaCodeSel);
+                break;
+																								            case    BURPROGRAM_CEXV1001_K_EU_63K:
+                BurnInterface(CEXV1001_K_EU_63K, BURN_CEXV1001_K, AreaCodeSel);
+                break;
+																														            case    BURPROGRAM_CEXV1001_K_EU_63K:
+                BurnInterface(CEXV1001_K_EU_63K, BURN_CEXV1001_K, AreaCodeSel);
+                break;
+
+
+
+
+
+
+            /********************************       检测      ********************************/
+
+
+
+            //NPG83_K_AS_71K
+            case    TESTCHIP_NPG83_K_AS_71K:
+                CheckChipInterface(TEST_NPG83_K_AS_71K, NPG83_K_AS_71K, AreaCodeSel);
+                break;
+
+            //NPG83_C_AS_60K
+            case    TESTCHIP_NPG83_C_AS_60K:
+                CheckChipInterface(TEST_NPG83_C_AS_60K, NPG83_C_AS_60K, AreaCodeSel);
+                break;
+
+            //NPG83_M_AS_60K
+            case    TESTCHIP_NPG83_M_AS_60K:
+                CheckChipInterface(TEST_NPG83_M_AS_60K, NPG83_M_AS_60K, AreaCodeSel);
+                break;
+
+            //NPG83_Y_AS_60K
+            case    TESTCHIP_NPG83_Y_AS_60K:
+                CheckChipInterface(TEST_NPG83_Y_AS_60K, NPG83_Y_AS_60K, AreaCodeSel);
+                break;
+
+            //NPG83L_C_AS_26K
+            case    TESTCHIP_NPG83L_C_AS_26K:
+                CheckChipInterface(TEST_NPG83L_C_AS_26K, NPG83L_C_AS_26K, AreaCodeSel);
+                break;
+
+            //NPG83L_M_AS_26K
+            case    TESTCHIP_NPG83L_M_AS_26K:
+                CheckChipInterface(TEST_NPG83L_M_AS_26K, NPG83L_M_AS_26K, AreaCodeSel);
+                break;
+
+            //NPG83L_Y_AS_26K
+            case    TESTCHIP_NPG83L_Y_AS_26K:
+                CheckChipInterface(TEST_NPG83L_Y_AS_26K, NPG83L_Y_AS_26K, AreaCodeSel);
+                break;
+
+            //GPR61_K_US_71K
+            case    TESTCHIP_GPR61_BK_US_71K:
+                CheckChipInterface(TEST_GPR61_BK_US_71K, GPR61_BK_US_71K, AreaCodeSel);
+                break;
+
+            //GPR61_C_US_60K
+            case    TESTCHIP_GPR61_C_US_60K:
+                CheckChipInterface(TEST_GPR61_C_US_60K, GPR61_C_US_60K, AreaCodeSel);
+                break;
+
+            //GPR61_M_US_60K
+            case    TESTCHIP_GPR61_M_US_60K:
+                CheckChipInterface(TEST_GPR61_M_US_60K, GPR61_M_US_60K, AreaCodeSel);
+                break;
+
+            //GPR61_Y_US_60K
+            case    TESTCHIP_GPR61_Y_US_60K:
+                CheckChipInterface(TEST_GPR61_Y_US_60K, GPR61_Y_US_60K, AreaCodeSel);
+                break;
+
+            //GPR61L_C_US_26K
+            case    TESTCHIP_GPR61L_C_US_26K:
+                CheckChipInterface(TEST_GPR61L_C_US_26K, GPR61L_C_US_26K, AreaCodeSel);
+                break;
+
+            //GPR61L_M_US_26K
+            case    TESTCHIP_GPR61L_M_US_26K:
+                CheckChipInterface(TEST_GPR61L_M_US_26K, GPR61L_M_US_26K, AreaCodeSel);
+                break;
+
+            //GPR61L_Y_US_26K
+            case    TESTCHIP_GPR61L_Y_US_26K:
+                CheckChipInterface(TEST_GPR61L_Y_US_26K, GPR61L_Y_US_26K, AreaCodeSel);
+                break;
+
+            //CEXV58_K_EU_71K
+            case    TESTCHIP_CEXV58_K_EU_71K:
+                CheckChipInterface(TEST_CEXV58_K_EU_71K, CEXV58_K_EU_71K, AreaCodeSel);
+                break;
+
+            //CEXV58_C_EU_60K
+            case    TESTCHIP_CEXV58_C_EU_60K:
+                CheckChipInterface(TEST_CEXV58_C_EU_60K, CEXV58_C_EU_60K, AreaCodeSel);
+                break;
+
+            //CEXV58_M_EU_60K
+            case    TESTCHIP_CEXV58_M_EU_60K:
+                CheckChipInterface(TEST_CEXV58_M_EU_60K, CEXV58_M_EU_60K, AreaCodeSel);
+                break;
+
+            //CEXV58_Y_EU_60K
+            case    TESTCHIP_CEXV58_Y_EU_60K:
+                CheckChipInterface(TEST_CEXV58_Y_EU_60K, CEXV58_Y_EU_60K, AreaCodeSel);
+                break;
+
+            //CEXV58L_C_EU_26K
+            case    TESTCHIP_CEXV58L_C_EU_26K:
+                CheckChipInterface(TEST_CEXV58L_C_EU_26K, CEXV58L_C_EU_26K, AreaCodeSel);
+                break;
+
+            //CEXV58L_M_EU_26K
+            case    TESTCHIP_CEXV58L_M_EU_26K:
+                CheckChipInterface(TEST_CEXV58L_M_EU_26K, CEXV58L_M_EU_26K, AreaCodeSel);
+                break;
+
+            //CEXV58L_Y_EU_26K
+            case    TESTCHIP_CEXV58L_Y_EU_26K:
+                CheckChipInterface(TEST_CEXV58L_Y_EU_26K, CEXV58L_Y_EU_26K, AreaCodeSel);
+                break;
+
+            //NPG85_K_AS_71_5K
+            case    TESTCHIP_NPG85_K_AS_71_5K:
+                CheckChipInterface(TEST_NPG85_K_AS_71_5K, NPG85_K_AS_71_5K, AreaCodeSel);
+                break;
+
+            //GPR63_K_US_71_5K
+            case    TESTCHIP_GPR63_K_US_71_5K:
+                CheckChipInterface(TEST_GPR63_K_US_71_5K, GPR63_K_US_71_5K, AreaCodeSel);
+                break;
+
+            //CEXV61_K_EU_71_5K
+            case    TESTCHIP_CEXV61_K_EU_71_5K:
+                CheckChipInterface(TEST_CEXV61_K_EU_71_5K, CEXV61_K_EU_71_5K, AreaCodeSel);
+                break;
+
+//新增9.4
+            //CEXV65_BK_EU_17_5K
+            case    TESTCHIP_CEXV65_BK_EU_17_5K:
+                CheckChipInterface(TEST_CEXV65_BK_EU_17_5K, CEXV65_BK_EU_17_5K, AreaCodeSel);
+                break;
+
+            //CEXV65_C_EU_11K
+            case    TESTCHIP_CEXV65_C_EU_11K:
+                CheckChipInterface(TEST_CEXV65_C_EU_11K, CEXV65_C_EU_11K, AreaCodeSel);
+                break;
+
+            //CEXV65_M_EU_11K
+            case    TESTCHIP_CEXV65_M_EU_11K:
+                CheckChipInterface(TEST_CEXV65_M_EU_11K, CEXV65_M_EU_11K, AreaCodeSel);
+                break;
+
+            //CEXV65_Y_EU_11K
+            case    TESTCHIP_CEXV65_Y_EU_11K:
+                CheckChipInterface(TEST_CEXV65_Y_EU_11K, CEXV65_Y_EU_11K, AreaCodeSel);
+                break;
+
+            //CEXV64_BK_EU_38K
+            case    TESTCHIP_CEXV64_BK_EU_38K:
+                CheckChipInterface(TEST_CEXV64_BK_EU_38K, CEXV64_BK_EU_38K, AreaCodeSel);
+                break;
+
+            //CEXV64_C_EU_25_5K
+            case    TESTCHIP_CEXV64_C_EU_25_5K:
+                CheckChipInterface(TEST_CEXV64_C_EU_25_5K, CEXV64_C_EU_25_5K, AreaCodeSel);
+                break;
+
+            //CEXV64_M_EU_25_5K
+            case    TESTCHIP_CEXV64_M_EU_25_5K:
+                CheckChipInterface(TEST_CEXV64_M_EU_25_5K, CEXV64_M_EU_25_5K, AreaCodeSel);
+                break;
+
+            //CEXV64_Y_EU_25_5K
+            case    TESTCHIP_CEXV64_Y_EU_25_5K:
+                CheckChipInterface(TEST_CEXV64_Y_EU_25_5K, CEXV64_Y_EU_25_5K, AreaCodeSel);
+                break;
+
+            //CEXV66_BK_EU_44_5K
+            case    TESTCHIP_CEXV66_BK_EU_44_5K:
+                CheckChipInterface(TEST_CEXV66_BK_EU_44_5K, CEXV66_BK_EU_44_5K, AreaCodeSel);
+                break;
+
+            //GPR67_K_US_44_5K
+            case    TESTCHIP_GPR67_K_US_44_5K:
+                CheckChipInterface(TEST_GPR67_K_US_44_5K, GPR67_K_US_44_5K, AreaCodeSel);
+                break;
+
+            //GPR66_BK_US_38K
+            case    TESTCHIP_GPR66_BK_US_38K:
+                CheckChipInterface(TEST_GPR66_BK_US_38K, GPR66_BK_US_38K, AreaCodeSel);
+                break;
+
+            //GPR66_C_US_25_5K
+            case    TESTCHIP_GPR66_C_US_25_5K:
+                CheckChipInterface(TEST_GPR66_C_US_25_5K, GPR66_C_US_25_5K, AreaCodeSel);
+                break;
+
+            //GPR66_M_US_25_5K
+            case    TESTCHIP_GPR66_M_US_25_5K:
+                CheckChipInterface(TEST_GPR66_M_US_25_5K, GPR66_M_US_25_5K, AreaCodeSel);
+                break;
+
+            //GPR66_Y_US_25_5K
+            case    TESTCHIP_GPR66_Y_US_25_5K:
+                CheckChipInterface(TEST_GPR66_Y_US_25_5K, GPR66_Y_US_25_5K, AreaCodeSel);
+                break;
+
+            //NPG83_DRUM_K_AS_477K
+            case    TESTCHIP_NPG83_DRUM_K_AS_477K:
+                CheckChipInterface(TEST_NPG83_DRUM_K_AS_477K, NPG83_DRUM_K_AS_477K, AreaCodeSel);
+                break;
+
+            //NPG83_DRUM_C_AS_404K
+            case    TESTCHIP_NPG83_DRUM_C_AS_404K:
+                CheckChipInterface(TEST_NPG83_DRUM_C_AS_404K, NPG83_DRUM_C_AS_404K, AreaCodeSel);
+                break;
+
+            //NPG83_DRUM_M_AS_404K
+            case    TESTCHIP_NPG83_DRUM_M_AS_404K:
+                CheckChipInterface(TEST_NPG83_DRUM_M_AS_404K, NPG83_DRUM_M_AS_404K, AreaCodeSel);
+                break;
+
+            //NPG83_DRUM_Y_AS_404K
+            case    TESTCHIP_NPG83_DRUM_Y_AS_404K:
+                CheckChipInterface(TEST_NPG83_DRUM_Y_AS_404K, NPG83_DRUM_Y_AS_404K, AreaCodeSel);
+                break;
+
+            //NPG85_DRUM_K_AS_480K
+            case    TESTCHIP_NPG85_DRUM_K_AS_480K:
+                CheckChipInterface(TEST_NPG85_DRUM_K_AS_480K, NPG85_DRUM_K_AS_480K, AreaCodeSel);
+                break;
+
+
+//9.27  新增
+            //   CEXV67_K_EU_33K,
+            case    TESTCHIP_CEXV67_K_EU_33K:
+                CheckChipInterface(TEST_CEXV67_K_EU_33K, CEXV67_K_EU_33K, AreaCodeSel);
+                break;
+            //   GPR66L_C_US_11K,
+            case    TESTCHIP_GPR66L_C_US_11K:
+                CheckChipInterface(TEST_GPR66L_C_US_11K, GPR66L_C_US_11K, AreaCodeSel);
+                break;
+            //   GPR66L_M_US_11K,
+            case    TESTCHIP_GPR66L_M_US_11K:
+                CheckChipInterface(TEST_GPR66L_M_US_11K, GPR66L_M_US_11K, AreaCodeSel);
+                break;
+            //   GPR66L_Y_US_11K,
+            case    TESTCHIP_GPR66L_Y_US_11K:
+                CheckChipInterface(TEST_GPR66L_Y_US_11K, GPR66L_Y_US_11K, AreaCodeSel);
+                break;
+            //   NPG88_K_AS_38K,
+            case    TESTCHIP_NPG88_K_AS_38K:
+                CheckChipInterface(TEST_NPG88_K_AP_38K, NPG88_K_AS_38K, AreaCodeSel);
+                break;
+            //   NPG88_C_AS_25_5K,
+            case    TESTCHIP_NPG88_C_AS_25_5K:
+                CheckChipInterface(TEST_NPG88_C_AP_25_5K, NPG88_C_AS_25_5K, AreaCodeSel);
+                break;
+            //   NPG88_M_AS_25_5K,
+            case    TESTCHIP_NPG88_M_AS_25_5K:
+                CheckChipInterface(TEST_NPG88_M_AP_25_5K, NPG88_M_AS_25_5K, AreaCodeSel);
+                break;
+            //   NPG88_Y_AS_25_5K,
+            case    TESTCHIP_NPG88_Y_AS_25_5K:
+                CheckChipInterface(TEST_NPG88_Y_AP_25_5K, NPG88_Y_AS_25_5K, AreaCodeSel);
+                break;
+            //   NPG88L_K_AS,
+            case    TESTCHIP_NPG88L_K_AS:
+                CheckChipInterface(TEST_NPG88L_K_AS, NPG88L_K_AS, AreaCodeSel);
+                break;
+            //   NPG88L_C_AS_4K,
+            case    TESTCHIP_NPG88L_C_AS_4K:
+                CheckChipInterface(TEST_NPG88L_C_AS_4K, NPG88L_C_AS_4K, AreaCodeSel);
+                break;
+            //   NPG88L_M_AS_4K,
+            case    TESTCHIP_NPG88L_M_AS_4K:
+                CheckChipInterface(TEST_NPG88L_M_AS_4K, NPG88L_M_AS_4K, AreaCodeSel);
+                break;
+            //   NPG88L_Y_AS_4K,
+            case    TESTCHIP_NPG88L_Y_AS_4K:
+                CheckChipInterface(TEST_NPG88L_Y_AS_4K, NPG88L_Y_AS_4K, AreaCodeSel);
+                break;
+            //   NPG89_K_AS_44_5K,
+            case    TESTCHIP_NPG89_K_AS_44_5K:
+                CheckChipInterface(TEST_NPG89_K_AS_44_5K, NPG89_K_AS_44_5K, AreaCodeSel);
+                break;
+            //   NPG90L_K_AS_6_5K,
+            case    TESTCHIP_NPG90L_K_AS_6_5K:
+                CheckChipInterface(TEST_NPG90L_K_AS_6_5K, NPG90L_K_AS_6_5K, AreaCodeSel);
+                break;
+            //   NPG90_K_AS_33K,
+            case    TESTCHIP_NPG90_K_AS_33K:
+                CheckChipInterface(TEST_NPG90_K_AS_33K, NPG90_K_AS_33K, AreaCodeSel);
+                break;
+
+            //   XT88K_U, 20240719 add
+            case    TESTCHIP_XT88K_U:
+                CheckChipInterface(TEST_XT88K_U, XT88K_U, AreaCodeSel);
+                break;
+
+            //   XT88C_U, 20240719 add
+            case    TESTCHIP_XT88C_U:
+                CheckChipInterface(TEST_XT88C_U, XT88C_U, AreaCodeSel);
+                break;
+
+            //   XT88M_U, 20240719 add
+            case    TESTCHIP_XT88M_U:
+                CheckChipInterface(TEST_XT88M_U, XT88M_U, AreaCodeSel);
+                break;
+
+            //   XT88Y_U, 20240719 add
+            case    TESTCHIP_XT88Y_U:
+                CheckChipInterface(TEST_XT88Y_U, XT88Y_U, AreaCodeSel);
+                break;
+
+            //   XT89K_U, 20240719 add
+            case    TESTCHIP_XT89K_U:
+                CheckChipInterface(TEST_XT89K_U, XT89K_U, AreaCodeSel);
+                break;
+
+            //   3001K  20241226 ADD
+            case    TESTCHIP_3001K:
+                CheckChipInterface(TEST_3001K, _3001K, AreaCodeSel);
+                break;
+
+            //   3001C  20241226 ADD
+            case    TESTCHIP_3001C:
+                CheckChipInterface(TEST_3001C, _3001C, AreaCodeSel);
+                break;
+
+            //   3001M  20241226 ADD
+            case    TESTCHIP_3001M:
+                CheckChipInterface(TEST_3001M, _3001M, AreaCodeSel);
+                break;
+
+            //   3001Y  20241226 ADD
+            case    TESTCHIP_3001Y:
+                CheckChipInterface(TEST_3001Y, _3001Y, AreaCodeSel);
+                break;
+
+            //   CEXV1002  20250908 ADD
+            case    TESTCHIP_CEXV1002_K:
+                CheckChipInterface(TEST_CEXV1002_K, CEXV1002, AreaCodeSel);
+                break;
+
+                /************************************************************************************************/
+            }
+        }
+        else if (KeyPressed == Key_Esc)          /* 退出底层用户界面，然后返回显示目录 */
+        {
+            DisplayStart = UserChoose;
+            DisplayEnd = UserChoose + 6;
+            if (DisplayEnd > MaxItems)
+            {
+                DisplayEnd = MaxItems;
+                if (MaxItems >= 6)
+                {
+                    DisplayStart = MaxItems - 6;
+                }
+                else
+                {
+                    DisplayStart = 0;
+                }
+            }
+            break;
+        }
+    }
+}
+
