@@ -1,0 +1,16 @@
+.\Out_Files\asn1parse.o: Mbedtls\library\asn1parse.c
+.\Out_Files\asn1parse.o: .\Mbedtls\include\mbedtls\config.h
+.\Out_Files\asn1parse.o: .\Mbedtls\include\mbedtls\check_config.h
+.\Out_Files\asn1parse.o: C:\keil\ARM\RV31\Inc\limits.h
+.\Out_Files\asn1parse.o: .\Mbedtls\include\mbedtls\asn1.h
+.\Out_Files\asn1parse.o: C:\keil\ARM\RV31\Inc\stddef.h
+.\Out_Files\asn1parse.o: .\Mbedtls\include\mbedtls\bignum.h
+.\Out_Files\asn1parse.o: C:\keil\ARM\RV31\Inc\stdint.h
+.\Out_Files\asn1parse.o: .\Mbedtls\include\mbedtls\platform_util.h
+.\Out_Files\asn1parse.o: .\Mbedtls\include\mbedtls\error.h
+.\Out_Files\asn1parse.o: C:\keil\ARM\RV31\Inc\string.h
+.\Out_Files\asn1parse.o: .\Mbedtls\include\mbedtls\platform.h
+.\Out_Files\asn1parse.o: .\Mbedtls\include\mbedtls\platform_time.h
+.\Out_Files\asn1parse.o: C:\keil\ARM\RV31\Inc\time.h
+.\Out_Files\asn1parse.o: C:\keil\ARM\RV31\Inc\stdio.h
+.\Out_Files\asn1parse.o: C:\keil\ARM\RV31\Inc\stdlib.h

@@ -1,0 +1,310 @@
+#include "mqtt_fun.h"
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include "delay.h"
+#include "socket.h"
+#include "MQTTPacket.h"
+#include "cloud_platform_para.h"
+#include "ssl_direct.h" 
+
+#define WAIT_ACK_TIME		5
+
+extern int MQTTSerialize_zero(unsigned char* buf, int buflen, unsigned char packettype);
+
+
+
+/***********************************************************************************************
+ *                                    MQTT报文拼接函数                                          *
+************************************************************************************************/
+/*******************************************************
+ * @brief    拼接连接报文
+ * @param    xxx:xxx
+ * @return   
+********************************************************/
+int MakeConnectMsg(MQTT_PACKET_INFOR *MqttPacket, MQTT_INFOR *MqttInfor)
+{
+	int Len;
+	MQTT_CONNECT_PACKET Data = MQTTPacket_connectData_initializer;
+    Data.clientID.cstring = (char *)MqttInfor->ClientID;
+	Data.keepAliveInterval = MqttPacket->KeepAlive;
+	Data.cleansession = MqttPacket->CleanSession;
+	Data.username.cstring = (char *)MqttInfor->Username;
+	Data.password.cstring = (char *)MqttInfor->Passward;
+	Len = MQTTSerialize_connect(MqttPacket->DataPacket, MqttPacket->DataPacketLen, &Data);//构造链接报文
+	return Len;
+}
+
+
+/*******************************************************
+ * @brief    拼接订阅报文
+ * @param    MqttPacket： 指向MQTT构成报文所需要的参数的结构体
+ * @return   Len：报文的长度
+********************************************************/
+int MakeSubMsg(MQTT_PACKET_INFOR *MqttPacket, u8 SubNum)
+{
+	int MsgId = 1;
+	int Len;
+	u8 Topic[100] = {0,};
+    MQTTString TopicString= MQTTString_initializer;
+	
+	memcpy(Topic, MqttPacket->SubTopic[SubNum], strlen((const char*)MqttPacket->SubTopic[SubNum]));
+	TopicString.cstring = (char*)Topic;
+	Len = MQTTSerialize_subscribe(MqttPacket->DataPacket, MqttPacket->DataPacketLen, 0, MsgId, 1, &TopicString, (int *)&MqttPacket->Qos);
+	return Len;
+}
+
+/*******************************************************
+ * @brief    拼接发布报文
+ * @param    MqttPacket： 指向MQTT构成报文所需要的参数的结构体
+ * @return   Len：发布报文的长度
+********************************************************/
+int MakePubMsg(MQTT_PACKET_INFOR *MqttPacket)
+{
+	int Len;
+	char Topic[100] = {0};
+	MQTTString TopicString = MQTTString_initializer;
+	
+	memcpy(Topic, MqttPacket->PubTopic, strlen(MqttPacket->PubTopic));
+	TopicString.cstring = Topic;
+	Len = MQTTSerialize_publish(  MqttPacket->DataPacket, MqttPacket->DataPacketLen, 				    //发布报文的缓存区
+							      0, MqttPacket->Qos, 0, 0, TopicString, 
+							      (u8*)MqttPacket->UploadTemplate, strlen(MqttPacket->UploadTemplate)); 			//要发布的数据
+	return Len;
+}
+/*******************************************************
+ * @brief    拼接Ping报文，用来保持心跳
+ * @param    xxx:xxx
+ * @return   
+********************************************************/
+int MakePingMsg(u8 *TxBuff, int Len)
+{
+   return MQTTSerialize_zero(TxBuff, Len, PINGREQ);
+}
+
+
+
+/******解析收到的ACK报文*********/
+int MqttAckMsg(unsigned char *RxBuf)
+{
+	int rc = -1;
+    MQTTHeader Header = {0};
+	
+	Header.byte = RxBuf[0];
+	rc = Header.bits.type;
+	return rc;
+}
+
+/***********************************************************************************************
+ *                                   MQTT相关操作函数                                           *
+************************************************************************************************/
+
+/*******************************************************
+ * @brief    
+ * @param    xxx:xxx
+ * @return   
+********************************************************/
+u16 WaitReceiveMsg(MQTT_PACKET_INFOR *MqttPacket)
+{
+	u16 Len;
+	Len = getSn_RX_RSR(SOCK_TCPS);
+	if(Len > 0)
+	{
+		memset(MqttPacket->DataPacket, 0, MqttPacket->DataPacketLen);
+        Len = SSL_ReadData(MqttPacket->DataPacket, MqttPacket->DataPacketLen);    //接收物联网发布的消息
+	}
+	return Len;
+}
+
+/*******************************************************
+ * @brief    发送连接云平台报文
+ * @param    MqttPacket： 指向MQTT构成报文所需要的参数的结构体
+ * @return   CONNECT_MQTT_CLIENT_ERR：连接失败
+			 PACKET_SUCCESS：连接成功
+********************************************************/
+u8 ConnectMqttClientPacket(MQTT_PACKET_INFOR *MqttPacket, MQTT_INFOR *MqttInfor)
+{
+	u8 Ret = 0;
+	int PacketLen = 0;
+	u16 Timeout = WAIT_ACK_TIME;
+	
+/* 拼接连接报文格式，并通过W5500发送拼接好的报文, 云平台服务器接收到连接报文后，会返回CONNACK回应，通过判断接收的回应的值，来确定是否连接成功 */
+	/* 清空socket缓存空间，再发送报文 */	
+	Ret = getSn_RX_RSR(SOCK_TCPS);
+	if (Ret != 0)    
+	{
+		SSL_ReadData(MqttPacket->DataPacket, MqttPacket->DataPacketLen);
+	}
+	memset(MqttPacket->DataPacket, 0, MqttPacket->DataPacketLen);
+	PacketLen = MakeConnectMsg(MqttPacket, MqttInfor);
+	SSL_SendData(MqttPacket->DataPacket, PacketLen);
+	Timer0DelayMs(50);
+	Ret = getSn_RX_RSR(SOCK_TCPS);										   //检测云平台有没有返回回应
+	while (Ret == 0 && Timeout--)   
+	{
+		printfS("wait connect ack\r\n");
+		Timer0DelayMs(50);
+		if (Timeout == 0)
+		{
+			return CONNECT_MQTT_CLIENT_ERR;
+		}
+		Ret = getSn_RX_RSR(SOCK_TCPS);
+	}
+	PacketLen = SSL_ReadData(MqttPacket->DataPacket, MqttPacket->DataPacketLen);   //接收云平台返回状态
+	Ret = MqttAckMsg(MqttPacket->DataPacket);											  
+	if (Ret != CONNACK)                                                            //返回的回应是否为CONNACK
+	{
+		printfS("connect err\r\n");
+		return CONNECT_MQTT_CLIENT_ERR;
+	}
+	return PACKET_SUCCESS;
+}
+
+
+/*******************************************************
+ * @brief    发送订阅主题报文
+ * @param    MqttPacket： 指向MQTT构成报文所需要的参数的结构体
+ * @return   SUB_TOPIC_ERR：订阅主题失败
+			 PACKET_SUCCESS：订阅主题成功
+********************************************************/
+u8 SubscribeTopicPacket(MQTT_PACKET_INFOR *MqttPacket)
+{   
+	u8 i = 0;
+	u8 Ret = 0;
+	u16 PacketLen = 0;
+	u16 Timeout = WAIT_ACK_TIME;
+	
+	for (i = 0; i < SUB_TOPIC_COUNT; i++)
+	{
+/* 拼接订阅报文格式，并通过W5500发送拼接好的报文, 云平台服务器接收到订阅报文后，会返回SUBACK回应，通过判断接收的回应的值，来确定是否订阅成功 */	
+		memset(MqttPacket->DataPacket, 0, MqttPacket->DataPacketLen);
+		PacketLen = (u16)MakeSubMsg(MqttPacket, i);                              //拼接订阅报文
+		SSL_SendData(MqttPacket->DataPacket, PacketLen);                         //发送订阅报文
+		Ret = getSn_RX_RSR(SOCK_TCPS);									         //检测云平台有没有返回回应
+		while (Ret == 0 && Timeout--)    
+		{
+			Timer0DelayMs(50);
+			if (Timeout == 0)
+			{
+				return SUB_TOPIC_ERR;
+			}
+			Ret = getSn_RX_RSR(SOCK_TCPS);
+		}
+		PacketLen = SSL_ReadData(MqttPacket->DataPacket, MqttPacket->DataPacketLen);  //接收云平台返回状态
+		Ret = MqttAckMsg(MqttPacket->DataPacket);									  //解析返回的回应是否为SUBACK
+		if (Ret != SUBACK)
+		{
+			printfS("suback err  %d\r\n", Ret);
+			return SUB_TOPIC_ERR;
+		}
+	}	
+	return PACKET_SUCCESS;
+}
+
+
+/*******************************************************
+ * @brief    发送发布消息报文
+ * @param    MqttPacket： 指向MQTT构成报文所需要的参数的结构体
+ * @return   PUB_TOPIC_ERR：发布消息失败
+			 PACKET_SUCCESS：发布消息成功
+********************************************************/
+u8 PublishTopicPacket(MQTT_PACKET_INFOR *MqttPacket)
+{
+	__IO u16 Ret = 0;
+	__IO int PacketLen = 0;
+	u16 Timeout = WAIT_ACK_TIME;
+	
+/* 清空socket缓存空间，再发送报文，拼接发布报文格式，并通过W5500发送拼接好的报文 */	
+	Timer0DelayMs(500);
+	Ret = getSn_RX_RSR(SOCK_TCPS);
+	if (Ret != 0)    
+	{
+		SSL_ReadData(MqttPacket->DataPacket, MqttPacket->DataPacketLen);//recv(SOCK_TCPS, MqttPacket->DataPacket, MqttPacket->DataPacketLen);
+	}
+	memset(MqttPacket->DataPacket, 0, MqttPacket->DataPacketLen);
+	PacketLen = MakePubMsg(MqttPacket);                                              //拼接发布报文
+	printfS("PUB LENGTH: %d\r\n", PacketLen);
+	PrintfHex(MqttPacket->DataPacket, PacketLen);	      	                         //打印发布报文                       
+	SSL_SendData(MqttPacket->DataPacket, PacketLen);	                             //发送发布报文
+/* 发布消息的服务质量等级 QoS 若为1，则服务器接收发布报文后，会返回PUBACK回应，若QoS为0，则不会有回应 */
+	if (MqttPacket->Qos == 1)
+	{
+		Timer0DelayMs(500);
+		Ret = getSn_RX_RSR(SOCK_TCPS);                                                 //检测云平台有没有返回回应
+		while (Ret == 0 && Timeout--)    
+		{
+			Timer0DelayMs(200);
+			if (Timeout == 0)
+			{
+				return PUB_TOPIC_ERR;
+			}
+			Ret = getSn_RX_RSR(SOCK_TCPS); 
+		}
+		PacketLen = SSL_ReadData(MqttPacket->DataPacket, MqttPacket->DataPacketLen);    //接收云平台服务器返回来的状态信息
+
+		Ret = MqttAckMsg(MqttPacket->DataPacket);							            //解析返回的回应是否为PUBACK
+		if (Ret != PUBACK)
+		{
+			printfS("puback err\r\n");
+			return PUB_TOPIC_ERR;
+		}
+	}
+	return PACKET_SUCCESS;
+}
+
+/*******************************************************
+ * @brief    发送断开MQTT连接报文
+ * @param    无
+ * @return   无
+********************************************************/
+int32 DisconnectMqttClientPacket(void)
+{
+	u8 DisconnectBuf[200] = {0,}; 
+	u16 SendLen = 0;
+	
+	SendLen = MQTTSerialize_zero(DisconnectBuf, sizeof(DisconnectBuf), DISCONNECT);
+	SendLen = SSL_SendData(DisconnectBuf, SendLen);//send(SOCK_TCPS, DisconnectBuf, SendLen);         //向服务器发送断开连接数据报
+	memset(DisconnectBuf, 0, sizeof(DisconnectBuf));	
+	return SendLen;
+}
+
+
+/*******************************************************
+ * @brief    发送心跳保活报文
+ * @param    无
+ * @return   KEEP_ALIVE_ERR：发送失败
+			 PACKET_SUCCESS：发送成功
+********************************************************/
+u8 KeppAlivePacket(void)
+{
+	u16 Ret = 0;
+	int PacketLen = 0;
+	u16 Timeout = WAIT_ACK_TIME;
+	u8 KeepBuf[200] = {0}; 
+	
+/* 云平台服务器接收到PING报文后，会返回 PINGRESP 回应，通过判断接收的回应的值，来确定是否有心跳响应 */	
+	PacketLen = MakePingMsg(KeepBuf, sizeof(KeepBuf)); 					    //拼接心跳报文
+	SSL_SendData(KeepBuf, PacketLen);
+	Ret = getSn_RX_RSR(SOCK_TCPS);											//检测云平台有没有返回回应
+	while (Ret == 0 && Timeout--)    
+	{
+		printfS("wait ping ack\r\n");
+		Timer0DelayMs(50);
+		if (Timeout == 0)
+		{
+			return KEEP_ALIVE_ERR;
+		}
+		Ret = getSn_RX_RSR(SOCK_TCPS);
+	}
+	PacketLen = SSL_ReadData(KeepBuf, sizeof(KeepBuf));          //接收云平台返回状态
+	Ret = MqttAckMsg(KeepBuf);								     //解析返回的回应是否为PINGRESP		  
+	if (Ret != PINGRESP)                                                                  
+	{
+		printfS("ping err\r\n");
+		return KEEP_ALIVE_ERR;
+	}
+	return PACKET_SUCCESS;
+}
+
+

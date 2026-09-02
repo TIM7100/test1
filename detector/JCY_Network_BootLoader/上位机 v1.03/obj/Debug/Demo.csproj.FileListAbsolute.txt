@@ -1,0 +1,68 @@
+C:\Users\rttt\source\repos\Demo\obj\Debug\Demo.csproj.AssemblyReference.cache
+C:\Users\rttt\source\repos\Demo\obj\Debug\Demo.Form1.resources
+C:\Users\rttt\source\repos\Demo\obj\Debug\Demo.Properties.Resources.resources
+C:\Users\rttt\source\repos\Demo\obj\Debug\Demo.csproj.GenerateResource.cache
+C:\Users\rttt\source\repos\Demo\obj\Debug\Demo.csproj.CoreCompileInputs.cache
+C:\Users\rttt\source\repos\Demo\bin\Debug\Demo.exe.config
+C:\Users\rttt\source\repos\Demo\bin\Debug\Demo.exe
+C:\Users\rttt\source\repos\Demo\bin\Debug\Demo.pdb
+C:\Users\rttt\source\repos\Demo\bin\Debug\MetroFramework.Design.dll
+C:\Users\rttt\source\repos\Demo\bin\Debug\MetroFramework.dll
+C:\Users\rttt\source\repos\Demo\bin\Debug\MetroFramework.Fonts.dll
+C:\Users\rttt\source\repos\Demo\obj\Debug\Demo.csproj.CopyComplete
+C:\Users\rttt\source\repos\Demo\obj\Debug\Demo.exe
+C:\Users\rttt\source\repos\Demo\obj\Debug\Demo.pdb
+C:\Users\rttt\source\repos\Demo\bin\Debug\ClosedXML.dll
+C:\Users\rttt\source\repos\Demo\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\rttt\source\repos\Demo\bin\Debug\ExcelNumberFormat.dll
+C:\Users\rttt\source\repos\Demo\bin\Debug\Irony.dll
+C:\Users\rttt\source\repos\Demo\bin\Debug\SixLabors.Fonts.dll
+C:\Users\rttt\source\repos\Demo\bin\Debug\System.Buffers.dll
+C:\Users\rttt\source\repos\Demo\bin\Debug\System.IO.Packaging.dll
+C:\Users\rttt\source\repos\Demo\bin\Debug\System.Memory.dll
+C:\Users\rttt\source\repos\Demo\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\rttt\source\repos\Demo\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\rttt\source\repos\Demo\bin\Debug\XLParser.dll
+C:\Users\rttt\source\repos\Demo\bin\Debug\ClosedXML.xml
+C:\Users\rttt\source\repos\Demo\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\rttt\source\repos\Demo\bin\Debug\ExcelNumberFormat.xml
+C:\Users\rttt\source\repos\Demo\bin\Debug\SixLabors.Fonts.xml
+C:\Users\rttt\source\repos\Demo\bin\Debug\System.Buffers.xml
+C:\Users\rttt\source\repos\Demo\bin\Debug\System.IO.Packaging.xml
+C:\Users\rttt\source\repos\Demo\bin\Debug\System.Memory.xml
+C:\Users\rttt\source\repos\Demo\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\rttt\source\repos\Demo\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+F:\检测仪\上位机 v2.1\bin\Debug\Demo.exe.config
+F:\检测仪\上位机 v2.1\bin\Debug\Demo.exe
+F:\检测仪\上位机 v2.1\bin\Debug\Demo.pdb
+F:\检测仪\上位机 v2.1\bin\Debug\ClosedXML.dll
+F:\检测仪\上位机 v2.1\bin\Debug\DocumentFormat.OpenXml.dll
+F:\检测仪\上位机 v2.1\bin\Debug\ExcelNumberFormat.dll
+F:\检测仪\上位机 v2.1\bin\Debug\Irony.dll
+F:\检测仪\上位机 v2.1\bin\Debug\MetroFramework.Design.dll
+F:\检测仪\上位机 v2.1\bin\Debug\MetroFramework.dll
+F:\检测仪\上位机 v2.1\bin\Debug\MetroFramework.Fonts.dll
+F:\检测仪\上位机 v2.1\bin\Debug\SixLabors.Fonts.dll
+F:\检测仪\上位机 v2.1\bin\Debug\System.Buffers.dll
+F:\检测仪\上位机 v2.1\bin\Debug\System.IO.Packaging.dll
+F:\检测仪\上位机 v2.1\bin\Debug\System.Memory.dll
+F:\检测仪\上位机 v2.1\bin\Debug\System.Numerics.Vectors.dll
+F:\检测仪\上位机 v2.1\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+F:\检测仪\上位机 v2.1\bin\Debug\XLParser.dll
+F:\检测仪\上位机 v2.1\bin\Debug\ClosedXML.xml
+F:\检测仪\上位机 v2.1\bin\Debug\DocumentFormat.OpenXml.xml
+F:\检测仪\上位机 v2.1\bin\Debug\ExcelNumberFormat.xml
+F:\检测仪\上位机 v2.1\bin\Debug\SixLabors.Fonts.xml
+F:\检测仪\上位机 v2.1\bin\Debug\System.Buffers.xml
+F:\检测仪\上位机 v2.1\bin\Debug\System.IO.Packaging.xml
+F:\检测仪\上位机 v2.1\bin\Debug\System.Memory.xml
+F:\检测仪\上位机 v2.1\bin\Debug\System.Numerics.Vectors.xml
+F:\检测仪\上位机 v2.1\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+F:\检测仪\上位机 v2.1\obj\Debug\Demo.csproj.AssemblyReference.cache
+F:\检测仪\上位机 v2.1\obj\Debug\Demo.Form1.resources
+F:\检测仪\上位机 v2.1\obj\Debug\Demo.Properties.Resources.resources
+F:\检测仪\上位机 v2.1\obj\Debug\Demo.csproj.GenerateResource.cache
+F:\检测仪\上位机 v2.1\obj\Debug\Demo.csproj.CoreCompileInputs.cache
+F:\检测仪\上位机 v2.1\obj\Debug\Demo.csproj.CopyComplete
+F:\检测仪\上位机 v2.1\obj\Debug\Demo.exe
+F:\检测仪\上位机 v2.1\obj\Debug\Demo.pdb

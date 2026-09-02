@@ -1,0 +1,9 @@
+.\Out_Files\dns.o: Internet\Application\dns.c
+.\Out_Files\dns.o: C:\keil\ARM\RV31\Inc\string.h
+.\Out_Files\dns.o: C:\keil\ARM\RV31\Inc\stdlib.h
+.\Out_Files\dns.o: .\Internet\W5500\socket.h
+.\Out_Files\dns.o: .\Internet\W5500\wizchip_conf.h
+.\Out_Files\dns.o: C:\keil\ARM\RV31\Inc\stdint.h
+.\Out_Files\dns.o: .\Internet\W5500\w5500.h
+.\Out_Files\dns.o: .\Internet\W5500\wizchip_conf.h
+.\Out_Files\dns.o: Internet\Application\dns.h

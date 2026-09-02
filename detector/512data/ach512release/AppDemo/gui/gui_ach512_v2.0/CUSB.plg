@@ -1,0 +1,44 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: CUSB - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/CUSB.res" /d "_DEBUG" "D:\Aisinochip\ACH512\work\V2\appdemo\pc上位机程序\gui_ach512\CUSB.rc"" 
+Creating temporary file "C:\Users\AC-YAN~1\AppData\Local\Temp\RSP4B23.tmp" with contents
+[
+setupapi.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/CUSB.pdb" /debug /machine:I386 /out:"Debug/CUSB.exe" /pdbtype:sept 
+".\Debug\AESDlg.obj"
+".\Debug\CUSB.obj"
+".\Debug\CUSBDlg.obj"
+".\Debug\DESDlg.obj"
+".\Debug\HRNGDlg.obj"
+".\Debug\ISO7816Dlg.obj"
+".\Debug\MyTabCtrl.obj"
+".\Debug\OpenByInterface.obj"
+".\Debug\RSADlg.obj"
+".\Debug\SM1Dlg.obj"
+".\Debug\SM2Dlg.obj"
+".\Debug\SM3Dlg.obj"
+".\Debug\SM4Dlg.obj"
+".\Debug\SSF33Dlg.obj"
+".\Debug\StdAfx.obj"
+".\Debug\UsbDevice.obj"
+".\Debug\CUSB.res"
+".\CmdDll.lib"
+".\DEVICEIO.lib"
+]
+Creating command line "link.exe @"C:\Users\AC-YAN~1\AppData\Local\Temp\RSP4B23.tmp""
+<h3>Output Window</h3>
+Compiling resources...
+Linking...
+
+
+
+<h3>Results</h3>
+CUSB.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

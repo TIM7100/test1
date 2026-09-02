@@ -1,0 +1,31 @@
+#ifndef _MENU_SHOW_H
+#define _MENU_SHOW_H
+
+#include  "common.h"
+
+#define Download_Firmware  0
+#define Factory_Reset      1
+
+#define DOWNLOAD_RUNNING   0
+#define UPDATE_RUNNING     1
+#define JUMP_APP_RUNNING   2
+
+void DeviceInitShow(void);
+void LcdMainpage(void);
+void ConnectTencentCloudShow(void);
+void Interface_Display(void);
+void Ethernet_Action(void);
+void GetOTAInfoShow(u8 Result);
+void ConnectShow(void);
+void DownloadFirmwareShow(u8 Result);
+void VerifyFirmwareShow(void);
+u8 WaitingUserPress(u8 Action);
+void ProgressBarShow(u32 AllCut, u32 CurrentCut);
+void RunningShow(u8 Action);
+void ProgressBarShow(u32 AllCut, u32 CurrentCut);
+void ResultShow(u8 Action);
+void JumpAppShow(u8 Result);
+
+#endif
+
+

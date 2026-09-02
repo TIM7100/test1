@@ -1,0 +1,10 @@
+.\Out_Files\sha512.o: Mbedtls\library\sha512.c
+.\Out_Files\sha512.o: .\Mbedtls\include\mbedtls\config.h
+.\Out_Files\sha512.o: .\Mbedtls\include\mbedtls\check_config.h
+.\Out_Files\sha512.o: C:\keil\ARM\RV31\Inc\limits.h
+.\Out_Files\sha512.o: .\Mbedtls\include\mbedtls\sha512.h
+.\Out_Files\sha512.o: C:\keil\ARM\RV31\Inc\stddef.h
+.\Out_Files\sha512.o: C:\keil\ARM\RV31\Inc\stdint.h
+.\Out_Files\sha512.o: .\Mbedtls\include\mbedtls\platform_util.h
+.\Out_Files\sha512.o: .\Mbedtls\include\mbedtls\error.h
+.\Out_Files\sha512.o: C:\keil\ARM\RV31\Inc\string.h

@@ -1,0 +1,9 @@
+
+烧写代码时，需要将cloud_platform_para.h中的PRODUCT_ID、DEVICE_NAME、DEVICE_SECRET修改为腾讯云平台对应的产品名、设备名和设备密钥。
+
+添加云平台主题：
+在cloud_platform_para.h中添加发布主题，同时也可以添加订阅主题在数组中的下标
+在cloud_platform_para.c中添加订阅主题
+完成这两边，就能在连接云平台时订阅对应的主题，之后通过mqtt_client.h的相关函数，就能向对应主题发送消息和接收消息。
+
+添加功能：在Menu--menu.c中添加对应的显示选项，之后在menu.h中EventCode枚举里添加对应的事件码。

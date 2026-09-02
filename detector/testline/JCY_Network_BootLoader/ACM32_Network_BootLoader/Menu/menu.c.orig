@@ -1,0 +1,40 @@
+#include "menu.h"
+
+const u8 EmptyHex[2] = {0x00, 0x00}; /* 空的Hex */
+
+MenuItem NullMenuItem;       /* 空的Menu */
+MenuItem NullPMenuItem;
+
+
+#define FUNC_MENU_NODE        4                 //功能菜单节点数
+#define LANGUAGE_MENU_NODE    2                 //语言菜单节点数
+/* 第一级Menu *******************************************************************************************************************/
+MenuItem FunctionMenu[] =
+{
+    /*MenuCount         DisplayString                       ChildrenMenus      ParentMenus        EventCode */
+    {FUNC_MENU_NODE,   {"SeriesMenu",      "系列菜单"},     &NullMenuItem,     &NullMenuItem,     JUMP_EVENT},
+    {FUNC_MENU_NODE,   {"UpdateFirmware",  "更新固件"},     &NullMenuItem,     &NullMenuItem,     OTA_EVENT},
+ //   {FUNC_MENU_NODE,   {"InquireCount",    "更新升级点数"},     &NullMenuItem,     &NullMenuItem,     COUNT_EVENT},
+    {FUNC_MENU_NODE,   {"Language",        "语言选择"},     LanguageMenu,      &NullMenuItem,     0xFF},
+    {FUNC_MENU_NODE,   {"FactoryReset",    "恢复出厂设置"}, &NullMenuItem,     &NullMenuItem,     FACTORY_RESET_EVENT},
+};
+
+
+
+/* 第二级Menu ********************************************************************************************************************/
+MenuItem LanguageMenu[] =
+{
+    /*MenuCount             DisplayString                   ChildrenMenus      ParentMenus        EventCode */
+    {LANGUAGE_MENU_NODE,    {"English", "English"},         &NullMenuItem,     FunctionMenu,      LANGUAGE_EVENT },	
+    {LANGUAGE_MENU_NODE,    {"中文",    "中文"},            &NullMenuItem,     FunctionMenu,      LANGUAGE_EVENT },	
+};
+
+
+
+void NullSubs(void)  /* 空函数 */
+{
+
+}
+
+
+

@@ -1,0 +1,211 @@
+#include "XxySpi.h"
+
+volatile UINT8 flag_spia_batchdone_int;
+volatile UINT8 flag_spib_batchdone_int;
+
+/*函数名: SPIA_IRQHandler                          */
+/*函数功能: SPIA中断服务函数					   */
+/*返回值: 无                                       */
+/*参数  : 无                                       */
+void SPIA_IRQHandler(void)
+{
+    if(REG_SPI_STATUS(SPIA) & 0x02)				//检测批量传输完成标志
+    {
+        flag_spia_batchdone_int = 1;
+        REG_SPI_STATUS(SPIA) |= 0x02;			//清除批量传输完成标志
+    }
+}
+
+/*函数名: SPIB_IRQHandler                          */
+/*函数功能: SPIB中断服务函数					   */
+/*返回值: 无                                       */
+/*参数  : 无                                       */
+void SPIB_IRQHandler(void)
+{
+    if(REG_SPI_STATUS(SPIB) & 0x02)				//检测批量传输完成标志
+    {
+        flag_spib_batchdone_int = 1;
+        REG_SPI_STATUS(SPIB) |= 0x02;			//清除批量传输完成标志
+    }
+}
+
+/*函数名: spi_init                                 */
+/*函数功能: 硬件SPI初始化函数					   */
+/*返回值: 无                                       */
+/*参数  :                                          */
+/*spi_index	输入参数，选择SPI模块SPIA或SPIB    	   */
+/*work_mode	输入参数，SPI的工作模式：模式0,1,2,3   */
+void spi_init(UINT8 spi_index, UINT8 work_mode)
+{
+    if(spi_index == SPIA)
+    {
+        NVIC_ClearPendingIRQ(SPIA_IRQn);
+        NVIC_EnableIRQ(SPIA_IRQn);
+        REG_SCU_MUXCTRLA = (REG_SCU_MUXCTRLA & ~(0xfff << 4)) | (0x551 << 4);	//复用为SPIA
+    }
+    else
+    {
+        NVIC_ClearPendingIRQ(SPIB_IRQn);
+        NVIC_EnableIRQ(SPIB_IRQn);
+        REG_SCU_MUXCTRLA = (REG_SCU_MUXCTRLA & ~(0x0fUL << 28)) | (0x05 << 28);
+        REG_SCU_MUXCTRLB = (REG_SCU_MUXCTRLB & ~(0xff << 0)) | (0x55 << 0);		//复用为SPIB    		      
+    }
+
+    REG_SPI_CTL(spi_index) = work_mode << 2;
+
+#ifdef SPI_MASTER
+//     REG_SPI_BAUD(spi_index) = ((3 << 8) | 6); 
+	if(spi_index == SPIB)
+		REG_SPI_BAUD(spi_index) = ((2 << 8) | 2); 
+	else
+		REG_SPI_BAUD(spi_index) = ((2 << 8) | 2); 
+    REG_SPI_OUT_EN(spi_index) = 0x01;			//默认单线模式
+    REG_SPI_CTL(spi_index) |= 0x01;				//设置为主机模式
+#else
+    REG_SPI_OUT_EN(spi_index) = 0x02;			//默认单线模式
+    REG_SPI_CTL(spi_index) &= ~0x01;			//设置为从机模式
+#endif
+}
+
+/*函数名: chip_disable                             */
+/*函数功能: SPI失能函数					 		   */
+/*返回值: 无                                       */
+/*参数  :                                          */
+/*spi_index		输入参数，选择SPI模块SPIA或SPIB    */
+void chip_disable(UINT8 spi_index)
+{
+    REG_SPI_CS(spi_index) = 0;
+}
+
+/*函数名: chip_enable                              */
+/*函数功能: SPI使能函数					 		   */
+/*返回值: 无                                       */
+/*参数  :                                          */
+/*spi_index		输入参数，选择SPI模块SPIA或SPIB    */
+void chip_enable(UINT8 spi_index)
+{
+    REG_SPI_CS(spi_index) = 1;
+}
+
+/*函数名: spi_rx_bytes                             */
+/*函数功能: SPI通用模式接收数据					   */
+/*返回值: 无                                       */
+/*参数  :                                          */
+/*spi_index		输入参数，选择SPI模块SPIA或SPIB    */
+/**rx_data		输出参数，接收数据缓冲区的指针     */
+/*len			输入参数，接收数据的长度	       */
+void spi_rx_bytes(UINT8 spi_index, UINT8 *rx_data, UINT32 len)
+{
+    UINT32 i;
+    len &= 0x3ff;
+
+    REG_SPI_STATUS(spi_index) |= 0x01 << 1;			//清除批量传输完成标志
+    REG_SPI_BATCH(spi_index) = len;
+
+    REG_SPI_RX_CTL(spi_index) |= 0x01;				//SPI接收使能
+
+#ifdef SPI_MASTER
+    REG_SPI_CS(spi_index) = 1;
+#endif
+
+    for(i = 0; i < len; i++)
+    {
+        while(REG_SPI_STATUS(spi_index) & 0x10);	//等待RX_FIFO不为空
+        *rx_data = (UINT8)REG_SPI_RX_DAT(spi_index);
+        rx_data++;
+    }
+
+    while(!(REG_SPI_STATUS(spi_index) & 0x02));		//等待批量传输完成
+    REG_SPI_STATUS(spi_index) |= 0x02;
+
+    REG_SPI_RX_CTL(spi_index) &= ~0x01;				//SPI接收禁止
+}
+
+/*函数名: spi_tx_bytes                             */
+/*函数功能: SPI通用模式发送数据					   */
+/*返回值: 无                                       */
+/*参数  :                                          */
+/*spi_index		输入参数，选择SPI模块SPIA或SPIB    */
+/**tx_data		输入参数，发送数据缓冲区的指针     */
+/*len			输入参数，发送数据的长度	       */
+void spi_tx_bytes(UINT8 spi_index, UINT8 *tx_data, UINT32 len)
+{
+    UINT32 i;
+
+    len &= 0x3ff;
+
+    REG_SPI_STATUS(spi_index) |= 0x02;			//清除批量传输完成标志
+    REG_SPI_BATCH(spi_index) = len;
+
+    REG_SPI_TX_CTL(spi_index) |= 0x01;			//SPI发送使能
+#ifdef SPI_MASTER
+    REG_SPI_CS(spi_index) = 1;
+#endif
+
+    for(i = 0; i < len; i++)
+    {
+        while(REG_SPI_STATUS(spi_index) & 0x08);	//等待TX_FIFO未满
+        REG_SPI_TX_DAT(spi_index) = *tx_data;
+        tx_data++;
+    }
+
+    while(!(REG_SPI_STATUS(spi_index) & 0x02));		//等待批量传输完成
+    REG_SPI_STATUS(spi_index) |= 0x02;
+
+    REG_SPI_TX_CTL(spi_index) &= ~0x01;				//SPI发送禁止
+}
+
+/*函数名: spi_txrx_bytes                           */
+/*函数功能: SPI通用模式收发数据					   */
+/*返回值: 无                                       */
+/*参数  :                                          */
+/*spi_index		输入参数，选择SPI模块SPIA或SPIB    */
+/**tx_data		输入参数，发送数据缓冲区的指针     */
+/**rx_data		输出参数，接收数据缓冲区的指针     */
+/*len			输入参数，收发数据的长度	       */
+void spi_txrx_bytes(UINT8 spi_index, UINT8 *tx_data, UINT8 *rx_data, UINT32 len)
+{
+	UINT32 i = 0;
+
+	REG_SPI_STATUS(spi_index) |= 0x02;			//清除批量传输完成标志
+	REG_SPI_BATCH(spi_index) = len;
+
+	REG_SPI_TX_CTL(spi_index) |= 0x01;			//SPI发送使能
+	REG_SPI_RX_CTL(spi_index) |= 0x01;			//SPI接收使能
+
+#ifdef SPI_MASTER
+	REG_SPI_CS(spi_index) = 1;
+#endif
+
+	while(!(REG_SPI_STATUS(spi_index) & 0x02))	//等待批量传输完成
+	{
+		if(i < len)
+		{
+			if(!(REG_SPI_STATUS(spi_index) & 0x08))	//等待TX_FIFO未满
+			{
+				REG_SPI_TX_DAT(spi_index) = *tx_data;
+				tx_data++;
+				i++;
+			}
+		}
+
+		if(!(REG_SPI_STATUS(spi_index) & 0x10))		//等待RX_FIFO不为空
+		{
+			*rx_data = (UINT8)REG_SPI_RX_DAT(spi_index);
+			rx_data++;
+
+		}
+	}
+
+	while(!(REG_SPI_STATUS(spi_index) & 0x10))		//等待RX_FIFO不为
+	{
+		*rx_data = (UINT8)REG_SPI_RX_DAT(spi_index);
+		rx_data++;
+	}
+
+	REG_SPI_STATUS(spi_index) |= 0x02;
+
+	REG_SPI_TX_CTL(spi_index) &= ~0x01;
+	REG_SPI_RX_CTL(spi_index) &= ~0x01;
+
+}

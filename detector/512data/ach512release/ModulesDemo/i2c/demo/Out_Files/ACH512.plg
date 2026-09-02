@@ -1,0 +1,26 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\ac-xujie\Downloads\drive._mike_kaifabanpao\iic\demo\ACH512.uvproj
+Project File Date:  04/29/2016
+
+<h2>Output:</h2>
+Build target 'project'
+compiling iic.c...
+compiling app.c...
+linking...
+Program Size: Code=6178 RO-data=266 RW-data=24 ZI-data=2176  
+FromELF: creating hex file...
+".\Out_Files\ACH512.axf" - 0 Errors, 0 Warning(s).
+Build target 'project'
+linking...
+Program Size: Code=6178 RO-data=266 RW-data=24 ZI-data=2176  
+FromELF: creating hex file...
+".\Out_Files\ACH512.axf" - 0 Errors, 0 Warning(s).
+Build target 'project'
+linking...
+Program Size: Code=6178 RO-data=266 RW-data=24 ZI-data=2176  
+FromELF: creating hex file...
+".\Out_Files\ACH512.axf" - 0 Errors, 0 Warning(s).

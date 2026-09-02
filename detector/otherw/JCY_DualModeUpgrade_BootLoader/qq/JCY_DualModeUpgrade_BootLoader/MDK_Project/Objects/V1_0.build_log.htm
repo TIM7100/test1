@@ -1,0 +1,1425 @@
+<html>
+<body>
+<pre>
+<h1>�Vision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ��Vision V5.39.0.0
+Copyright (C) 2023 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: 111 XXY-XM2504271, 111, LIC=GMZI6-DS8RF-X7KRZ-JM0ZU-Y0SQ5-0INT5
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.39.0.0
+Toolchain Path:  D:\KEIL5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.21
+Assembler:       Armasm.exe V6.21
+Linker/Locator:  ArmLink.exe V6.21
+Library Manager: ArmAr.exe V6.21
+Hex Converter:   FromElf.exe V6.21
+CPU DLL:         
+Dialog DLL:      
+Target DLL:      CMSIS_AGDI_V8M.DLL V1.8.1.0
+Dialog DLL:      TCM.DLL V1.56.4.0
+ 
+<h2>Project:</h2>
+G:\JCY_DualModeUpgrade_BootLoader(����+����ota)\qq\JCY_DualModeUpgrade_BootLoader\MDK_Project\Project.uvprojx
+Project File Date:  08/21/2025
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.21', folder: 'D:\KEIL5\ARM\ARMCLANG\Bin'
+Build target 'Project'
+assembling startup_f4_f3.s...
+../User/cloud_platform_para.c(1): warning: In file included from...
+../User/cloud_platform_para.h(58): error: unknown type name 'u8'
+   58 |         u8   ServerIP[4];                        //<B4><E6><B7><C5><D4><C6>ƽ̨<B5>ķ<FE><CE><F1><C6><F7>IP<BB><F2><CA><C7><D3><F2><C3><FB>
+      |         ^
+../User/cloud_platform_para.h(59): error: unknown type name 'u16'
+   59 |         u16  ServerPort;                           //<B4><E6><B7>ŷ<FE><CE><F1><C6><F7><B5>Ķ˿ں<C5> 
+      |         ^
+../User/cloud_platform_para.h(81): error: unknown type name 'u8'
+   81 |         u8 ClientID[64];                         //<B4><E6><B7><C5>MQTT<BF>ͻ<A7><B6><CB>ID<B5>Ļ<BA><B3><E5><C7><F8>
+      |         ^
+../User/cloud_platform_para.h(83): error: unknown type name 'u8'
+   83 |     u8 Passward[80];                         //<B4><E6><B7><C5>MQTT<C3><DC><C2><EB><B5>Ļ<BA><B3><E5><C7><F8>     
+      |     ^
+../User/cloud_platform_para.h(94): error: unknown type name 'u8'
+   94 |         u8 Qos;                                         //<B7><A2><B2><BC><CF><FB>Ϣ<B5>ķ<FE><CE><F1><D6><CA><C1><BF><B5>ȼ<B6>, <BF><C9>ѡ 0 or 1
+      |         ^
+../User/cloud_platform_para.h(95): error: unknown type name 'u8'
+   95 |         u8 CleanSession;                        //1<A3><BA><B4><B4><BD><A8>һ<B8><F6><B6><CC><C6>ڻỰ<A3><AC><BF>ͻ<A7><B6>˶Ͽ<AA><C1><AC><BD><D3>ʱ<BB>Ự<CF><FA><BB>٣<BB> 0<A3><BA><B4><B4><BD><A8><B3><A4><C6>ڻỰ<A3><AC><BF>ͻ<A7><B6>˶Ͽ<AA><C1><AC><BD>ӣ<AC><C8>Իᱣ<B3>ֻỰ
+      |         ^
+../User/cloud_platform_para.h(96): error: unknown type name 'u16'
+   96 |         u16 KeepAlive;                          //<B1><A3><BB><EE><BC><C6>ʱ<C6><F7><A3><AC><B6><A8><D2><E5><C1>˷<FE><CE><F1><C6><F7><CA>յ<BD><BF>ͻ<A7><B6><CB><CF><FB>Ϣ<B5><C4><D7><EE><B4><F3>ʱ<BC><E4><BC><E4><B8><F4>
+      |         ^
+../User/cloud_platform_para.h(97): error: unknown type name 'u16'
+   97 |         u16 DataPacketLen;
+      |         ^
+../User/cloud_platform_para.h(99): error: unknown type name 'u8'
+   99 |         u8 DataPacket[DATA_PACKET_LEN];                         //<B4><FD><B7><A2><B2><BC><B5><C4><CA><FD><BE>ݱ<A8><CE>Ļ<BA><B4><E6><C7><F8>
+      |         ^
+../User/cloud_platform_para.c(37): error: use of undeclared identifier 'u8'
+   37 |         u8 i = 0;
+      |         ^
+../User/cloud_platform_para.c(42): error: use of undeclared identifier 'i'
+   42 |         for (i = 0; i < SUB_TOPIC_COUNT; i++)
+      |              ^
+../User/cloud_platform_para.c(42): error: use of undeclared identifier 'i'
+   42 |         for (i = 0; i < SUB_TOPIC_COUNT; i++)
+      |                     ^
+../User/cloud_platform_para.c(42): error: use of undeclared identifier 'i'
+   42 |         for (i = 0; i < SUB_TOPIC_COUNT; i++)
+      |                                          ^
+../User/cloud_platform_para.c(45): error: use of undeclared identifier 'i'
+   45 |                 sprintf(SubTopic, SubTopicBuff[i], PRODUCT_ID, DEVICE_NAME);
+      |                                                ^
+../User/cloud_platform_para.c(46): error: use of undeclared identifier 'i'
+   46 |                 memcpy(MqttPacket->SubTopic[i], SubTopic, sizeof(SubTopic));
+      |                                             ^
+15 errors generated.
+compiling cloud_platform_para.c...
+../User/crc.c(1): warning: In file included from...
+../User/crc.h(7): error: unknown type name 'u8'
+    7 | void memset_data(u8* des, u8 data, u32 len);
+      |                  ^
+../User/crc.h(7): error: unknown type name 'u8'
+    7 | void memset_data(u8* des, u8 data, u32 len);
+      |                           ^
+../User/crc.h(7): error: unknown type name 'u32'
+    7 | void memset_data(u8* des, u8 data, u32 len);
+      |                                    ^
+../User/crc.h(9): error: unknown type name 'u16'
+    9 | u16 GetCrc16(char* pData, u32 nLength);
+      | ^
+../User/crc.h(9): error: unknown type name 'u32'
+    9 | u16 GetCrc16(char* pData, u32 nLength);
+      |                           ^
+../User/crc.h(11): error: unknown type name 'u8'
+   11 | void MemcpyData(char* Des, u8* Src, u32 Len);
+      |                            ^
+../User/crc.h(11): error: unknown type name 'u32'
+   11 | void MemcpyData(char* Des, u8* Src, u32 Len);
+      |                                     ^
+../User/crc.h(13): error: unknown type name 'u8'
+   13 | void MemsetData(char* Des, u8 Setdata, u32 Len);
+      |                            ^
+../User/crc.h(13): error: unknown type name 'u32'
+   13 | void MemsetData(char* Des, u8 Setdata, u32 Len);
+      |                                        ^
+../User/crc.h(15): error: unknown type name 'u8'
+   15 | u8 MemcmpData(char* Des, u8* Src, u32 Len);
+      | ^
+../User/crc.h(15): error: unknown type name 'u8'
+   15 | u8 MemcmpData(char* Des, u8* Src, u32 Len);
+      |                          ^
+../User/crc.h(15): error: unknown type name 'u32'
+   15 | u8 MemcmpData(char* Des, u8* Src, u32 Len);
+      |                                   ^
+../User/crc.h(17): error: unknown type name 'u16'
+   17 | u16 GetTolCrc16(u16 CurCrc, char* pData, u32 nLength);
+      | ^
+../User/crc.h(17): error: unknown type name 'u16'
+   17 | u16 GetTolCrc16(u16 CurCrc, char* pData, u32 nLength);
+      |                 ^
+../User/crc.h(17): error: unknown type name 'u32'
+   17 | u16 GetTolCrc16(u16 CurCrc, char* pData, u32 nLength);
+      |                                          ^
+../User/crc.c(39): error: unknown type name 'u8'
+   39 | void MemcpyData(char* Des, u8* Src, u32 Len)
+      |                            ^
+../User/crc.c(39): error: unknown type name 'u32'
+   39 | void MemcpyData(char* Des, u8* Src, u32 Len)
+      |                                     ^
+../User/crc.c(41): error: use of undeclared identifier 'u32'
+   41 |     u32 i;
+      |     ^
+../User/crc.c(42): error: use of undeclared identifier 'i'
+   42 |     for (i = 0; i < Len; i++)
+      |          ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling crc.c...
+../User/main.c(1): warning: In file included from...
+../Menu\menu_app.h(16): error: unknown type name 'u8'
+   16 | extern __IO u8 RefreshFlag;
+      |             ^
+../Menu\menu_app.h(17): error: unknown type name 'u8'
+   17 | extern __IO u8 SelectPoint;
+      |             ^
+../Menu\menu_app.h(18): error: unknown type name 'u8'
+   18 | extern __IO u8 NodeChangFlag;
+      |             ^
+../User/main.c(3): warning: In file included from...
+../BSP\bsp_usart1.h(29): error: unknown type name 'u32'
+   29 | void UART1_ParaInit(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size);
+      |                                                                 ^
+../BSP\bsp_usart1.h(30): error: unknown type name 'u32'
+   30 | void UART1_ParaClear(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size);
+      |                                                                  ^
+../User/main.c(4): warning: In file included from...
+../BSP\bsp_usart3.h(5): warning: In file included from...
+../User\LoopList.h(35): error: unknown type name 'u8'
+   35 | int32_t rbWriteByte(rb_t *rb ,u8 buf);
+      |                               ^
+../User/main.c(5): warning: In file included from...
+../Internet/Application\w5500_user_conf.h(32): error: unknown type name 'u8'
+   32 | u8 W5500_SocketBuffConfig(void);
+      | ^
+../Internet/Application\w5500_user_conf.h(34): error: unknown type name 'u8'
+   34 | u8 NetworkConfig(wiz_NetInfo *NetworkInfo);
+      | ^
+../Internet/Application\w5500_user_conf.h(35): error: unknown type name 'u8'
+   35 | u8 W5500PhyLinkCheck(void);
+      | ^
+../Internet/Application\w5500_user_conf.h(38): error: unknown type name 'int32'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      | ^
+../Internet/Application\w5500_user_conf.h(38): error: unknown type name 'u8'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      |                    ^
+../Internet/Application\w5500_user_conf.h(38): error: unknown type name 'u32'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      |                                ^
+../Internet/Application\w5500_user_conf.h(39): error: unknown type name 'u16'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      | ^
+../Internet/Application\w5500_user_conf.h(39): error: unknown type name 'u8'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      |                  ^
+../Internet/Application\w5500_user_conf.h(39): error: unknown type name 'u32'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      |                              ^
+../User/main.c(6): warning: In file included from...
+../Internet/ESP8266\esp8266_config.h(20): error: unknown type name 'u8'
+   20 | extern volatile u8 NetWork_Flag;
+      |                 ^
+../Internet/ESP8266\esp8266_config.h(22): error: unknown type name 'u8'
+   22 | u8 Parse_SSID_Password(u8* buffer, WifiInfo_t* wifi_info);
+      | ^
+../Internet/ESP8266\esp8266_config.h(22): error: unknown type name 'u8'
+   22 | u8 Parse_SSID_Password(u8* buffer, WifiInfo_t* wifi_info);
+      |                        ^
+../User/main.c(8): error: unknown type name 'u8'
+    8 | __IO u8 NetWork_Flag = ESP8266;
+      |      ^
+19 errors generated.
+compiling main.c...
+compiling fxx_gpio.c...
+../User/fxx_it.c(9): warning: In file included from...
+../BSP\bsp_uart_lcd.h(12): error: unknown type name 'u8'
+   12 | void StrMiddleShow(char *StrName, u8 Yaxis, u8 Color);
+      |                                   ^
+../BSP\bsp_uart_lcd.h(12): error: unknown type name 'u8'
+   12 | void StrMiddleShow(char *StrName, u8 Yaxis, u8 Color);
+      |                                             ^
+../BSP\bsp_uart_lcd.h(15): error: unknown type name 'u16'
+   15 | char* CMD_DC16(u16 x, u16 y, char *str, u8 Color);
+      |                ^
+../BSP\bsp_uart_lcd.h(15): error: unknown type name 'u16'
+   15 | char* CMD_DC16(u16 x, u16 y, char *str, u8 Color);
+      |                       ^
+../BSP\bsp_uart_lcd.h(15): error: unknown type name 'u8'
+   15 | char* CMD_DC16(u16 x, u16 y, char *str, u8 Color);
+      |                                         ^
+../BSP\bsp_uart_lcd.h(17): error: unknown type name 'u16'
+   17 | char* CMD_DC16_Len(u16 x, u16 y, char *str, u32 length, u8 Color);
+      |                    ^
+../BSP\bsp_uart_lcd.h(17): error: unknown type name 'u16'
+   17 | char* CMD_DC16_Len(u16 x, u16 y, char *str, u32 length, u8 Color);
+      |                           ^
+../BSP\bsp_uart_lcd.h(17): error: unknown type name 'u32'
+   17 | char* CMD_DC16_Len(u16 x, u16 y, char *str, u32 length, u8 Color);
+      |                                             ^
+../BSP\bsp_uart_lcd.h(17): error: unknown type name 'u8'
+   17 | char* CMD_DC16_Len(u16 x, u16 y, char *str, u32 length, u8 Color);
+      |                                                         ^
+../BSP\bsp_uart_lcd.h(19): error: unknown type name 'u16'
+   19 | char* CMD_BOX(u16 x1, u16 y1, u16 x2, u16 y2, u8 Color);
+      |               ^
+../BSP\bsp_uart_lcd.h(19): error: unknown type name 'u16'
+   19 | char* CMD_BOX(u16 x1, u16 y1, u16 x2, u16 y2, u8 Color);
+      |                       ^
+../BSP\bsp_uart_lcd.h(19): error: unknown type name 'u16'
+   19 | char* CMD_BOX(u16 x1, u16 y1, u16 x2, u16 y2, u8 Color);
+      |                               ^
+../BSP\bsp_uart_lcd.h(19): error: unknown type name 'u16'
+   19 | char* CMD_BOX(u16 x1, u16 y1, u16 x2, u16 y2, u8 Color);
+      |                                       ^
+../BSP\bsp_uart_lcd.h(19): error: unknown type name 'u8'
+   19 | char* CMD_BOX(u16 x1, u16 y1, u16 x2, u16 y2, u8 Color);
+      |                                               ^
+../BSP\bsp_uart_lcd.h(21): error: unknown type name 'u16'
+   21 | char* CMD_DC24(u16 x, u16 y, char *Str, u8 Color);
+      |                ^
+../BSP\bsp_uart_lcd.h(21): error: unknown type name 'u16'
+   21 | char* CMD_DC24(u16 x, u16 y, char *Str, u8 Color);
+      |                       ^
+../BSP\bsp_uart_lcd.h(21): error: unknown type name 'u8'
+   21 | char* CMD_DC24(u16 x, u16 y, char *Str, u8 Color);
+      |                                         ^
+../User/fxx_it.c(11): warning: In file included from...
+../User/firmware_download.h(5): warning: In file included from...
+../BSP\bsp_usart1.h(29): error: unknown type name 'u32'
+   29 | void UART1_ParaInit(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size);
+      |                                                                 ^
+../BSP\bsp_usart1.h(30): error: unknown type name 'u32'
+   30 | void UART1_ParaClear(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size);
+      |                                                                  ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling fxx_it.c...
+compiling fxx_uart.c...
+compiling fxx_eflash.c...
+compiling fxx_rtc.c...
+compiling fxx_tim.c...
+compiling fxx_spi.c...
+compiling system_f4_f3.c...
+../Mbedtls/my_aes_cbc/my_aes_cbc.c(2): warning: In file included from...
+../Mbedtls/my_aes_cbc/my_aes_cbc.h(17): error: unknown type name 'u8'
+   17 | u8 EncryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutEncryptedData, u8 *IV);
+      | ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.h(17): error: unknown type name 'u8'
+   17 | u8 EncryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutEncryptedData, u8 *IV);
+      |                        ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.h(17): error: unknown type name 'u16'
+   17 | u8 EncryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutEncryptedData, u8 *IV);
+      |                                    ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.h(17): error: unknown type name 'u8'
+   17 | u8 EncryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutEncryptedData, u8 *IV);
+      |                                                    ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.h(17): error: unknown type name 'u8'
+   17 | u8 EncryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutEncryptedData, u8 *IV);
+      |                                                                          ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.h(18): error: unknown type name 'u8'
+   18 | u8 DecryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutDecryptedData, u8 *IV, u8 Key);
+      | ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.h(18): error: unknown type name 'u8'
+   18 | u8 DecryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutDecryptedData, u8 *IV, u8 Key);
+      |                        ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.h(18): error: unknown type name 'u16'
+   18 | u8 DecryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutDecryptedData, u8 *IV, u8 Key);
+      |                                    ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.h(18): error: unknown type name 'u8'
+   18 | u8 DecryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutDecryptedData, u8 *IV, u8 Key);
+      |                                                    ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.h(18): error: unknown type name 'u8'
+   18 | u8 DecryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutDecryptedData, u8 *IV, u8 Key);
+      |                                                                          ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.h(18): error: unknown type name 'u8'
+   18 | u8 DecryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutDecryptedData, u8 *IV, u8 Key);
+      |                                                                                  ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.c(8): error: unknown type name 'u8'
+    8 | const u8 APP_DecryptKey[16] = {0x2F, 0x2F, 0x62, 0x32, 0x33, 0x2E, 0x74, 0x76, 0x2F, 0x74, 0x6A, 0x79, 0x37, 0x56, 0x7A, 0x42};
+      |       ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.c(10): error: unknown type name 'u8'
+   10 | static u8 *SV_EncryptKey    = (u8 *)ChipSnAddress;              //<BC><D3><C3><DC><C3><DC>Կ, <B8><F9><BE><DD>оƬ<B5><C4>SV<D0><F2><C1>к<C5><C9><FA><B3><C9><C3><DC>Կ
+      |        ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.c(10): error: expected expression
+   10 | static u8 *SV_EncryptKey    = (u8 *)ChipSnAddress;              //<BC><D3><C3><DC><C3><DC>Կ, <B8><F9><BE><DD>оƬ<B5><C4>SV<D0><F2><C1>к<C5><C9><FA><B3><C9><C3><DC>Կ
+      |                                    ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.c(10): error: use of undeclared identifier 'u8'
+   10 | static u8 *SV_EncryptKey    = (u8 *)ChipSnAddress;              //<BC><D3><C3><DC><C3><DC>Կ, <B8><F9><BE><DD>оƬ<B5><C4>SV<D0><F2><C1>к<C5><C9><FA><B3><C9><C3><DC>Կ
+      |                                ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.c(17): error: unknown type name 'u8'
+   17 | u8 EncryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutEncryptedData, u8 *IV)
+      | ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.c(17): error: unknown type name 'u8'
+   17 | u8 EncryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutEncryptedData, u8 *IV)
+      |                        ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.c(17): error: unknown type name 'u16'
+   17 | u8 EncryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutEncryptedData, u8 *IV)
+      |                                    ^
+../Mbedtls/my_aes_cbc/my_aes_cbc.c(17): error: unknown type name 'u8'
+   17 | u8 EncryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutEncryptedData, u8 *IV)
+      |                                                    ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling my_aes_cbc.c...
+../User/UserFunctionInterface.c(1): warning: In file included from...
+../User/UserFunctionInterface.h(6): error: unknown type name 'u8'
+    6 | void UserFunctionInterface(u8 UserChooseEvent, u8 ChooseNode);
+      |                            ^
+../User/UserFunctionInterface.h(6): error: unknown type name 'u8'
+    6 | void UserFunctionInterface(u8 UserChooseEvent, u8 ChooseNode);
+      |                                                ^
+../User/UserFunctionInterface.c(3): warning: In file included from...
+../Menu\menu_show.h(37): error: unknown type name 'u8'
+   37 | void MainPageShow(u8 ShowLanguage, char* Version);
+      |                   ^
+../Menu\menu_show.h(38): error: unknown type name 'u8'
+   38 | void MenuShow(u8 ShowLanguage);
+      |               ^
+../Menu\menu_show.h(39): error: unknown type name 'u32'
+   39 | void ProgressBarShow(u32 AllCut, u32 CurrentCut);
+      |                      ^
+../Menu\menu_show.h(39): error: unknown type name 'u32'
+   39 | void ProgressBarShow(u32 AllCut, u32 CurrentCut);
+      |                                  ^
+../Menu\menu_show.h(42): error: unknown type name 'u8'
+   42 | void JumpResultShow(u8 ShowLanguage, u8 JumpResultCode);
+      |                     ^
+../Menu\menu_show.h(42): error: unknown type name 'u8'
+   42 | void JumpResultShow(u8 ShowLanguage, u8 JumpResultCode);
+      |                                      ^
+../Menu\menu_show.h(46): error: unknown type name 'u8'
+   46 | void ChooseFactoryResetShow(u8 ShowLanguage);
+      |                             ^
+../Menu\menu_show.h(47): error: unknown type name 'u8'
+   47 | void FactoryResetShow(u8 ShowLanguage);
+      |                       ^
+../Menu\menu_show.h(49): error: unknown type name 'u8'
+   49 | void SetResultShow(u8 ShowLanguage, u8 Result);
+      |                    ^
+../Menu\menu_show.h(49): error: unknown type name 'u8'
+   49 | void SetResultShow(u8 ShowLanguage, u8 Result);
+      |                                     ^
+../Menu\menu_show.h(53): error: unknown type name 'u8'
+   53 | void RunningShow(u8 ShowLanguage, u8 Function);
+      |                  ^
+../Menu\menu_show.h(53): error: unknown type name 'u8'
+   53 | void RunningShow(u8 ShowLanguage, u8 Function);
+      |                                   ^
+../Menu\menu_show.h(56): error: unknown type name 'u8'
+   56 | void AnalysisShow(u8 ShowLanguage);
+      |                   ^
+../Menu\menu_show.h(57): error: unknown type name 'u8'
+   57 | void ConnectShow(u8 ShowLanguage);
+      |                  ^
+../Menu\menu_show.h(58): error: unknown type name 'u8'
+   58 | void TimeOutShow(u8 ShowLanguage);
+      |                  ^
+../Menu\menu_show.h(59): error: unknown type name 'u8'
+   59 | void WaitingFirmwareShow(u8 ShowLanguage);
+      |                          ^
+../Menu\menu_show.h(60): error: unknown type name 'u8'
+   60 | void ChooseDownloadShow(u8 ShowLanguage);
+      |                         ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling UserFunctionInterface.c...
+../User/LoopList.c(8): warning: In file included from...
+../User/LoopList.h(35): error: unknown type name 'u8'
+   35 | int32_t rbWriteByte(rb_t *rb ,u8 buf);
+      |                               ^
+1 error generated.
+compiling LoopList.c...
+../Menu/menu.c(3): error: unknown type name 'u8'
+    3 | const u8 EmptyHex[2] = {0x00, 0x00}; /* <BF>յ<C4>Hex */
+      |       ^
+1 error generated.
+compiling menu.c...
+../Menu/menu_app.c(1): warning: In file included from...
+../Menu/menu_app.h(16): error: unknown type name 'u8'
+   16 | extern __IO u8 RefreshFlag;
+      |             ^
+../Menu/menu_app.h(17): error: unknown type name 'u8'
+   17 | extern __IO u8 SelectPoint;
+      |             ^
+../Menu/menu_app.h(18): error: unknown type name 'u8'
+   18 | extern __IO u8 NodeChangFlag;
+      |             ^
+../Menu/menu_app.c(3): warning: In file included from...
+../Menu/menu_show.h(37): error: unknown type name 'u8'
+   37 | void MainPageShow(u8 ShowLanguage, char* Version);
+      |                   ^
+../Menu/menu_show.h(38): error: unknown type name 'u8'
+   38 | void MenuShow(u8 ShowLanguage);
+      |               ^
+../Menu/menu_show.h(39): error: unknown type name 'u32'
+   39 | void ProgressBarShow(u32 AllCut, u32 CurrentCut);
+      |                      ^
+../Menu/menu_show.h(39): error: unknown type name 'u32'
+   39 | void ProgressBarShow(u32 AllCut, u32 CurrentCut);
+      |                                  ^
+../Menu/menu_show.h(42): error: unknown type name 'u8'
+   42 | void JumpResultShow(u8 ShowLanguage, u8 JumpResultCode);
+      |                     ^
+../Menu/menu_show.h(42): error: unknown type name 'u8'
+   42 | void JumpResultShow(u8 ShowLanguage, u8 JumpResultCode);
+      |                                      ^
+../Menu/menu_show.h(46): error: unknown type name 'u8'
+   46 | void ChooseFactoryResetShow(u8 ShowLanguage);
+      |                             ^
+../Menu/menu_show.h(47): error: unknown type name 'u8'
+   47 | void FactoryResetShow(u8 ShowLanguage);
+      |                       ^
+../Menu/menu_show.h(49): error: unknown type name 'u8'
+   49 | void SetResultShow(u8 ShowLanguage, u8 Result);
+      |                    ^
+../Menu/menu_show.h(49): error: unknown type name 'u8'
+   49 | void SetResultShow(u8 ShowLanguage, u8 Result);
+      |                                     ^
+../Menu/menu_show.h(53): error: unknown type name 'u8'
+   53 | void RunningShow(u8 ShowLanguage, u8 Function);
+      |                  ^
+../Menu/menu_show.h(53): error: unknown type name 'u8'
+   53 | void RunningShow(u8 ShowLanguage, u8 Function);
+      |                                   ^
+../Menu/menu_show.h(56): error: unknown type name 'u8'
+   56 | void AnalysisShow(u8 ShowLanguage);
+      |                   ^
+../Menu/menu_show.h(57): error: unknown type name 'u8'
+   57 | void ConnectShow(u8 ShowLanguage);
+      |                  ^
+../Menu/menu_show.h(58): error: unknown type name 'u8'
+   58 | void TimeOutShow(u8 ShowLanguage);
+      |                  ^
+../Menu/menu_show.h(59): error: unknown type name 'u8'
+   59 | void WaitingFirmwareShow(u8 ShowLanguage);
+      |                          ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling menu_app.c...
+../BSP/bsp_key.c(1): warning: In file included from...
+../BSP/bsp_key.h(15): error: unknown type name 'u8'
+   15 | u8 KeyScan(void);
+      | ^
+../BSP/bsp_key.c(35): error: unknown type name 'u8'
+   35 | u8 KeyScan(void)
+      | ^
+../BSP/bsp_key.c(37): error: use of undeclared identifier 'u8'
+   37 |     u8 KeyValue = KEY_NO_DOWN;
+      |     ^
+../BSP/bsp_key.c(38): error: unknown type name 'u8'
+   38 |     static u8 KeyLock = 0;
+      |            ^
+../BSP/bsp_key.c(39): error: unknown type name 'u32'
+   39 |         static u32 AutoTime = KeyTime;
+      |                ^
+../BSP/bsp_key.c(49): error: use of undeclared identifier 'KeyValue'
+   49 |             KeyValue = KEY_ENTER_VALUE;
+      |             ^
+../BSP/bsp_key.c(54): error: use of undeclared identifier 'KeyValue'
+   54 |             KeyValue = KEY_ESC_VALUE;
+      |             ^
+../BSP/bsp_key.c(59): error: use of undeclared identifier 'KeyValue'
+   59 |             KeyValue = KEY_UP_VALUE;
+      |             ^
+../BSP/bsp_key.c(64): error: use of undeclared identifier 'KeyValue'
+   64 |             KeyValue = KEY_DOWN_VALUE;
+      |             ^
+../BSP/bsp_key.c(91): error: use of undeclared identifier 'KeyValue'
+   91 |     return KeyValue;
+      |            ^
+10 errors generated.
+compiling bsp_key.c...
+../BSP/bsp_spi.c(1): warning: In file included from...
+../BSP/bsp_spi.h(44): error: unknown type name 'u8'
+   44 | u8 SPIx_WriteReadByte(SPI_TypeDef* SPIx, u8 TxData);
+      | ^
+../BSP/bsp_spi.h(44): error: unknown type name 'u8'
+   44 | u8 SPIx_WriteReadByte(SPI_TypeDef* SPIx, u8 TxData);
+      |                                          ^
+../BSP/bsp_spi.h(53): error: unknown type name 'u8'
+   53 | void SPIx_SetSpeed(SPI_TypeDef* SPIx, u8 speed);
+      |                                       ^
+../BSP/bsp_spi.c(104): error: unknown type name 'u8'
+  104 | void SPIx_SetSpeed(SPI_TypeDef* SPIx, u8 Speed)
+      |                                       ^
+../BSP/bsp_spi.c(479): error: unknown type name 'u8'
+  479 | u8 SPIx_WriteReadByte(SPI_TypeDef* SPIx, u8 TxData)
+      | ^
+../BSP/bsp_spi.c(479): error: unknown type name 'u8'
+  479 | u8 SPIx_WriteReadByte(SPI_TypeDef* SPIx, u8 TxData)
+      |                                          ^
+../BSP/bsp_spi.c(481): error: use of undeclared identifier 'u8'
+  481 |         u8 RxData;
+      |         ^
+../BSP/bsp_spi.c(482): error: use of undeclared identifier 'RxData'
+  482 |         SPI_TransmitReceive(SPIx, &TxData, &RxData, 1, 0);
+      |                                             ^
+../BSP/bsp_spi.c(483): error: use of undeclared identifier 'RxData'
+  483 |         return RxData;
+      |                ^
+9 errors generated.
+compiling bsp_spi.c...
+../BSP/bsp_usart1.c(1): warning: In file included from...
+../BSP/bsp_usart1.h(29): error: unknown type name 'u32'
+   29 | void UART1_ParaInit(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size);
+      |                                                                 ^
+../BSP/bsp_usart1.h(30): error: unknown type name 'u32'
+   30 | void UART1_ParaClear(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size);
+      |                                                                  ^
+../BSP/bsp_usart1.c(59): error: unknown type name 'u32'
+   59 | void UART1_ParaInit(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size)
+      |                                                                 ^
+../BSP/bsp_usart1.c(74): error: unknown type name 'u32'
+   74 | void UART1_ParaClear(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size)
+      |                                                                  ^
+4 errors generated.
+compiling bsp_usart1.c...
+../Menu/menu_show.c(1): warning: In file included from...
+../Menu/menu_show.h(37): error: unknown type name 'u8'
+   37 | void MainPageShow(u8 ShowLanguage, char* Version);
+      |                   ^
+../Menu/menu_show.h(38): error: unknown type name 'u8'
+   38 | void MenuShow(u8 ShowLanguage);
+      |               ^
+../Menu/menu_show.h(39): error: unknown type name 'u32'
+   39 | void ProgressBarShow(u32 AllCut, u32 CurrentCut);
+      |                      ^
+../Menu/menu_show.h(39): error: unknown type name 'u32'
+   39 | void ProgressBarShow(u32 AllCut, u32 CurrentCut);
+      |                                  ^
+../Menu/menu_show.h(42): error: unknown type name 'u8'
+   42 | void JumpResultShow(u8 ShowLanguage, u8 JumpResultCode);
+      |                     ^
+../Menu/menu_show.h(42): error: unknown type name 'u8'
+   42 | void JumpResultShow(u8 ShowLanguage, u8 JumpResultCode);
+      |                                      ^
+../Menu/menu_show.h(46): error: unknown type name 'u8'
+   46 | void ChooseFactoryResetShow(u8 ShowLanguage);
+      |                             ^
+../Menu/menu_show.h(47): error: unknown type name 'u8'
+   47 | void FactoryResetShow(u8 ShowLanguage);
+      |                       ^
+../Menu/menu_show.h(49): error: unknown type name 'u8'
+   49 | void SetResultShow(u8 ShowLanguage, u8 Result);
+      |                    ^
+../Menu/menu_show.h(49): error: unknown type name 'u8'
+   49 | void SetResultShow(u8 ShowLanguage, u8 Result);
+      |                                     ^
+../Menu/menu_show.h(53): error: unknown type name 'u8'
+   53 | void RunningShow(u8 ShowLanguage, u8 Function);
+      |                  ^
+../Menu/menu_show.h(53): error: unknown type name 'u8'
+   53 | void RunningShow(u8 ShowLanguage, u8 Function);
+      |                                   ^
+../Menu/menu_show.h(56): error: unknown type name 'u8'
+   56 | void AnalysisShow(u8 ShowLanguage);
+      |                   ^
+../Menu/menu_show.h(57): error: unknown type name 'u8'
+   57 | void ConnectShow(u8 ShowLanguage);
+      |                  ^
+../Menu/menu_show.h(58): error: unknown type name 'u8'
+   58 | void TimeOutShow(u8 ShowLanguage);
+      |                  ^
+../Menu/menu_show.h(59): error: unknown type name 'u8'
+   59 | void WaitingFirmwareShow(u8 ShowLanguage);
+      |                          ^
+../Menu/menu_show.h(60): error: unknown type name 'u8'
+   60 | void ChooseDownloadShow(u8 ShowLanguage);
+      |                         ^
+../Menu/menu_show.h(61): error: unknown type name 'u8'
+   61 | void DownloadModeShow(u8 ShowLanguage, u8 Mode);
+      |                       ^
+../Menu/menu_show.h(61): error: unknown type name 'u8'
+   61 | void DownloadModeShow(u8 ShowLanguage, u8 Mode);
+      |                                        ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling menu_show.c...
+../BSP/bsp_sdcard.c(1): warning: In file included from...
+../BSP/bsp_sdcard.h(94): error: unknown type name 'u8'
+   94 | u8 SD_Initialize(void);
+      | ^
+../BSP/bsp_sdcard.h(95): error: unknown type name 'u8'
+   95 | u8 SD_ReadDisk(u8* RxBuf, u32 StartSector, u8 Cnt);
+      | ^
+../BSP/bsp_sdcard.h(95): error: unknown type name 'u8'
+   95 | u8 SD_ReadDisk(u8* RxBuf, u32 StartSector, u8 Cnt);
+      |                ^
+../BSP/bsp_sdcard.h(95): error: unknown type name 'u32'
+   95 | u8 SD_ReadDisk(u8* RxBuf, u32 StartSector, u8 Cnt);
+      |                           ^
+../BSP/bsp_sdcard.h(95): error: unknown type name 'u8'
+   95 | u8 SD_ReadDisk(u8* RxBuf, u32 StartSector, u8 Cnt);
+      |                                            ^
+../BSP/bsp_sdcard.h(96): error: unknown type name 'u8'
+   96 | u8 SD_WriteDisk(u8* TxBuf, u32 StartSector, u8 Cnt);
+      | ^
+../BSP/bsp_sdcard.h(96): error: unknown type name 'u8'
+   96 | u8 SD_WriteDisk(u8* TxBuf, u32 StartSector, u8 Cnt);
+      |                 ^
+../BSP/bsp_sdcard.h(96): error: unknown type name 'u32'
+   96 | u8 SD_WriteDisk(u8* TxBuf, u32 StartSector, u8 Cnt);
+      |                            ^
+../BSP/bsp_sdcard.h(96): error: unknown type name 'u8'
+   96 | u8 SD_WriteDisk(u8* TxBuf, u32 StartSector, u8 Cnt);
+      |                                             ^
+../BSP/bsp_sdcard.c(3): warning: In file included from...
+../BSP/bsp_soft_spi.h(9): error: unknown type name 'u8'
+    9 | u8 SPI_ReadWriteByte(u8 Data);
+      | ^
+../BSP/bsp_soft_spi.h(9): error: unknown type name 'u8'
+    9 | u8 SPI_ReadWriteByte(u8 Data);
+      |                      ^
+../BSP/bsp_sdcard.c(15): error: unknown type name 'u8'
+   15 | __IO static u8 SD_Type = 0;                         //SD<BF><A8><B5><C4><C0><E0><D0><CD>
+      |             ^
+../BSP/bsp_sdcard.c(31): error: unknown type name 'u8'
+   31 | static u8 SD_ReadByte(void)
+      |        ^
+../BSP/bsp_sdcard.c(33): error: use of undeclared identifier 'u8'
+   33 |     u8 RxData;
+      |     ^
+../BSP/bsp_sdcard.c(35): error: use of undeclared identifier 'RxData'
+   35 |     RxData = SPI_ReadWriteByte(0xFF);
+      |     ^
+../BSP/bsp_sdcard.c(41): error: use of undeclared identifier 'RxData'
+   41 |     return RxData;
+      |            ^
+../BSP/bsp_sdcard.c(44): error: unknown type name 'u8'
+   44 | static u8 SD_WriteByte(u8 TxData)
+      |        ^
+../BSP/bsp_sdcard.c(44): error: unknown type name 'u8'
+   44 | static u8 SD_WriteByte(u8 TxData)
+      |                        ^
+../BSP/bsp_sdcard.c(51): error: unknown type name 'u8'
+   51 | static u8 SD_WriteReadByte(u8 TxData)
+      |        ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling bsp_sdcard.c...
+../BSP/bsp_uart_lcd.c(1): warning: In file included from...
+../BSP/bsp_uart_lcd.h(12): error: unknown type name 'u8'
+   12 | void StrMiddleShow(char *StrName, u8 Yaxis, u8 Color);
+      |                                   ^
+../BSP/bsp_uart_lcd.h(12): error: unknown type name 'u8'
+   12 | void StrMiddleShow(char *StrName, u8 Yaxis, u8 Color);
+      |                                             ^
+../BSP/bsp_uart_lcd.h(15): error: unknown type name 'u16'
+   15 | char* CMD_DC16(u16 x, u16 y, char *str, u8 Color);
+      |                ^
+../BSP/bsp_uart_lcd.h(15): error: unknown type name 'u16'
+   15 | char* CMD_DC16(u16 x, u16 y, char *str, u8 Color);
+      |                       ^
+../BSP/bsp_uart_lcd.h(15): error: unknown type name 'u8'
+   15 | char* CMD_DC16(u16 x, u16 y, char *str, u8 Color);
+      |                                         ^
+../BSP/bsp_uart_lcd.h(17): error: unknown type name 'u16'
+   17 | char* CMD_DC16_Len(u16 x, u16 y, char *str, u32 length, u8 Color);
+      |                    ^
+../BSP/bsp_uart_lcd.h(17): error: unknown type name 'u16'
+   17 | char* CMD_DC16_Len(u16 x, u16 y, char *str, u32 length, u8 Color);
+      |                           ^
+../BSP/bsp_uart_lcd.h(17): error: unknown type name 'u32'
+   17 | char* CMD_DC16_Len(u16 x, u16 y, char *str, u32 length, u8 Color);
+      |                                             ^
+../BSP/bsp_uart_lcd.h(17): error: unknown type name 'u8'
+   17 | char* CMD_DC16_Len(u16 x, u16 y, char *str, u32 length, u8 Color);
+      |                                                         ^
+../BSP/bsp_uart_lcd.h(19): error: unknown type name 'u16'
+   19 | char* CMD_BOX(u16 x1, u16 y1, u16 x2, u16 y2, u8 Color);
+      |               ^
+../BSP/bsp_uart_lcd.h(19): error: unknown type name 'u16'
+   19 | char* CMD_BOX(u16 x1, u16 y1, u16 x2, u16 y2, u8 Color);
+      |                       ^
+../BSP/bsp_uart_lcd.h(19): error: unknown type name 'u16'
+   19 | char* CMD_BOX(u16 x1, u16 y1, u16 x2, u16 y2, u8 Color);
+      |                               ^
+../BSP/bsp_uart_lcd.h(19): error: unknown type name 'u16'
+   19 | char* CMD_BOX(u16 x1, u16 y1, u16 x2, u16 y2, u8 Color);
+      |                                       ^
+../BSP/bsp_uart_lcd.h(19): error: unknown type name 'u8'
+   19 | char* CMD_BOX(u16 x1, u16 y1, u16 x2, u16 y2, u8 Color);
+      |                                               ^
+../BSP/bsp_uart_lcd.h(21): error: unknown type name 'u16'
+   21 | char* CMD_DC24(u16 x, u16 y, char *Str, u8 Color);
+      |                ^
+../BSP/bsp_uart_lcd.h(21): error: unknown type name 'u16'
+   21 | char* CMD_DC24(u16 x, u16 y, char *Str, u8 Color);
+      |                       ^
+../BSP/bsp_uart_lcd.h(21): error: unknown type name 'u8'
+   21 | char* CMD_DC24(u16 x, u16 y, char *Str, u8 Color);
+      |                                         ^
+../BSP/bsp_uart_lcd.c(21): error: unknown type name 'u8'
+   21 | static u8 RxBuf[3]; 
+      |        ^
+../BSP/bsp_uart_lcd.c(22): error: unknown type name 'u8'
+   22 | static u8 UartRxFinished = 0;
+      |        ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling bsp_uart_lcd.c...
+compiling bsp_eflash.c...
+../BSP/bsp_timer7.c(2): warning: In file included from...
+../Internet/Application\w5500_user_conf.h(32): error: unknown type name 'u8'
+   32 | u8 W5500_SocketBuffConfig(void);
+      | ^
+../Internet/Application\w5500_user_conf.h(34): error: unknown type name 'u8'
+   34 | u8 NetworkConfig(wiz_NetInfo *NetworkInfo);
+      | ^
+../Internet/Application\w5500_user_conf.h(35): error: unknown type name 'u8'
+   35 | u8 W5500PhyLinkCheck(void);
+      | ^
+../Internet/Application\w5500_user_conf.h(38): error: unknown type name 'int32'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      | ^
+../Internet/Application\w5500_user_conf.h(38): error: unknown type name 'u8'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      |                    ^
+../Internet/Application\w5500_user_conf.h(38): error: unknown type name 'u32'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      |                                ^
+../Internet/Application\w5500_user_conf.h(39): error: unknown type name 'u16'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      | ^
+../Internet/Application\w5500_user_conf.h(39): error: unknown type name 'u8'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      |                  ^
+../Internet/Application\w5500_user_conf.h(39): error: unknown type name 'u32'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      |                              ^
+9 errors generated.
+compiling bsp_timer7.c...
+compiling delay.c...
+../BSP/bsp_soft_spi.c(1): warning: In file included from...
+../BSP/bsp_soft_spi.h(9): error: unknown type name 'u8'
+    9 | u8 SPI_ReadWriteByte(u8 Data);
+      | ^
+../BSP/bsp_soft_spi.h(9): error: unknown type name 'u8'
+    9 | u8 SPI_ReadWriteByte(u8 Data);
+      |                      ^
+../BSP/bsp_soft_spi.c(104): error: unknown type name 'u8'
+  104 | u8 SPI_ReadWriteByte(u8 Data)
+      | ^
+../BSP/bsp_soft_spi.c(104): error: unknown type name 'u8'
+  104 | u8 SPI_ReadWriteByte(u8 Data)
+      |                      ^
+../BSP/bsp_soft_spi.c(106): error: use of undeclared identifier 'u8'
+  106 |     u8 i = 0;
+      |     ^
+../BSP/bsp_soft_spi.c(107): error: use of undeclared identifier 'u8'
+  107 |     u8 Value = 0;
+      |     ^
+../BSP/bsp_soft_spi.c(109): error: use of undeclared identifier 'i'
+  109 |     for (i = 0; i < 8; i++)
+      |          ^
+../BSP/bsp_soft_spi.c(109): error: use of undeclared identifier 'i'
+  109 |     for (i = 0; i < 8; i++)
+      |                 ^
+../BSP/bsp_soft_spi.c(109): error: use of undeclared identifier 'i'
+  109 |     for (i = 0; i < 8; i++)
+      |                        ^
+../BSP/bsp_soft_spi.c(127): error: use of undeclared identifier 'Value'
+  127 |         Value <<= 1;
+      |         ^
+../BSP/bsp_soft_spi.c(130): error: use of undeclared identifier 'Value'
+  130 |             Value |= 0x01;
+      |             ^
+../BSP/bsp_soft_spi.c(134): error: use of undeclared identifier 'Value'
+  134 |     return Value;
+      |            ^
+12 errors generated.
+compiling bsp_soft_spi.c...
+../BSP/bsp_usart3.c(1): warning: In file included from...
+../BSP/bsp_usart3.h(5): warning: In file included from...
+../User\LoopList.h(35): error: unknown type name 'u8'
+   35 | int32_t rbWriteByte(rb_t *rb ,u8 buf);
+      |                               ^
+../BSP/bsp_usart3.c(3): warning: In file included from...
+../BSP/bsp_usart1.h(29): error: unknown type name 'u32'
+   29 | void UART1_ParaInit(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size);
+      |                                                                 ^
+../BSP/bsp_usart1.h(30): error: unknown type name 'u32'
+   30 | void UART1_ParaClear(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size);
+      |                                                                  ^
+../BSP/bsp_usart3.c(5): warning: In file included from...
+../Internet/ESP8266\esp8266_config.h(20): error: unknown type name 'u8'
+   20 | extern volatile u8 NetWork_Flag;
+      |                 ^
+../Internet/ESP8266\esp8266_config.h(22): error: unknown type name 'u8'
+   22 | u8 Parse_SSID_Password(u8* buffer, WifiInfo_t* wifi_info);
+      | ^
+../Internet/ESP8266\esp8266_config.h(22): error: unknown type name 'u8'
+   22 | u8 Parse_SSID_Password(u8* buffer, WifiInfo_t* wifi_info);
+      |                        ^
+../BSP/bsp_usart3.c(49): error: unknown type name 'u32'
+   49 |         if (READ_UART3_IE_RXI && READ_UART3_IE_RIS)
+      |             ^
+../BSP/bsp_usart3.h(14): note: expanded from macro 'READ_UART3_IE_RXI'
+   14 | #define  READ_UART3_IE_RXI    ((REG_UART3_IE & 0x10) == 0x10)
+      |                                 ^
+../BSP/bsp_usart3.h(9): note: expanded from macro 'REG_UART3_IE'
+    9 | #define  REG_UART3_IE         (*((volatile u32*)(0x40004838)))
+      |                                            ^
+../BSP/bsp_usart3.c(49): error: unknown type name 'u32'
+   49 |         if (READ_UART3_IE_RXI && READ_UART3_IE_RIS)
+      |                                  ^
+../BSP/bsp_usart3.h(15): note: expanded from macro 'READ_UART3_IE_RIS'
+   15 | #define  READ_UART3_IE_RIS    ((REG_UART3_IE & 0x10) == 0x10)
+      |                                 ^
+../BSP/bsp_usart3.h(9): note: expanded from macro 'REG_UART3_IE'
+    9 | #define  REG_UART3_IE         (*((volatile u32*)(0x40004838)))
+      |                                            ^
+../BSP/bsp_usart3.c(51): error: unknown type name 'u32'
+   51 |                 REG_GPIOAB_ICR |= 0x10;
+      |                 ^
+../BSP/bsp_usart3.h(12): note: expanded from macro 'REG_GPIOAB_ICR'
+   12 | #define  REG_GPIOAB_ICR       (*((volatile u32*)(0x40004844)))
+      |                                            ^
+../BSP/bsp_usart3.c(52): error: expected expression
+   52 |                 PutData(&rb_t_ssl, (u8*)&REG_UART3_DR, 1);
+      |                                        ^
+../BSP/bsp_usart3.c(52): error: use of undeclared identifier 'u8'
+   52 |                 PutData(&rb_t_ssl, (u8*)&REG_UART3_DR, 1);
+      |                                     ^
+../BSP/bsp_usart3.c(52): error: unknown type name 'u32'
+   52 |                 PutData(&rb_t_ssl, (u8*)&REG_UART3_DR, 1);
+      |                                          ^
+../BSP/bsp_usart3.h(8): note: expanded from macro 'REG_UART3_DR'
+    8 | #define  REG_UART3_DR         (*((volatile u32*)(0x40004800)))
+      |                                            ^
+12 errors generated.
+compiling bsp_usart3.c...
+compiling socket.c...
+compiling w5500.c...
+compiling wizchip_conf.c...
+../Internet/ESP8266/esp8266_config.c(1): warning: In file included from...
+../Internet/ESP8266/esp8266_config.h(5): warning: In file included from...
+../BSP\bsp_usart1.h(29): error: unknown type name 'u32'
+   29 | void UART1_ParaInit(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size);
+      |                                                                 ^
+../BSP\bsp_usart1.h(30): error: unknown type name 'u32'
+   30 | void UART1_ParaClear(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size);
+      |                                                                  ^
+../Internet/ESP8266/esp8266_config.c(1): warning: In file included from...
+../Internet/ESP8266/esp8266_config.h(20): error: unknown type name 'u8'
+   20 | extern volatile u8 NetWork_Flag;
+      |                 ^
+../Internet/ESP8266/esp8266_config.h(22): error: unknown type name 'u8'
+   22 | u8 Parse_SSID_Password(u8* buffer, WifiInfo_t* wifi_info);
+      | ^
+../Internet/ESP8266/esp8266_config.h(22): error: unknown type name 'u8'
+   22 | u8 Parse_SSID_Password(u8* buffer, WifiInfo_t* wifi_info);
+      |                        ^
+../Internet/ESP8266/esp8266_config.c(2): warning: In file included from...
+../BSP\bsp_usart3.h(5): warning: In file included from...
+../User\LoopList.h(35): error: unknown type name 'u8'
+   35 | int32_t rbWriteByte(rb_t *rb ,u8 buf);
+      |                               ^
+../Internet/ESP8266/esp8266_config.c(3): warning: In file included from...
+../Internet/OTA\ota_firmware_updata.h(52): error: unknown type name 'u32'
+   52 |     u32 FileSize;                                                                 //<CE>ļ<FE><B4><F3>С
+      |     ^
+../Internet/OTA\ota_firmware_updata.h(58): error: unknown type name 'u16'
+   58 |         u16 CmdBuffLen;
+      |         ^
+../Internet/OTA\ota_firmware_updata.h(69): error: unknown type name 'u32'
+   69 |         u32 DownloadCount;                                 //<D7>ܹ<B2><D0><E8>Ҫ<CF><C2><D4>صĴ<CE><CA><FD>
+      |         ^
+../Internet/OTA\ota_firmware_updata.h(70): error: unknown type name 'u32'
+   70 |         u32 DownloadNum;                                   //<D2>Ѿ<AD><CF><C2><D4>صĴ<CE><CA><FD>
+      |         ^
+../Internet/OTA\ota_firmware_updata.h(101): error: unknown type name 'u8'
+  101 | u8 FactoryReset(void);
+      | ^
+../Internet/OTA\ota_firmware_updata.h(102): error: unknown type name 'u8'
+  102 | u8 ConnectTencentCloud(void);
+      | ^
+../Internet/OTA\ota_firmware_updata.h(103): error: unknown type name 'u8'
+  103 | u8 AnalyseOTADownloadInfo(void);
+      | ^
+../Internet/OTA\ota_firmware_updata.h(104): error: unknown type name 'u8'
+  104 | u8 HandleFirmwareProcess(void);
+      | ^
+../Internet/OTA\ota_firmware_updata.h(105): error: unknown type name 'u8'
+  105 | u8 HandleDownloadFirmwareCommand(u8 Command, u8 *AddSeriesCount);
+      | ^
+../Internet/OTA\ota_firmware_updata.h(105): error: unknown type name 'u8'
+  105 | u8 HandleDownloadFirmwareCommand(u8 Command, u8 *AddSeriesCount);
+      |                                  ^
+../Internet/OTA\ota_firmware_updata.h(105): error: unknown type name 'u8'
+  105 | u8 HandleDownloadFirmwareCommand(u8 Command, u8 *AddSeriesCount);
+      |                                              ^
+../Internet/OTA\ota_firmware_updata.h(106): error: unknown type name 'u8'
+  106 | u8 HandleDownloadFirmwareState(u8 State);
+      | ^
+../Internet/OTA\ota_firmware_updata.h(106): error: unknown type name 'u8'
+  106 | u8 HandleDownloadFirmwareState(u8 State);
+      |                                ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling esp8266_config.c...
+compiling dhcp.c...
+compiling dns.c...
+../Internet/Application/mqtt_client.c(1): warning: In file included from...
+../Internet/Application/mqtt_client.h(5): warning: In file included from...
+../User\cloud_platform_para.h(58): error: unknown type name 'u8'
+   58 |         u8   ServerIP[4];                        //<B4><E6><B7><C5><D4><C6>ƽ̨<B5>ķ<FE><CE><F1><C6><F7>IP<BB><F2><CA><C7><D3><F2><C3><FB>
+      |         ^
+../User\cloud_platform_para.h(59): error: unknown type name 'u16'
+   59 |         u16  ServerPort;                           //<B4><E6><B7>ŷ<FE><CE><F1><C6><F7><B5>Ķ˿ں<C5> 
+      |         ^
+../User\cloud_platform_para.h(81): error: unknown type name 'u8'
+   81 |         u8 ClientID[64];                         //<B4><E6><B7><C5>MQTT<BF>ͻ<A7><B6><CB>ID<B5>Ļ<BA><B3><E5><C7><F8>
+      |         ^
+../User\cloud_platform_para.h(83): error: unknown type name 'u8'
+   83 |     u8 Passward[80];                         //<B4><E6><B7><C5>MQTT<C3><DC><C2><EB><B5>Ļ<BA><B3><E5><C7><F8>     
+      |     ^
+../User\cloud_platform_para.h(94): error: unknown type name 'u8'
+   94 |         u8 Qos;                                         //<B7><A2><B2><BC><CF><FB>Ϣ<B5>ķ<FE><CE><F1><D6><CA><C1><BF><B5>ȼ<B6>, <BF><C9>ѡ 0 or 1
+      |         ^
+../User\cloud_platform_para.h(95): error: unknown type name 'u8'
+   95 |         u8 CleanSession;                        //1<A3><BA><B4><B4><BD><A8>һ<B8><F6><B6><CC><C6>ڻỰ<A3><AC><BF>ͻ<A7><B6>˶Ͽ<AA><C1><AC><BD><D3>ʱ<BB>Ự<CF><FA><BB>٣<BB> 0<A3><BA><B4><B4><BD><A8><B3><A4><C6>ڻỰ<A3><AC><BF>ͻ<A7><B6>˶Ͽ<AA><C1><AC><BD>ӣ<AC><C8>Իᱣ<B3>ֻỰ
+      |         ^
+../User\cloud_platform_para.h(96): error: unknown type name 'u16'
+   96 |         u16 KeepAlive;                          //<B1><A3><BB><EE><BC><C6>ʱ<C6><F7><A3><AC><B6><A8><D2><E5><C1>˷<FE><CE><F1><C6><F7><CA>յ<BD><BF>ͻ<A7><B6><CB><CF><FB>Ϣ<B5><C4><D7><EE><B4><F3>ʱ<BC><E4><BC><E4><B8><F4>
+      |         ^
+../User\cloud_platform_para.h(97): error: unknown type name 'u16'
+   97 |         u16 DataPacketLen;
+      |         ^
+../User\cloud_platform_para.h(99): error: unknown type name 'u8'
+   99 |         u8 DataPacket[DATA_PACKET_LEN];                         //<B4><FD><B7><A2><B2><BC><B5><C4><CA><FD><BE>ݱ<A8><CE>Ļ<BA><B4><E6><C7><F8>
+      |         ^
+../Internet/Application/mqtt_client.c(1): warning: In file included from...
+../Internet/Application/mqtt_client.h(25): error: unknown type name 'u8'
+   25 | u8 ConnectMqttClient(void);
+      | ^
+../Internet/Application/mqtt_client.h(33): error: unknown type name 'u8'
+   33 | u8 DisconnectMqttClient(void);
+      | ^
+../Internet/Application/mqtt_client.h(41): error: unknown type name 'u8'
+   41 | u8 SendPubTopicInfo(const char* PubTopic, const char* PubUploadData);
+      | ^
+../Internet/Application/mqtt_client.h(52): error: unknown type name 'u8'
+   52 | u8 GetSubTopicInfo(const char* PubTopic, SUB_TOPIC_MAP_t SubTopicNum, const char* PubUploadData, char* RxBuff);
+      | ^
+../Internet/Application/mqtt_client.c(6): warning: In file included from...
+../Internet/MQTT\mqtt_fun.h(6): warning: In file included from...
+../Internet/Application\w5500_user_conf.h(32): error: unknown type name 'u8'
+   32 | u8 W5500_SocketBuffConfig(void);
+      | ^
+../Internet/Application\w5500_user_conf.h(34): error: unknown type name 'u8'
+   34 | u8 NetworkConfig(wiz_NetInfo *NetworkInfo);
+      | ^
+../Internet/Application\w5500_user_conf.h(35): error: unknown type name 'u8'
+   35 | u8 W5500PhyLinkCheck(void);
+      | ^
+../Internet/Application\w5500_user_conf.h(38): error: unknown type name 'int32'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      | ^
+../Internet/Application\w5500_user_conf.h(38): error: unknown type name 'u8'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      |                    ^
+../Internet/Application\w5500_user_conf.h(38): error: unknown type name 'u32'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      |                                ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling mqtt_client.c...
+../Internet/Application/tcp_client.c(1): warning: In file included from...
+../Internet/Application/tcp_client.h(14): error: unknown type name 'u8'
+   14 | u8 GetDnsServerIP(u8* DnsServerIP);
+      | ^
+../Internet/Application/tcp_client.h(14): error: unknown type name 'u8'
+   14 | u8 GetDnsServerIP(u8* DnsServerIP);
+      |                   ^
+../Internet/Application/tcp_client.h(15): error: unknown type name 'u8'
+   15 | u8 EthernetConnectServer(const char *DomainName, u16 ServerPort);
+      | ^
+../Internet/Application/tcp_client.h(15): error: unknown type name 'u16'
+   15 | u8 EthernetConnectServer(const char *DomainName, u16 ServerPort);
+      |                                                  ^
+../Internet/Application/tcp_client.h(16): error: unknown type name 'u8'
+   16 | u8 ConnectServerAgain();
+      | ^
+../Internet/Application/tcp_client.c(6): warning: In file included from...
+../User\cloud_platform_para.h(58): error: unknown type name 'u8'
+   58 |         u8   ServerIP[4];                        //<B4><E6><B7><C5><D4><C6>ƽ̨<B5>ķ<FE><CE><F1><C6><F7>IP<BB><F2><CA><C7><D3><F2><C3><FB>
+      |         ^
+../User\cloud_platform_para.h(59): error: unknown type name 'u16'
+   59 |         u16  ServerPort;                           //<B4><E6><B7>ŷ<FE><CE><F1><C6><F7><B5>Ķ˿ں<C5> 
+      |         ^
+../User\cloud_platform_para.h(81): error: unknown type name 'u8'
+   81 |         u8 ClientID[64];                         //<B4><E6><B7><C5>MQTT<BF>ͻ<A7><B6><CB>ID<B5>Ļ<BA><B3><E5><C7><F8>
+      |         ^
+../User\cloud_platform_para.h(83): error: unknown type name 'u8'
+   83 |     u8 Passward[80];                         //<B4><E6><B7><C5>MQTT<C3><DC><C2><EB><B5>Ļ<BA><B3><E5><C7><F8>     
+      |     ^
+../User\cloud_platform_para.h(94): error: unknown type name 'u8'
+   94 |         u8 Qos;                                         //<B7><A2><B2><BC><CF><FB>Ϣ<B5>ķ<FE><CE><F1><D6><CA><C1><BF><B5>ȼ<B6>, <BF><C9>ѡ 0 or 1
+      |         ^
+../User\cloud_platform_para.h(95): error: unknown type name 'u8'
+   95 |         u8 CleanSession;                        //1<A3><BA><B4><B4><BD><A8>һ<B8><F6><B6><CC><C6>ڻỰ<A3><AC><BF>ͻ<A7><B6>˶Ͽ<AA><C1><AC><BD><D3>ʱ<BB>Ự<CF><FA><BB>٣<BB> 0<A3><BA><B4><B4><BD><A8><B3><A4><C6>ڻỰ<A3><AC><BF>ͻ<A7><B6>˶Ͽ<AA><C1><AC><BD>ӣ<AC><C8>Իᱣ<B3>ֻỰ
+      |         ^
+../User\cloud_platform_para.h(96): error: unknown type name 'u16'
+   96 |         u16 KeepAlive;                          //<B1><A3><BB><EE><BC><C6>ʱ<C6><F7><A3><AC><B6><A8><D2><E5><C1>˷<FE><CE><F1><C6><F7><CA>յ<BD><BF>ͻ<A7><B6><CB><CF><FB>Ϣ<B5><C4><D7><EE><B4><F3>ʱ<BC><E4><BC><E4><B8><F4>
+      |         ^
+../User\cloud_platform_para.h(97): error: unknown type name 'u16'
+   97 |         u16 DataPacketLen;
+      |         ^
+../User\cloud_platform_para.h(99): error: unknown type name 'u8'
+   99 |         u8 DataPacket[DATA_PACKET_LEN];                         //<B4><FD><B7><A2><B2><BC><B5><C4><CA><FD><BE>ݱ<A8><CE>Ļ<BA><B4><E6><C7><F8>
+      |         ^
+../Internet/Application/tcp_client.c(7): warning: In file included from...
+../Internet/Application/w5500_user_conf.h(32): error: unknown type name 'u8'
+   32 | u8 W5500_SocketBuffConfig(void);
+      | ^
+../Internet/Application/w5500_user_conf.h(34): error: unknown type name 'u8'
+   34 | u8 NetworkConfig(wiz_NetInfo *NetworkInfo);
+      | ^
+../Internet/Application/w5500_user_conf.h(35): error: unknown type name 'u8'
+   35 | u8 W5500PhyLinkCheck(void);
+      | ^
+../Internet/Application/w5500_user_conf.h(38): error: unknown type name 'int32'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      | ^
+../Internet/Application/w5500_user_conf.h(38): error: unknown type name 'u8'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      |                    ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling tcp_client.c...
+../Internet/Application/w5500_user_conf.c(1): warning: In file included from...
+../Internet/Application/w5500_user_conf.h(32): error: unknown type name 'u8'
+   32 | u8 W5500_SocketBuffConfig(void);
+      | ^
+../Internet/Application/w5500_user_conf.h(34): error: unknown type name 'u8'
+   34 | u8 NetworkConfig(wiz_NetInfo *NetworkInfo);
+      | ^
+../Internet/Application/w5500_user_conf.h(35): error: unknown type name 'u8'
+   35 | u8 W5500PhyLinkCheck(void);
+      | ^
+../Internet/Application/w5500_user_conf.h(38): error: unknown type name 'int32'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      | ^
+../Internet/Application/w5500_user_conf.h(38): error: unknown type name 'u8'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      |                    ^
+../Internet/Application/w5500_user_conf.h(38): error: unknown type name 'u32'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      |                                ^
+../Internet/Application/w5500_user_conf.h(39): error: unknown type name 'u16'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      | ^
+../Internet/Application/w5500_user_conf.h(39): error: unknown type name 'u8'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      |                  ^
+../Internet/Application/w5500_user_conf.h(39): error: unknown type name 'u32'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      |                              ^
+../Internet/Application/w5500_user_conf.c(2): warning: In file included from...
+../BSP\bsp_spi.h(44): error: unknown type name 'u8'
+   44 | u8 SPIx_WriteReadByte(SPI_TypeDef* SPIx, u8 TxData);
+      | ^
+../BSP\bsp_spi.h(44): error: unknown type name 'u8'
+   44 | u8 SPIx_WriteReadByte(SPI_TypeDef* SPIx, u8 TxData);
+      |                                          ^
+../BSP\bsp_spi.h(53): error: unknown type name 'u8'
+   53 | void SPIx_SetSpeed(SPI_TypeDef* SPIx, u8 speed);
+      |                                       ^
+../Internet/Application/w5500_user_conf.c(18): error: unknown type name 'u8'
+   18 | static void SPI_WriteByte(u8 Byte);
+      |                           ^
+../Internet/Application/w5500_user_conf.c(19): error: unknown type name 'u8'
+   19 | static u8 SPI_ReadByte(void);
+      |        ^
+../Internet/Application/w5500_user_conf.c(95): error: unknown type name 'u8'
+   95 | u8 W5500_SocketBuffConfig(void)
+      | ^
+../Internet/Application/w5500_user_conf.c(98): error: use of undeclared identifier 'u8'
+   98 |     u8 MemSize[2][8] = {{2, 2, 2, 2, 2, 2, 2, 2}, {2, 4, 2, 2, 2, 2, 1, 1}};                    //[0]Ϊ<B7><A2><CB>ͻ<BA><B4><E6><C7><F8>               [1]Ϊ<BD><D3><CA>ջ<BA><B4><E6><C7><F8>
+      |     ^
+../Internet/Application/w5500_user_conf.c(99): error: use of undeclared identifier 'MemSize'
+   99 |         if(ctlwizchip(CW_INIT_WIZCHIP, (void*)MemSize) == -1)
+      |                                               ^
+../Internet/Application/w5500_user_conf.c(108): error: unknown type name 'u8'
+  108 |         static u8 DHCP_Buff[512];                 //DHCPBuff 
+      |                ^
+../Internet/Application/w5500_user_conf.c(118): error: unknown type name 'u8'
+  118 | u8 W5500PhyLinkCheck(void)
+      | ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling w5500_user_conf.c...
+../Internet/Application/ssl_direct.c(2): warning: In file included from...
+../Internet/Application/w5500_user_conf.h(32): error: unknown type name 'u8'
+   32 | u8 W5500_SocketBuffConfig(void);
+      | ^
+../Internet/Application/w5500_user_conf.h(34): error: unknown type name 'u8'
+   34 | u8 NetworkConfig(wiz_NetInfo *NetworkInfo);
+      | ^
+../Internet/Application/w5500_user_conf.h(35): error: unknown type name 'u8'
+   35 | u8 W5500PhyLinkCheck(void);
+      | ^
+../Internet/Application/w5500_user_conf.h(38): error: unknown type name 'int32'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      | ^
+../Internet/Application/w5500_user_conf.h(38): error: unknown type name 'u8'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      |                    ^
+../Internet/Application/w5500_user_conf.h(38): error: unknown type name 'u32'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      |                                ^
+../Internet/Application/w5500_user_conf.h(39): error: unknown type name 'u16'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      | ^
+../Internet/Application/w5500_user_conf.h(39): error: unknown type name 'u8'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      |                  ^
+../Internet/Application/w5500_user_conf.h(39): error: unknown type name 'u32'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      |                              ^
+../Internet/Application/ssl_direct.c(3): warning: In file included from...
+../BSP\bsp_usart1.h(29): error: unknown type name 'u32'
+   29 | void UART1_ParaInit(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size);
+      |                                                                 ^
+../BSP\bsp_usart1.h(30): error: unknown type name 'u32'
+   30 | void UART1_ParaClear(Type_UART_t* UARTHandle, uint8_t* RxBuffer, u32 Size);
+      |                                                                  ^
+../Internet/Application/ssl_direct.c(4): warning: In file included from...
+../BSP\bsp_usart3.h(5): warning: In file included from...
+../User\LoopList.h(35): error: unknown type name 'u8'
+   35 | int32_t rbWriteByte(rb_t *rb ,u8 buf);
+      |                               ^
+../Internet/Application/ssl_direct.c(6): warning: In file included from...
+../Internet/ESP8266\esp8266_config.h(20): error: unknown type name 'u8'
+   20 | extern volatile u8 NetWork_Flag;
+      |                 ^
+../Internet/ESP8266\esp8266_config.h(22): error: unknown type name 'u8'
+   22 | u8 Parse_SSID_Password(u8* buffer, WifiInfo_t* wifi_info);
+      | ^
+../Internet/ESP8266\esp8266_config.h(22): error: unknown type name 'u8'
+   22 | u8 Parse_SSID_Password(u8* buffer, WifiInfo_t* wifi_info);
+      |                        ^
+../Internet/Application/ssl_direct.c(147): error: expected expression
+  147 |         UartSend_bytes(UART3, (u8*)TxBuf, Len);
+      |                                   ^
+../Internet/Application/ssl_direct.c(147): error: use of undeclared identifier 'u8'
+  147 |         UartSend_bytes(UART3, (u8*)TxBuf, Len);
+      |                                ^
+17 errors generated.
+compiling ssl_direct.c...
+../Internet/MQTT/mqtt_fun.c(1): warning: In file included from...
+../Internet/MQTT/mqtt_fun.h(5): warning: In file included from...
+../User\cloud_platform_para.h(58): error: unknown type name 'u8'
+   58 |         u8   ServerIP[4];                        //<B4><E6><B7><C5><D4><C6>ƽ̨<B5>ķ<FE><CE><F1><C6><F7>IP<BB><F2><CA><C7><D3><F2><C3><FB>
+      |         ^
+../User\cloud_platform_para.h(59): error: unknown type name 'u16'
+   59 |         u16  ServerPort;                           //<B4><E6><B7>ŷ<FE><CE><F1><C6><F7><B5>Ķ˿ں<C5> 
+      |         ^
+../User\cloud_platform_para.h(81): error: unknown type name 'u8'
+   81 |         u8 ClientID[64];                         //<B4><E6><B7><C5>MQTT<BF>ͻ<A7><B6><CB>ID<B5>Ļ<BA><B3><E5><C7><F8>
+      |         ^
+../User\cloud_platform_para.h(83): error: unknown type name 'u8'
+   83 |     u8 Passward[80];                         //<B4><E6><B7><C5>MQTT<C3><DC><C2><EB><B5>Ļ<BA><B3><E5><C7><F8>     
+      |     ^
+../User\cloud_platform_para.h(94): error: unknown type name 'u8'
+   94 |         u8 Qos;                                         //<B7><A2><B2><BC><CF><FB>Ϣ<B5>ķ<FE><CE><F1><D6><CA><C1><BF><B5>ȼ<B6>, <BF><C9>ѡ 0 or 1
+      |         ^
+../User\cloud_platform_para.h(95): error: unknown type name 'u8'
+   95 |         u8 CleanSession;                        //1<A3><BA><B4><B4><BD><A8>һ<B8><F6><B6><CC><C6>ڻỰ<A3><AC><BF>ͻ<A7><B6>˶Ͽ<AA><C1><AC><BD><D3>ʱ<BB>Ự<CF><FA><BB>٣<BB> 0<A3><BA><B4><B4><BD><A8><B3><A4><C6>ڻỰ<A3><AC><BF>ͻ<A7><B6>˶Ͽ<AA><C1><AC><BD>ӣ<AC><C8>Իᱣ<B3>ֻỰ
+      |         ^
+../User\cloud_platform_para.h(96): error: unknown type name 'u16'
+   96 |         u16 KeepAlive;                          //<B1><A3><BB><EE><BC><C6>ʱ<C6><F7><A3><AC><B6><A8><D2><E5><C1>˷<FE><CE><F1><C6><F7><CA>յ<BD><BF>ͻ<A7><B6><CB><CF><FB>Ϣ<B5><C4><D7><EE><B4><F3>ʱ<BC><E4><BC><E4><B8><F4>
+      |         ^
+../User\cloud_platform_para.h(97): error: unknown type name 'u16'
+   97 |         u16 DataPacketLen;
+      |         ^
+../User\cloud_platform_para.h(99): error: unknown type name 'u8'
+   99 |         u8 DataPacket[DATA_PACKET_LEN];                         //<B4><FD><B7><A2><B2><BC><B5><C4><CA><FD><BE>ݱ<A8><CE>Ļ<BA><B4><E6><C7><F8>
+      |         ^
+../Internet/MQTT/mqtt_fun.c(1): warning: In file included from...
+../Internet/MQTT/mqtt_fun.h(6): warning: In file included from...
+../Internet/Application\w5500_user_conf.h(32): error: unknown type name 'u8'
+   32 | u8 W5500_SocketBuffConfig(void);
+      | ^
+../Internet/Application\w5500_user_conf.h(34): error: unknown type name 'u8'
+   34 | u8 NetworkConfig(wiz_NetInfo *NetworkInfo);
+      | ^
+../Internet/Application\w5500_user_conf.h(35): error: unknown type name 'u8'
+   35 | u8 W5500PhyLinkCheck(void);
+      | ^
+../Internet/Application\w5500_user_conf.h(38): error: unknown type name 'int32'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      | ^
+../Internet/Application\w5500_user_conf.h(38): error: unknown type name 'u8'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      |                    ^
+../Internet/Application\w5500_user_conf.h(38): error: unknown type name 'u32'
+   38 | int32 W5500_TxData(u8 *TxData, u32 DataLen);
+      |                                ^
+../Internet/Application\w5500_user_conf.h(39): error: unknown type name 'u16'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      | ^
+../Internet/Application\w5500_user_conf.h(39): error: unknown type name 'u8'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      |                  ^
+../Internet/Application\w5500_user_conf.h(39): error: unknown type name 'u32'
+   39 | u16 W5500_RxData(u8 *RxData, u32 DataLen);
+      |                              ^
+../Internet/MQTT/mqtt_fun.c(1): warning: In file included from...
+../Internet/MQTT/mqtt_fun.h(15): error: unknown type name 'u8'
+   15 | u8 ConnectMqttClientPacket(MQTT_PACKET_INFOR *MqttPacket, MQTT_INFOR *MqttInfor);
+      | ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling mqtt_fun.c...
+compiling MQTTSerializePublish.c...
+compiling MQTTSubscribeClient.c...
+compiling MQTTConnectClient.c...
+compiling MQTTPacket.c...
+../Internet/OTA/ota_firmware_updata.c(1): warning: In file included from...
+../Internet/OTA/ota_firmware_updata.h(52): error: unknown type name 'u32'
+   52 |     u32 FileSize;                                                                 //<CE>ļ<FE><B4><F3>С
+      |     ^
+../Internet/OTA/ota_firmware_updata.h(58): error: unknown type name 'u16'
+   58 |         u16 CmdBuffLen;
+      |         ^
+../Internet/OTA/ota_firmware_updata.h(69): error: unknown type name 'u32'
+   69 |         u32 DownloadCount;                                 //<D7>ܹ<B2><D0><E8>Ҫ<CF><C2><D4>صĴ<CE><CA><FD>
+      |         ^
+../Internet/OTA/ota_firmware_updata.h(70): error: unknown type name 'u32'
+   70 |         u32 DownloadNum;                                   //<D2>Ѿ<AD><CF><C2><D4>صĴ<CE><CA><FD>
+      |         ^
+../Internet/OTA/ota_firmware_updata.h(101): error: unknown type name 'u8'
+  101 | u8 FactoryReset(void);
+      | ^
+../Internet/OTA/ota_firmware_updata.h(102): error: unknown type name 'u8'
+  102 | u8 ConnectTencentCloud(void);
+      | ^
+../Internet/OTA/ota_firmware_updata.h(103): error: unknown type name 'u8'
+  103 | u8 AnalyseOTADownloadInfo(void);
+      | ^
+../Internet/OTA/ota_firmware_updata.h(104): error: unknown type name 'u8'
+  104 | u8 HandleFirmwareProcess(void);
+      | ^
+../Internet/OTA/ota_firmware_updata.h(105): error: unknown type name 'u8'
+  105 | u8 HandleDownloadFirmwareCommand(u8 Command, u8 *AddSeriesCount);
+      | ^
+../Internet/OTA/ota_firmware_updata.h(105): error: unknown type name 'u8'
+  105 | u8 HandleDownloadFirmwareCommand(u8 Command, u8 *AddSeriesCount);
+      |                                  ^
+../Internet/OTA/ota_firmware_updata.h(105): error: unknown type name 'u8'
+  105 | u8 HandleDownloadFirmwareCommand(u8 Command, u8 *AddSeriesCount);
+      |                                              ^
+../Internet/OTA/ota_firmware_updata.h(106): error: unknown type name 'u8'
+  106 | u8 HandleDownloadFirmwareState(u8 State);
+      | ^
+../Internet/OTA/ota_firmware_updata.h(106): error: unknown type name 'u8'
+  106 | u8 HandleDownloadFirmwareState(u8 State);
+      |                                ^
+../Internet/OTA/ota_firmware_updata.c(2): warning: In file included from...
+../Internet/Application\mqtt_client.h(5): warning: In file included from...
+../User\cloud_platform_para.h(58): error: unknown type name 'u8'
+   58 |         u8   ServerIP[4];                        //<B4><E6><B7><C5><D4><C6>ƽ̨<B5>ķ<FE><CE><F1><C6><F7>IP<BB><F2><CA><C7><D3><F2><C3><FB>
+      |         ^
+../User\cloud_platform_para.h(59): error: unknown type name 'u16'
+   59 |         u16  ServerPort;                           //<B4><E6><B7>ŷ<FE><CE><F1><C6><F7><B5>Ķ˿ں<C5> 
+      |         ^
+../User\cloud_platform_para.h(81): error: unknown type name 'u8'
+   81 |         u8 ClientID[64];                         //<B4><E6><B7><C5>MQTT<BF>ͻ<A7><B6><CB>ID<B5>Ļ<BA><B3><E5><C7><F8>
+      |         ^
+../User\cloud_platform_para.h(83): error: unknown type name 'u8'
+   83 |     u8 Passward[80];                         //<B4><E6><B7><C5>MQTT<C3><DC><C2><EB><B5>Ļ<BA><B3><E5><C7><F8>     
+      |     ^
+../User\cloud_platform_para.h(94): error: unknown type name 'u8'
+   94 |         u8 Qos;                                         //<B7><A2><B2><BC><CF><FB>Ϣ<B5>ķ<FE><CE><F1><D6><CA><C1><BF><B5>ȼ<B6>, <BF><C9>ѡ 0 or 1
+      |         ^
+../User\cloud_platform_para.h(95): error: unknown type name 'u8'
+   95 |         u8 CleanSession;                        //1<A3><BA><B4><B4><BD><A8>һ<B8><F6><B6><CC><C6>ڻỰ<A3><AC><BF>ͻ<A7><B6>˶Ͽ<AA><C1><AC><BD><D3>ʱ<BB>Ự<CF><FA><BB>٣<BB> 0<A3><BA><B4><B4><BD><A8><B3><A4><C6>ڻỰ<A3><AC><BF>ͻ<A7><B6>˶Ͽ<AA><C1><AC><BD>ӣ<AC><C8>Իᱣ<B3>ֻỰ
+      |         ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling ota_firmware_updata.c...
+../Internet/OTA/handle_firmware.c(4): warning: In file included from...
+../Internet/OTA/handle_firmware.h(5): warning: In file included from...
+../Internet/OTA/ota_firmware_updata.h(52): error: unknown type name 'u32'
+   52 |     u32 FileSize;                                                                 //<CE>ļ<FE><B4><F3>С
+      |     ^
+../Internet/OTA/ota_firmware_updata.h(58): error: unknown type name 'u16'
+   58 |         u16 CmdBuffLen;
+      |         ^
+../Internet/OTA/ota_firmware_updata.h(69): error: unknown type name 'u32'
+   69 |         u32 DownloadCount;                                 //<D7>ܹ<B2><D0><E8>Ҫ<CF><C2><D4>صĴ<CE><CA><FD>
+      |         ^
+../Internet/OTA/ota_firmware_updata.h(70): error: unknown type name 'u32'
+   70 |         u32 DownloadNum;                                   //<D2>Ѿ<AD><CF><C2><D4>صĴ<CE><CA><FD>
+      |         ^
+../Internet/OTA/ota_firmware_updata.h(101): error: unknown type name 'u8'
+  101 | u8 FactoryReset(void);
+      | ^
+../Internet/OTA/ota_firmware_updata.h(102): error: unknown type name 'u8'
+  102 | u8 ConnectTencentCloud(void);
+      | ^
+../Internet/OTA/ota_firmware_updata.h(103): error: unknown type name 'u8'
+  103 | u8 AnalyseOTADownloadInfo(void);
+      | ^
+../Internet/OTA/ota_firmware_updata.h(104): error: unknown type name 'u8'
+  104 | u8 HandleFirmwareProcess(void);
+      | ^
+../Internet/OTA/ota_firmware_updata.h(105): error: unknown type name 'u8'
+  105 | u8 HandleDownloadFirmwareCommand(u8 Command, u8 *AddSeriesCount);
+      | ^
+../Internet/OTA/ota_firmware_updata.h(105): error: unknown type name 'u8'
+  105 | u8 HandleDownloadFirmwareCommand(u8 Command, u8 *AddSeriesCount);
+      |                                  ^
+../Internet/OTA/ota_firmware_updata.h(105): error: unknown type name 'u8'
+  105 | u8 HandleDownloadFirmwareCommand(u8 Command, u8 *AddSeriesCount);
+      |                                              ^
+../Internet/OTA/ota_firmware_updata.h(106): error: unknown type name 'u8'
+  106 | u8 HandleDownloadFirmwareState(u8 State);
+      | ^
+../Internet/OTA/ota_firmware_updata.h(106): error: unknown type name 'u8'
+  106 | u8 HandleDownloadFirmwareState(u8 State);
+      |                                ^
+../Internet/OTA/handle_firmware.c(4): warning: In file included from...
+../Internet/OTA/handle_firmware.h(61): error: unknown type name 'u32'
+   61 |         u32 SeriesCount;
+      |         ^
+../Internet/OTA/handle_firmware.h(63): error: unknown type name 'u8'
+   63 |         u8 Crc1[2];
+      |         ^
+../Internet/OTA/handle_firmware.h(67): error: unknown type name 'u32'
+   67 |         u32 FirmwareSize;                               // <B1><BE><B4>θ<FC><D0>µĹ̼<FE><B0><FC><B5>Ĵ<F3>С<A3><A8><B3><FD>ȥCRC<A3><A9>
+      |         ^
+../Internet/OTA/handle_firmware.h(68): error: unknown type name 'u16'
+   68 |         u16 KeyFlag;                                    // <CA>Ƿ<F1><BC><D3><C3>ܱ<EA>־λ, <C8><F4>û<BC><D3><C3><DC>, <D4><F2><C4><DC>ֱ<BD>Ӷ<C1>ȡ<B5><BD>12345
+      |         ^
+../Internet/OTA/handle_firmware.h(69): error: unknown type name 'u8'
+   69 |         u8  EmptyBlock[10];
+      |         ^
+../Internet/OTA/handle_firmware.h(71): error: unknown type name 'u8'
+   71 |         u8  FirmwareState;                              // 0:û<D3><D0><D4>ڽ<F8><D0><D0><CF><C2><D4>ػ<F2><B8><FC><D0>²<D9><D7><F7><A3><BB> 1: <BD><F8><D0><D0><CF><C2><D4>ز<D9><D7><F7>  2: <BD><F8><D0>й̼<FE><B0><FC><BD><E2><C3><DC>-<B4><A6><C0><ED>-<BC><D3><C3>ܲ<D9><D7><F7>
+      |         ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+compiling handle_firmware.c...
+compiling utils_sha1.c...
+compiling utils_md5.c...
+compiling utils_hmac.c...
+compiling aes.c...
+compiling platform.c...
+compiling platform_util.c...
+compiling ssl_ciphersuites.c...
+compiling ssl_cli.c...
+compiling ssl_msg.c...
+compiling ssl_tls.c...
+compiling ctr_drbg.c...
+compiling debug.c...
+compiling pk_wrap.c...
+compiling entropy.c...
+compiling pk.c...
+compiling rsa_internal.c...
+compiling md.c...
+compiling oid.c...
+compiling rsa.c...
+compiling sha512.c...
+compiling md5.c...
+compiling sha256.c...
+compiling asn1parse.c...
+compiling cipher_wrap.c...
+compiling cipher.c...
+compiling x509.c...
+compiling pkparse.c...
+compiling sha1.c...
+compiling gcm.c...
+compiling x509_crt.c...
+compiling bignum.c...
+".\Objects\V1_0.axf" - 394 Error(s), 0 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: Aisinochip
+                
+                Aisinochip::ACM32FP4@1.0.0
+                Aisinochip ACM32FP4 ARMv8-M Device Family Pack
+
+<h2>Collection of Component include folders:</h2>
+
+<h2>Collection of Component Files used:</h2>
+Target not created.
+Build Time Elapsed:  00:00:05
+</pre>
+</body>
+</html>

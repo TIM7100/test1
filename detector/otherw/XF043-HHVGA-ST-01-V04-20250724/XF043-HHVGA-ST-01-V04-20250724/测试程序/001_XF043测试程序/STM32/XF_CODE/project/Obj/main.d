@@ -1,0 +1,9 @@
+.\obj\main.o: ..\src\main.c
+.\obj\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\obj\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\obj\main.o: ..\inc\ulitity.h
+.\obj\main.o: ..\inc\hmi_user_uart.h
+.\obj\main.o: ..\inc\stm32f10x_it.h
+.\obj\main.o: ..\..\..\Libraries\CMSIS\Core\CM3\stm32f10x.h
+.\obj\main.o: ..\..\..\Libraries\CMSIS\Core\CM3\core_cm3.h
+.\obj\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h

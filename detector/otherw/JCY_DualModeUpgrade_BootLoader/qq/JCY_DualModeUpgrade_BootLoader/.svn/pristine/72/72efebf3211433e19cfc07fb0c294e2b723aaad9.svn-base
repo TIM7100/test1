@@ -1,0 +1,877 @@
+#include "ota_firmware_updata.h"
+#include "mqtt_client.h"
+#include "bsp_sdcard.h"
+#include "tcp_client.h"
+#include "mqtt_client.h"
+#include "cloud_platform_para.h"
+#include "crc.h"
+#include "w5500_user_conf.h"            //调试时使用
+#include "handle_firmware.h"
+#include "ssl_direct.h"
+#include "bsp_eflash.h"
+#include "menu_show.h"
+#include "bsp_timer7.h"
+
+#define NO_ENCRYPT_FLAG       0x3435
+
+
+static void UploadLocalFirmwareInfo(void);                                         //上报云平台物模型, 包括本地记录的固件版本、使用的固件版本和支持的系列
+static u8 GetOtaInfo(void);                                                        //获取云平台的OTA信息，并解析获取其中的关键信息
+static u8 VersionCmp(const char *LocalVersion, const char *OTAVersion, u16 Size);  //版本比较函数, 判断待下载版本是否比本地版本高
+static u8 DecideUpdataState(const char *OtaCommandBuff);                           //判断接收的固件包中的系列版本，是否比本机支持的系列的版本新
+static u8 WaitHttpAck(void);                                                       //等待HTTP服务器的回应报文
+
+static u8 StartDownloadFirmware(void);                                //
+static u16 AddSeries(void);                                           //
+static u16 DeleteSeries(void);
+static u8 OTACheckDownloadFirmwareState(int8 *AddSeriesCount);        //
+
+extern u8 *LanguageChoose;
+FIRMWARE_INFO_t LocalFirmwareInfo = {0};
+static OTA_INFO_t OtaInfo = {0};                                    //存放从云平台获取的固件消息，包括云平台固件版本和下载地址和文件大小
+static HTTP_PACKET_t HttpPacketInfo = {0};                          //存放HTTP的下载进度
+
+
+/*******************************************************
+ * @brief    调式时使用，用于打印OTA下发的更新信息
+ * @param    OtaInfo：OTA信息的集合
+ * @return   无
+********************************************************/
+
+void PrintfOTAInfo(OTA_INFO_t *OtaInfo)
+{
+#ifdef UART_DEBUG_ENABLE
+    printfS("OTA Info:\r\n");
+    printfS("File Size:%d\r\n", OtaInfo->FileSize);
+    printfS("Md5Sum:");
+    PrintfString(OtaInfo->Md5Sum, strlen((const char*)OtaInfo->Md5Sum));
+    printfS("Host:");
+    PrintfString(OtaInfo->Host, strlen((const char*)OtaInfo->Host));
+    printfS("URLABuff:");
+    PrintfString(OtaInfo->URLABuff, strlen((const char*)OtaInfo->URLABuff));
+    printfS("Command:");
+    PrintfString(OtaInfo->Command, strlen((const char*)OtaInfo->Command));
+    printfS("CommandBuff:");
+    PrintfString(OtaInfo->CommandBuff, strlen((const char*)OtaInfo->CommandBuff));
+    printfS("Version:");
+    PrintfString(OtaInfo->Version, strlen((const char*)OtaInfo->Version));
+#endif
+}
+
+
+/*******************************************************
+ * @brief    恢复出厂设置
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 FactoryReset(void)
+{
+    char OTA_TxBuff[200] = {0};
+    u16 EncryptFlag = NO_ENCRYPT_FLAG;
+    u8 Language = Chinese;
+
+    printfS("Init Version\r\n");
+    memset(&LocalFirmwareInfo, 0, sizeof(LocalFirmwareInfo));
+    strncpy(LocalFirmwareInfo.DeviceName, DEVICE_NAME, 10);
+    strncpy(LocalFirmwareInfo.LocalFirmVersion, "000000000000", 12);
+    LocalFirmwareInfo.SeriesCount = 0;
+    LocalFirmwareInfo.FirmwareAreaFlag = 0;
+    memcpy(&LocalFirmwareInfo.KeyFlag, &EncryptFlag, 2);
+    HandleLocalFirmwareInfo();
+    //设置默认语言
+    EflashEraseArea(LANGUAGE_ADDRESS, 512);                      // 擦除存放语言标志位的Flash
+    EflashWritePage(LANGUAGE_ADDRESS, 1, &Language);             // 写入默认语言标志位 China == 1
+    if (ConnectTencentCloud() == CONNECT_SUCCESS)                // 连接云平台
+    {
+        //printfS("Update Version\r\n");
+        //上报当前设备固件版本
+        sprintf(OTA_TxBuff, OTA_UPLOAD_VERSION_TEMPLATE, LocalFirmwareInfo.LocalFirmVersion);
+        SendPubTopicInfo(OTA_PUB_TOPIC, OTA_TxBuff);
+        DisconnectTencentCloud();
+    }
+    else
+    {
+        return NETWORK_CONNECT_ERROR;
+    }
+
+    return CONNECT_SUCCESS;   //成功用CONNECT_SUCCESS代替，返回0
+}
+
+
+
+/*******************************************************
+ * @brief    连接腾讯云云平台
+ * @param    xxx:xxx
+ * @return   OTA_CONNECT_SERVER_ERR：连接服务器失败
+ *           OTA_SSL_ERR：    SSL握手失败
+ *           OTA_SUCCESS：    连接腾讯云云平台成功
+********************************************************/
+u8 ConnectTencentCloud(void)
+{
+    u8 Ret = 0;
+
+    SSL_Init();                                                    //初始化SSL配置
+
+    Ret = EthernetConnectServer(NULL, 0);                          //连接腾讯云服务器
+    if (Ret != CONNECT_SUCCESS)
+    {
+        printfS("连接服务器失败, 错误编号: %d\r\n", Ret);
+        return OTA_CONNECT_SERVER_ERR;
+    }
+    //SSL轮询握手
+    if (SSL_HandshakeAwait())
+    {
+        printfS("SSL轮询握手失败, 错误编号: %d\r\n", Ret);
+        return OTA_SSL_ERR;
+    }
+
+    Ret = ConnectMqttClient();                                       //连接腾讯云云平台并订阅主题
+    if (Ret != MQTT_SUCCESS)
+    {
+        printfS("连接云平台客户端失败, 错误编号: %d\r\n", Ret);
+        disconnect(SOCK_TCPS);                                       //断开服务器连接
+        return OTA_CONNECT_MQTT_ERR;
+    }
+    return OTA_SUCCESS;
+}
+
+void DisconnectTencentCloud(void)
+{
+    //断开云平台连接
+    if (DisconnectMqttClient() == DISCONNECT_ERROR)
+    {
+        //printfS("断开云平台失败, 错误编号: %d\r\n", Ret);
+    }
+    disconnect(SOCK_TCPS);                                              //断开服务器连接
+    close(SOCK_TCPS);                                                   //关闭Socket口
+}
+
+/*****************************************************************
+ * @brief    分析OTA下载信息，返回是否需要更新标志
+ * @param    xxx:xxx
+ * @return   OTA_LOSE_INFO:   固件包获取失败
+ *           OTA_DONT_UPDATA: 没有接收到OTA信息，代表不需要更新标志
+ *           OTA_COMMAND_ADD: 添加系列指令
+ *           OTA_COMMAND_UPDATA: 更新系列指令
+******************************************************************/
+u8 AnalyseOTADownloadInfo(void)
+{
+    u8 i = 0;
+    __IO u8 RetState = OTA_DONT_UPDATA;
+
+    /* 1.获取本地固件信息， 并上报到云平台的物模型主题 */
+    GetLocalFirmwareInfo();
+    UploadLocalFirmwareInfo();          //上报云平台物模型进行显示
+
+    /* 2.上报到云平台的OTA主题，并获取云平台OTA主题下发的OTA信息 */
+    RetState = GetOtaInfo();
+    if (RetState != OTA_SUCCESS)
+    {
+        return RetState;
+    }
+    /* 3.判断云平台固件版本是否大于本地记录的固件版本 */
+    if (VersionCmp(LocalFirmwareInfo.LocalFirmVersion, OtaInfo.Version, strlen(OtaInfo.Version)) != OTA_NEW_VERSION)
+    {
+        return OTA_DONT_UPDATA;
+    }
+    /* 4. 判断更新的命令类型："UPDATA_SERIES" or "ADD_SERIES" or ""*/
+    // 先记录云平台的固件版本到本地, 方便后续写入SD卡
+    strncpy((char *)LocalFirmwareInfo.FirmwareVersion, (const char*)OtaInfo.Version, strlen((const char*)OtaInfo.Version));
+    if (strncmp((const char*)OtaInfo.Command, SERIES_UPDATE, strlen(SERIES_UPDATE)) == 0)
+    {
+        /* UPDATA_SERIES指令，表示OTA消息为更新固件包, 判断本机所支持系列是否在待更新的固件包中有新的版本 */
+        if (DecideUpdataState((const char*)OtaInfo.CommandBuff) == OTA_NEW_VERSION)
+        {
+            return OTA_COMMAND_UPDATA;
+        }
+    }
+    else if (strncmp((const char*)OtaInfo.Command, SERIES_ADD, strlen(SERIES_ADD)) == 0)
+    {
+        /* ADD_SERIES, 添加新系列指令 */
+        return OTA_COMMAND_ADD;
+    }
+    else if (strncmp((const char*)OtaInfo.Command, DELETE_UPDATE, strlen(DELETE_UPDATE)) == 0)
+    {
+        /* DELETE_UPDATE指令，先判断本机所支持系列是否在待更新的固件包中有新的版本 */
+        if (DecideUpdataState((const char*)OtaInfo.CommandBuff) == OTA_NEW_VERSION)
+        {
+            return OTA_COMMAND_DELETE_UPDATE;
+        }
+    }
+    return OTA_DONT_UPDATA;
+}
+
+/***********************************************************************************
+ * @brief    处理AnalyseOTADownloadInfo函数返回的指令， 并执行相应的操作
+ * @param    Command: 下载固件的指令
+ *           OTA_COMMAND_ADD：添加新系列并下载固件包
+ *           OTA_COMMAND_UPDATA：支持的系列中有新版本，需要下载固件包
+ *           OTA_COMMAND_DELETE_UPDATE:支持的系列中有新版本，需要下载固件包
+ *           其他: 返回OTA_DONT_UPDATA
+ * @param    AddSeriesCount: 若为OTA_COMMAND_ADD指令, 则该值返回本次添加的新系列数量
+ * @return   OTA_SUCCESS：固件包下载成功
+ *           OTA_DONT_UPDATA： 不需要下载固件包
+ *           OTA_CONNECT_SERVER_ERR: 连接HTTP服务器失败
+ *           OTA_SSL_ERR：   SSL握手失败
+ *           OTA_HTTP_ERROR：下载固件包失败，原因是HTTP连接状态错误
+ *           OTA_CRC_ERROR:  下载固件包失败，原因是CRC校验失败
+ *           OTA_WRITE_ERROR：下载固件包失败，原因是写入SD卡失败
+************************************************************************************/
+u8 HandleDownloadFirmwareCommand(u8 Command, u8 *AddSeriesCount)
+{
+    u8 RetState = OTA_DONT_UPDATA;
+    /*有下载固件包指令，开始下载固件包操作, 通过云平台下发的URL进行固件包的下载*/
+    if ((Command == OTA_COMMAND_ADD) || (Command == OTA_COMMAND_UPDATA) || (Command == OTA_COMMAND_DELETE_UPDATE))
+    {
+        //1. 更新固件下载状态为下载状态
+        UpdateFirmwareDownloadState(FS_DOWNLOADING);
+
+        //printf("下载的固件版本%s\r\n", LocalFirmwareInfo.FirmwareVersion);
+
+        //2.
+        if (Command == OTA_COMMAND_ADD)
+        {
+            /*ADD_SERIES指令，表示OTA消息为为本机添加新系列  */
+            //printf("添加新系列到本机中\r\n");
+            DownloadModeShow(*LanguageChoose, ADD_COMMAND);
+            *AddSeriesCount = AddSeries();                                    //接收添加的系列数量
+            if (*AddSeriesCount == 0)
+            {
+                return OTA_ADD_SERIES_ZERO;
+            }
+        }
+        else if (Command == OTA_COMMAND_DELETE_UPDATE)
+        {
+            //printf("删除并更新某些系列\r\n");
+            DownloadModeShow(*LanguageChoose, UPDATA_COMMAND);              //按照更新系列显示
+            DeleteSeries();
+        }
+        else
+        {
+            DownloadModeShow(*LanguageChoose, UPDATA_COMMAND);
+        }
+
+        //2. 开始下载固件包
+        RetState = StartDownloadFirmware();
+    }
+    return RetState;
+}
+
+u8 HandleFirmwareProcess(void)
+{
+    u8 Ret = OTA_SUCCESS;
+    u32 HandleCount = 0;
+
+//  while (SD_Initialize() != SD_RESPONSE_NO_ERROR)
+//    {
+//        return OTA_WRITE_ERROR;
+//    }
+    RunningShow(*LanguageChoose, UPDATE_RUNNING);                               //解析固件包显示
+//  UploadFirmwareResult(STATE_UPDATA_SUCCESS, RESULT_CODE_SUCCESS);            //上报云平台固件更新成功
+    HandleCount = HandleFirmwareData();                                         //解析处理固件包数据
+    if ((HandleCount == OTA_FIRM_CRC_ERR) || (HandleCount == OTA_WRITE_ERROR))
+    {
+        Ret = HandleCount;
+        UpdateFirmwareDownloadState(FS_IDLE);                                   //更新下载固件包状态为空闲状态
+        GetLocalFirmwareInfo();
+        return Ret;
+    }
+    //更新固件版本
+    strncpy(LocalFirmwareInfo.LocalFirmVersion, LocalFirmwareInfo.FirmwareVersion, FIRMWARE_VERSION_SIZE);
+    LocalFirmwareInfo.FirmwareState = FS_IDLE;                                  //更新下载固件包状态为空闲状态
+    ChangeFirmwareSaveArea();
+    HandleLocalFirmwareInfo();                                                  //处理并保存本地固件包数据
+    return Ret;
+}
+
+/***************************************************    *****************************
+ * @brief    处理HandleDownloadFirmwareCommand函数执行返回的状态，用于外部调用
+ * @param    无
+ * @return
+*********************************************************************************/
+u8 HandleDownloadFirmwareState(u8 State)
+{
+    char OTA_TxBuff[200] = {0};
+    u8 Ret = State;
+    u32 HandleCount = 0;
+    u8 UploadVersionFlag = 0;
+
+    //根据返回状态不同，执行不同的操作
+    switch (Ret)
+    {
+    case OTA_ADD_SERIES_ZERO:
+        break;
+    case OTA_COMMAND_ANALYSIS:                                                   //固件包下载成功，开始解析固件包
+        printfS("下载固件包成功\r\n");
+        UpdateFirmwareDownloadState(FS_ANALYSIS);                                //修改固件包下载状态为解密-处理-加密阶段
+        Ret = HandleFirmwareProcess();
+        if (Ret == OTA_SUCCESS)
+        {
+            UploadVersionFlag = 1;
+        }
+        break;
+    case OTA_DONT_UPDATA:                                                        //有更新消息但不需要更新，需要记录最新的固件包信息
+        printfS("当前固件为最新版本: %s\r\n", LocalFirmwareInfo.FirmwareVersion);
+        HandleLocalFirmwareInfo();
+        UploadVersionFlag = 1;
+        break;
+    default:
+        printfS("获取下载数据失败, 错误编号: %d\r\n", Ret);
+        //保存本次下载进度
+        //return Ret;
+        break;
+    }
+
+    if (UploadVersionFlag)
+    {
+        if (ConnectTencentCloud() == CONNECT_SUCCESS)
+        {
+            printfS("Update Version\r\n");
+            UploadLocalFirmwareInfo();                                  //上报物模型设备的固件包信息
+            sprintf(OTA_TxBuff, OTA_UPLOAD_VERSION_TEMPLATE, LocalFirmwareInfo.LocalFirmVersion);
+            SendPubTopicInfo(OTA_PUB_TOPIC, OTA_TxBuff);                //上报OTA主题设备的固件版本
+            DisconnectTencentCloud();                                   //断开云平台连接
+        }
+    }
+    OTAResultShow(*LanguageChoose, Ret);                                //根据结果更新显示
+    return Ret;
+}
+
+
+/******************************************************************
+ * @brief    开始下载固件包
+ * @param    xxx:xxx
+ * @return   OTA_SUCCESS：固件包下载成功
+ *           OTA_CONNECT_SERVER_ERR: 连接HTTP服务器失败
+ *           OTA_SSL_ERR：   SSL握手失败
+ *           OTA_HTTP_ERROR：下载固件包失败，原因是HTTP连接状态错误
+ *           OTA_CRC_ERROR:  下载固件包失败，原因是CRC校验失败
+ *           OTA_WRITE_ERROR：下载固件包失败，原因是写入SD卡失败
+********************************************************************/
+static u8 StartDownloadFirmware(void)
+{
+    u8  DownloadState = OTA_COMMAND_UPDATA;                     //记录连接HTTP下载固件包的过程状态
+    u16 DownloadCount = 0;                                      //记录了本次固件包分段下载的次数
+    u32 StartAddress;                                           //每次分段下载的开始地址
+    u32 EndAddress;                                             //每次分段下载的结束地址
+    u32 AckStartAddress = 0;                                    //HTTP响应的开始地址
+    u32 AckEndAddress = 0;                                      //HTTP响应的结束地址
+    u8  CrcErrCount = CRC_ERROR_COUNT;                          //允许每次分段下载的数据CRC校验失败后的重试次数
+    u16 CurrentCRC = 0;                                         //分段下载的数据计算出来的CRC
+    u32 WriteSector = 0;
+    u16 WriteCount = 0;
+    char DataBuff[DOWNLOAD_SIZE_ONCE + 512];                    //数据缓存区
+    u8  *TxPoint = 0;
+
+//    SD_Initialize();
+    //连接HTTP服务器前，需要先断开其他连接的服务器
+    SSL_Init();
+    DownloadState = EthernetConnectServer((const char*)OtaInfo.Host, OTA_SERVER_PORT);          //连接OTA下载服务器HTTP协议
+    if (DownloadState != CONNECT_SUCCESS)
+    {
+        printfS("连接服务器失败, 错误编号: %d\r\n", DownloadState);
+        return OTA_CONNECT_SERVER_ERR;
+    }
+    printfS("HTTP SUCCESS\r\n");
+    //SSL轮询握手
+    if (SSL_HandshakeAwait())
+    {
+        return OTA_SSL_ERR;
+    }
+    printfS("SSL SUCCESS\r\n");
+
+    //计算分段下载次数
+    DownloadCount = OtaInfo.FileSize / DOWNLOAD_SIZE_ONCE;
+    if (OtaInfo.FileSize % DOWNLOAD_SIZE_ONCE != 0)
+    {
+        DownloadCount += 1;
+    }
+    //判断下载次数, 并确定是否有意外掉线导致未下载成功的数据
+    if ((HttpPacketInfo.DownloadCount != DownloadCount) && (HttpPacketInfo.DownloadNum == 0))
+    {
+        /* 上次更新成功, 重新计算下载次数 */
+        HttpPacketInfo.DownloadCount = DownloadCount;
+        HttpPacketInfo.DownloadNum = 0;
+    }
+    else
+    {
+        /* 记录了上次下载的停止的位置, 继续执行下方的操作 */
+    }
+
+    //开始分段请求固件包进行下载
+
+    for (; HttpPacketInfo.DownloadNum < HttpPacketInfo.DownloadCount; HttpPacketInfo.DownloadNum++)
+    {
+        CrcErrCount = CRC_ERROR_COUNT;
+        DownloadState = OTA_COMMAND_UPDATA;
+        /*计算本次下载要下载固件包中的起始地址和结束地址*/
+        StartAddress = HttpPacketInfo.DownloadNum * DOWNLOAD_SIZE_ONCE;
+        if (HttpPacketInfo.DownloadNum != HttpPacketInfo.DownloadCount - 1)
+        {
+            EndAddress = StartAddress + DOWNLOAD_SIZE_ONCE - 1;
+        }
+        else
+        {
+            //若本次下载为最后一次下载，则请求的固件包的结束地址为固件包的大小
+            EndAddress = OtaInfo.FileSize - 1;
+        }
+AgainSend:
+        /* 清空socket接收缓存区, 清空数据缓存区, 拼接HTTP请求报文, 并发送到HTTP服务器 */
+        //SSL_ReadData((u8 *)DataBuff, sizeof(DataBuff));
+        memset(DataBuff, 0, sizeof(DataBuff));
+        sprintf(DataBuff, HTTP_UPLOAD_TEMPLATE, OtaInfo.URLABuff, OtaInfo.Host, (int)StartAddress, (int)EndAddress);
+        SSL_SendData((u8*)DataBuff, strlen((const char*)DataBuff));
+        //等待接收Http回应报文, 若HTTP回应超时，下载状态为OTA_HTTP_ERROR
+        if (WaitHttpAck() == OTA_HTTP_ERROR)
+        {
+            DownloadState = OTA_HTTP_ERROR;
+            break;
+        }
+        /*Http回应，接收数据并解析数据是否正确 */
+        memset(DataBuff, 0, sizeof(DataBuff));
+        SSL_ReadData((u8 *)DataBuff, sizeof(DataBuff));                //接收数据
+        if (strstr(DataBuff, HTTP_ACK_PACKET) != NULL)                 //判断回应的数据是否正确
+        {
+            //Content-Range: bytes StartAddress-EndAddress/108616获取本次下载的字节数在固件包中的起始位
+            if ((sscanf(strstr(DataBuff, "Content-Range"), "Content-Range: bytes %d-%d/%*d", &AckStartAddress, &AckEndAddress) == 2))
+            {
+//              PrintfHex(DataBuff, 256);                               //打印接收到的回应报文
+                /*判断HTTP回应的下载地址是否错误*/
+                if (AckStartAddress != StartAddress || AckEndAddress != EndAddress)
+                {
+//                  printfS("S:%d --- %d\r\n", StartAddress, AckStartAddress);
+//                  printfS("E:%d --- %d\r\n", EndAddress, AckEndAddress);
+                    DownloadState = OTA_HTTP_ERROR;
+                    break;
+                }
+                //偏移到数据存放的地址
+                TxPoint = (u8 *)strstr(DataBuff, "\r\n\r\n") + 4;           //获取携带的数据的开始地址，标志为\r\n\r\n
+                /* 处理CRC */
+                CurrentCRC = GetCrc16((char *)TxPoint, WRITE_SD_SIZE);
+                if (CurrentCRC != ((TxPoint[EndAddress - StartAddress - 1] << 8) + TxPoint[EndAddress - StartAddress]))
+                {
+                    printfS("CRC 校验出错\r\n");
+                    DownloadState = OTA_CRC_ERROR;
+                    break;
+                }
+                /* 将CRC验证通过的数据，写入SD卡, 待所有数据写入成功后, 才能执行加解密功能 */
+                //计算每次写入的起始扇区
+                WriteSector = (WRITE_SD_START_ADDR + HttpPacketInfo.DownloadNum * (WRITE_SD_SIZE)) / 512;
+                if ((WRITE_SD_START_ADDR + HttpPacketInfo.DownloadNum * WRITE_SD_SIZE) % 512 != 0)
+                {
+                    WriteSector += 1;
+                }
+                //写入的扇区数量
+                WriteCount = (EndAddress - StartAddress - 1) / 512;             //减1 为 减去后面两位CRC和加一位从0开始算起的偏差 既 -2+1 = -1;
+                if ((EndAddress - StartAddress - 1) % 512 != 0)
+                {
+                    WriteCount += 1;
+                }
+                //开始写入SD卡
+                PrintfHex(TxPoint, 256);
+                if (SD_WriteDisk(TxPoint, WriteSector, WriteCount) != SD_DATA_OK)
+                {
+                    DownloadState = OTA_WRITE_ERROR;
+                    break;
+                }
+                ProgressBarShow(HttpPacketInfo.DownloadCount, HttpPacketInfo.DownloadNum);                      //加载进度条
+                LocalFirmwareInfo.FirmwareSize += (EndAddress - StartAddress - 1);
+                //  printfS("%d / %d\r\n", HttpPacketInfo.DownloadNum + 1, HttpPacketInfo.DownloadCount);
+            }
+        }
+        /* 接收到的回应出错，置下载状态为OTA_HTTP_ERROR错误状态*/
+        else
+        {
+            DownloadState = OTA_HTTP_ERROR;
+            break;
+        }
+    }
+    /* 下载状态异常处理, 有时连接的HTTP会意外掉线, 为防止出现错误, 需要保存下载的进度, 以便下次进行下载 */
+    switch (DownloadState)
+    {
+    case OTA_HTTP_ERROR:                                       //HTTP连接状态错误，重新连接HTTP服务器
+        DownloadState = ConnectServerAgain();
+        if (DownloadState == CONNECT_SUCCESS)                 //连接成功，重新下载
+        {
+            DownloadState = OTA_COMMAND_UPDATA;
+            goto AgainSend;
+            break;
+        }
+        else if (DownloadState == SOCKET_CONNECT_ERROR)        //HTTP连接失败
+        {
+            DownloadState = OTA_HTTP_ERROR;
+        }
+        else if (DownloadState == NETWORK_CABLE_LINK_ERROR)    //网线意外掉落
+        {
+            DownloadState = OTA_LINK_ERR;
+        }
+        break;
+    case OTA_CRC_ERROR:
+        if (CrcErrCount-- != 0)
+        {
+            DownloadState = OTA_COMMAND_UPDATA;
+            goto AgainSend;
+            break;
+        }
+        break;
+    //return DownloadState;
+    case OTA_WRITE_ERROR:                       //数据下载成功, 但写入SD卡失败, 重新尝试写入SD, 若失败则返回错误
+        if (SD_WriteDisk(TxPoint, WriteSector, WriteCount) == SD_DATA_OK)
+        {
+            DownloadState = OTA_COMMAND_UPDATA;
+            goto AgainSend;
+            break;
+        }
+        break;
+    }
+    /* 下载成功 */
+    disconnect(SOCK_TCPS);              //断开HTTPS服务器连接
+    if (DownloadState == OTA_COMMAND_UPDATA)
+    {
+        DownloadState = OTA_COMMAND_ANALYSIS;    //固件包下载成功，开始解析阶段
+        printfS("Download Count:%d\r\nReality Download Count: %d\r\n", HttpPacketInfo.DownloadCount, HttpPacketInfo.DownloadNum);
+        HttpPacketInfo.DownloadCount = 0;
+        HttpPacketInfo.DownloadNum = 0;
+    }
+    return DownloadState;
+}
+
+
+/*******************************************************
+ * @brief    添加新系列函数
+ * @param    xxx:xxx
+ * @return   返回添加了多少系列
+********************************************************/
+static u16 AddSeries(void)
+{
+    u8 i = 0;
+    u8 AddSeriesFlag = 0;
+    u8 Len = 0;
+    u16 AddSeriesCount = 0;
+    char* StartPoint = NULL;
+    char* EndPoint = NULL;
+    char NameBuff[SERIES_NAME_SIZE] = {0};
+
+    if (OtaInfo.CmdBuffLen <= 1)
+    {
+        return AddSeriesCount;
+    }
+    //开始添加新系列
+    StartPoint = OtaInfo.CommandBuff;
+    while (OtaInfo.CmdBuffLen > 2)
+    {
+        EndPoint = strchr(StartPoint, ',');
+        if (EndPoint == NULL)                       //在结尾时，需要特殊对待
+        {
+            EndPoint = strchr(StartPoint, ';');
+        }
+        Len = EndPoint - StartPoint;
+        AddSeriesFlag = 1;
+        if (AddSeriesCount >= 1)
+        {
+            //遍历已添加系列 和 待添加系列对比是否重复，若重复则跳过
+            for (i = 0; i < AddSeriesCount; i++)
+            {
+                memset(NameBuff, 0, SERIES_NAME_SIZE);
+                if (i < FIRST_BUFF_SERIES_COUNT)
+                {
+                    strncpy(NameBuff, (char*)LocalFirmwareInfo.SeriesBuff[i].SeriesName, SERIES_NAME_SIZE);
+                }
+                else
+                {
+                    strncpy(NameBuff, (char*)LocalFirmwareInfo.SeriesBuff2[i - FIRST_BUFF_SERIES_COUNT].SeriesName, SERIES_NAME_SIZE);
+                }
+                if (strncmp(NameBuff, StartPoint, Len) == 0)
+                {
+                    AddSeriesFlag = 0;
+                    break;
+                }
+            }
+        }
+
+        if (AddSeriesFlag == 1)
+        {
+            //开始添加新系列，先清空原数据再添加
+            memset(LocalFirmwareInfo.SeriesBuff[AddSeriesCount].SeriesName, 0, SERIES_NAME_SIZE);
+            memset(LocalFirmwareInfo.SeriesBuff[AddSeriesCount].SeriesVersion, 0, SERIES_VERSION_SIZE);
+            if (AddSeriesCount < FIRST_BUFF_SERIES_COUNT)
+            {
+                strncpy((char*)LocalFirmwareInfo.SeriesBuff[AddSeriesCount].SeriesName, StartPoint, Len);
+                strncpy((char*)LocalFirmwareInfo.SeriesBuff[AddSeriesCount].SeriesVersion, NEW_SERIES_VERSION, 4);
+            }
+            else
+            {
+                strncpy((char*)LocalFirmwareInfo.SeriesBuff2[AddSeriesCount - FIRST_BUFF_SERIES_COUNT].SeriesName, StartPoint, Len);
+                strncpy((char*)LocalFirmwareInfo.SeriesBuff2[AddSeriesCount - FIRST_BUFF_SERIES_COUNT].SeriesVersion, NEW_SERIES_VERSION, 4);
+            }
+            AddSeriesCount++;
+        }
+        OtaInfo.CmdBuffLen -=  Len + 1;
+        StartPoint = EndPoint + 1;
+    }
+    LocalFirmwareInfo.SeriesCount = AddSeriesCount;
+    /*调试用，查看当前缓存区放置的系列*/
+//  for(i = 0; i < LocalFirmwareInfo.SeriesCount; i++)
+//  {
+//      if (i < FIRST_BUFF_SERIES_COUNT)
+//      {
+//          printfS("Series Num:%d, SeriesName:", i);
+//          PrintfString(LocalFirmwareInfo.SeriesBuff[i].SeriesName, SERIES_NAME_SIZE);
+//          printfS("Version:");
+//          PrintfString(LocalFirmwareInfo.SeriesBuff[i].SeriesVersion, SERIES_VERSION_SIZE);
+//      }
+//      else
+//      {
+//          printfS("Series Num:%d, SeriesName:", i);
+//          PrintfString(LocalFirmwareInfo.SeriesBuff2[i - FIRST_BUFF_SERIES_COUNT].SeriesName, SERIES_NAME_SIZE);
+//          printfS("Version:");
+//          PrintfString(LocalFirmwareInfo.SeriesBuff2[i - FIRST_BUFF_SERIES_COUNT].SeriesVersion, SERIES_VERSION_SIZE);
+//      }
+//  }
+    return AddSeriesCount;
+}
+
+/*******************************************************
+ * @brief    删除系列函数
+ * @param    xxx:xxx
+ * @return   返回目前支持的系列数
+********************************************************/
+static u16 DeleteSeries(void)
+{
+    u8 i = 0;
+    u16 CurrentSeriesCount = 0;     //当前已遍历支持的系列
+    char* Point = NULL;
+    SERIES_INFO_t TempSeriesBuff[39];   //临时保存添加的系列
+    SERIES_INFO_t TempSeriesBuff2[41];
+
+    if (OtaInfo.CmdBuffLen <= 1)
+    {
+        return CurrentSeriesCount;
+    }
+
+    //仅能删除已经支持的系列
+    for (i = 0; i < LocalFirmwareInfo.SeriesCount; i++)
+    {
+        Point = NULL;
+        if (i < FIRST_BUFF_SERIES_COUNT)
+        {
+            Point = strstr((const char*)OtaInfo.CommandBuff, (const char*)LocalFirmwareInfo.SeriesBuff[i].SeriesName);
+        }
+        else
+        {
+            Point = strstr((const char*)OtaInfo.CommandBuff, (const char*)LocalFirmwareInfo.SeriesBuff2[i - FIRST_BUFF_SERIES_COUNT].SeriesName);
+        }
+        if (Point != NULL)      /*要删除的系列是遍历不到的*/
+        {
+            /*将遍历到的系列的结构体临时保存起来*/
+            if (i < FIRST_BUFF_SERIES_COUNT)
+            {
+                TempSeriesBuff[CurrentSeriesCount] = LocalFirmwareInfo.SeriesBuff[i];
+            }
+            else
+            {
+                if (CurrentSeriesCount < FIRST_BUFF_SERIES_COUNT)
+                {
+                    TempSeriesBuff[CurrentSeriesCount] = LocalFirmwareInfo.SeriesBuff[i];
+                }
+                else
+                {
+                    TempSeriesBuff2[CurrentSeriesCount - FIRST_BUFF_SERIES_COUNT] = LocalFirmwareInfo.SeriesBuff2[i - FIRST_BUFF_SERIES_COUNT];
+                }
+            }
+            CurrentSeriesCount += 1;
+        }
+    }
+    memcpy(LocalFirmwareInfo.SeriesBuff, TempSeriesBuff, sizeof(SERIES_INFO_t) * 39);
+    memcpy(LocalFirmwareInfo.SeriesBuff2, TempSeriesBuff2, sizeof(SERIES_INFO_t) * 41);
+    LocalFirmwareInfo.SeriesCount = CurrentSeriesCount;
+
+    return CurrentSeriesCount;
+}
+/*******************************************************
+ * @brief    上报云平台物理模型Topic，用于提供观察窗口
+ * @param    xxx:xxx
+ * @return   无
+********************************************************/
+static void UploadLocalFirmwareInfo(void)
+{
+    u8 i = 0;
+    char ThingBuff[1200] = {0};
+    char OtaInfoBuff[1000] = {0};
+
+    for (i = 1; i < LocalFirmwareInfo.SeriesCount; i++)                 //拼接本机支持的所有系列
+    {
+        if (i < FIRST_BUFF_SERIES_COUNT)
+        {
+            strcat(OtaInfoBuff, LocalFirmwareInfo.SeriesBuff[i].SeriesName);
+            strncat(OtaInfoBuff, LocalFirmwareInfo.SeriesBuff[i].SeriesVersion, 4);
+        }
+        else
+        {
+            strcat(OtaInfoBuff, LocalFirmwareInfo.SeriesBuff2[i - FIRST_BUFF_SERIES_COUNT].SeriesName);
+            strncat(OtaInfoBuff, LocalFirmwareInfo.SeriesBuff[i - FIRST_BUFF_SERIES_COUNT].SeriesVersion, 4);
+        }
+        strncat(OtaInfoBuff, ";", 1);
+    }
+    sprintf(ThingBuff, (const char*)THING_UPLOAD_TEMPLATE, LocalFirmwareInfo.LocalFirmVersion, DEVICE_VERSION, OtaInfoBuff);     //拼接上报的数据
+    SendPubTopicInfo(THING_PUB_TOPIC, ThingBuff);                           //发布消息
+    System_Delay_MS(500);
+}
+
+/*******************************************************************************
+ * @brief    解析OTA下发的数据包，获取其中的关键信息
+ * @param    无
+ * @return   OTA_LOSE_INFO: 获取的OTA固件包的信息错误
+ *           OTA_DONT_UPDATA: 没有固件包信息, 代表没有新版本的固件包需要更新
+ *           OTA_COMMAND_ERR: 固件包信息错误
+ *           OTA_SUCCESS: 获取到新的OTA固件包更新信息
+********************************************************************************/
+static u8 GetOtaInfo(void)
+{
+    u8 Ret = 0;
+    char OTA_RxBuff[1024] = {0};
+    char OTA_TxBuff[200] = {0};
+
+    //1. 向云平台上报当前设备的固件版本, 并获取最新的固件版本信息
+    sprintf(OTA_TxBuff, OTA_UPLOAD_VERSION_TEMPLATE, LocalFirmwareInfo.LocalFirmVersion);    //拼接报文数据包
+    if (GetSubTopicInfo(OTA_PUB_TOPIC, SUB_OTA_NUM, OTA_TxBuff, OTA_RxBuff) != GET_SUB_TOPIC_DATA)
+    {
+        return OTA_DONT_UPDATA;
+    }
+    //提取OTA升级时的信息，包括文件大小、URL信息、更新指令和版本号
+    if (sscanf(OTA_RxBuff,
+               "%*[^{]{\"file_size\":%d,\"fw_type\":\"mcu\",\"md5sum\":\"%[^\"]\",\"type\":\"update_firmware\",\"url\":\"%*[^:]://%[^/]%[^\"]\",\"user_defined\":\"{\\\"%[^\\]\\\":\\\"%[^\\]\\\"}\",\"version\":\"%[^\"]\"}",
+               &OtaInfo.FileSize, OtaInfo.Md5Sum, OtaInfo.Host, OtaInfo.URLABuff, OtaInfo.Command, OtaInfo.CommandBuff, OtaInfo.Version) == 7)
+    {
+        if (strncmp(OtaInfo.Command, SERIES_ADD, strlen(SERIES_ADD)) == 0)
+        {
+            if (strchr(OtaInfo.CommandBuff, ';') == NULL)
+            {
+                return OTA_COMMAND_ERR;
+            }
+        }
+        if ((strncmp(OtaInfo.Command, SERIES_UPDATE, strlen(SERIES_UPDATE)) == 0) || (strncmp(OtaInfo.Command, SERIES_ADD, strlen(SERIES_ADD)) == 0) || (strncmp(OtaInfo.Command, DELETE_UPDATE, strlen(DELETE_UPDATE)) == 0))
+        {
+            OtaInfo.CmdBuffLen = strlen((const char*)OtaInfo.CommandBuff);
+            PrintfOTAInfo(&OtaInfo);                    //打印OTA信息组
+            return OTA_SUCCESS;
+        }
+    }
+    return OTA_LOSE_INFO;
+}
+
+/*****************************************************************************
+ * @brief    版本比较函数
+ * @param    LocalVersion： 本地版本（被比较）
+ *           OTAVersion：OTA下发的最新版本
+ *           Size: 比较的字符串长度
+ * @return   OTA_DONT_UPDATA： 本地版本大于下发的待更新版本, 不需要更新
+ *           OTA_NEW_VERSION： 有新版本，需要判断是否下载固件
+*******************************************************************************/
+static u8 VersionCmp(const char *LocalVersion, const char *OTAVersion, u16 Size)
+{
+    u8 i;
+
+    if (LocalVersion == NULL || OTAVersion == NULL || Size == 0)
+    {
+        return OTA_DONT_UPDATA;
+    }
+    for (i = 0; i < Size; i++)
+    {
+        if (OTAVersion[i] > LocalVersion[i])
+        {
+            return OTA_NEW_VERSION;
+        }
+        else if (OTAVersion[i] < LocalVersion[i])
+        {
+            return OTA_DONT_UPDATA;
+        }
+    }
+    return OTA_DONT_UPDATA;
+}
+
+/*******************************************************
+ * @brief    分析获取到的OTA固件包信息中，是否包含本机支持系列的新版本
+ * @param    OtaCommandBuff: 固件包包含的系列加版本  （eg: Huawei1.0）
+             SeriesInfo: 包含了本机支持的系列和对应的版本
+             SeriesCount: 本机支持的系列数量
+ * @return   OTA_NEW_VERSION: 新固件包中, 有本机支持系列的新版本
+             OTA_DONT_UPDATA: 没有新版本, 不需要下载该固件包
+********************************************************/
+static u8 DecideUpdataState(const char *OtaCommandBuff)
+{
+    u8 i;
+    char *Point = NULL;
+    u8 ReState = 0;
+
+    //遍历本地支持系列， 判断是否有需要更新的系列
+    for (i = 0; i < LocalFirmwareInfo.SeriesCount; i++)
+    {
+        if (i < FIRST_BUFF_SERIES_COUNT)
+        {
+            Point = strstr(OtaCommandBuff, (const char*)LocalFirmwareInfo.SeriesBuff[i].SeriesName);
+        }
+        else
+        {
+            Point = strstr(OtaCommandBuff, (const char*)LocalFirmwareInfo.SeriesBuff2[i - FIRST_BUFF_SERIES_COUNT].SeriesName);
+        }
+        if (Point != NULL)
+        {
+            //更改指向到版本位置
+            if (i < FIRST_BUFF_SERIES_COUNT)
+            {
+                Point += strlen((const char*)LocalFirmwareInfo.SeriesBuff[i].SeriesName);
+            }
+            else
+            {
+                Point += strlen((const char*)LocalFirmwareInfo.SeriesBuff2[i - FIRST_BUFF_SERIES_COUNT].SeriesName);
+            }
+            //判断版本是否需要更新
+            if (i < FIRST_BUFF_SERIES_COUNT)
+            {
+                ReState = VersionCmp((const char*)LocalFirmwareInfo.SeriesBuff[i].SeriesVersion, (const char*)Point, strlen((const char*)LocalFirmwareInfo.SeriesBuff[i].SeriesVersion));
+            }
+            else
+            {
+                ReState = VersionCmp((const char*)LocalFirmwareInfo.SeriesBuff2[i - FIRST_BUFF_SERIES_COUNT].SeriesVersion, (const char*)Point, strlen((const char*)LocalFirmwareInfo.SeriesBuff2[i - FIRST_BUFF_SERIES_COUNT].SeriesVersion));
+            }
+            if (ReState == OTA_NEW_VERSION)
+            {
+//              printfS("%d\r\n", i);
+//              PrintfString(LocalFirmwareInfo.SeriesBuff[i].SeriesName, 5);
+//              PrintfString(LocalFirmwareInfo.SeriesBuff[i].SeriesVersion, 4);
+//              PrintfString(Point, 4);
+                return OTA_NEW_VERSION;
+            }
+        }
+    }
+    return OTA_DONT_UPDATA;
+}
+
+/*******************************************************
+ * @brief    等待HTTP服务器的回应报文
+ * @param    xxx:xxx
+ * @return   WAIT_HTTP_ACK_TIMEOUT： 等待时间超时，代表没有接收到回应
+ *           OTA_SUCCESS：代表接收到了回应报文，可以进行数据的解析
+********************************************************/
+static u8 WaitHttpAck(void)
+{
+    u8 Timeout = 20;
+    u16 Len = 0;
+
+
+    System_Delay_MS(20);
+    Len = getSn_RX_RSR(SOCK_TCPS);
+    while (Len == 0)
+    {
+        Len = getSn_RX_RSR(SOCK_TCPS);
+        Timeout--;
+        if (Timeout == 0)
+        {
+            return OTA_HTTP_ERROR;
+        }
+        System_Delay_MS(10);
+    }
+    return OTA_HTTP_SUCCESS;
+}
+

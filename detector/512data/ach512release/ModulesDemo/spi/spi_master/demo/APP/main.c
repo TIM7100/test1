@@ -1,0 +1,59 @@
+/***********************************************************************
+ * Copyright (c)  2008 - 2016, Shanghai AisinoChip Co.,Ltd .
+ * All rights reserved.
+ * Filename    : main.c
+ * Description : main source file
+ * Author(s)   : Eric
+ * version     : V1.0
+ * Modify date : 2016-03-24
+ ***********************************************************************/
+#include  "common.h"
+#include  "app.h"
+
+void SPI_SendByte(unsigned char SPIx, unsigned char *send_data, int data_len)
+{
+	int num;
+	
+	REG_SPI_STATUS(SPIx) |= 0x02 ;   //写1清除 Batch_DONE
+	REG_SPI_BATCH(SPIx) = data_len; //存储SPI即将传输的数据字节个数
+	REG_SPI_TX_CTL(SPIx) |= 0x01;   //发送使能开启
+	REG_SPI_CS(SPIx) = 1; //置1时将开始传输数据
+	for(num=0;num<data_len;num++)
+	{
+		    while(REG_SPI_STATUS(SPIx) & 0x08); 		//等待发送FIFO发送字节数大于8
+        REG_SPI_TX_DAT(SPIx) = *send_data;	//存储发送数据
+				send_data++;		//地址指针加1
+	}
+    while(!(REG_SPI_STATUS(SPIx) & 0x02)); //批量输出完成标志位 Batch_DONE
+    REG_SPI_STATUS(SPIx) |= 0x02;          //清除Batch_DONE,为下次传输做准备
+    REG_SPI_TX_CTL(SPIx) &= ~0x01; 	//关闭发送使能  
+}
+
+void SPI_Init(unsigned char SPIx, unsigned char Mode)
+{
+	REG_SCU_MUXCTRLA |= (0x05 <<28);
+	REG_SCU_MUXCTRLB |= (0x05 <<0);
+	REG_SPI_CTL(SPIx) = 0 << 5 | 0 << 4 | Mode << 2 | 1 << 0; //1X模式，MSB，工作模式为Mode，主模式
+	REG_SPI_BAUD(SPIx) = ((3 << 8) | 6);  //波特率 24分频
+	REG_SPI_OUT_EN(SPIx) = 0x01;   //MOSI输出模式	
+}
+
+
+/***********************************************************************
+ * main主函数
+ * 输入参数 ：无
+ * 返回值   ：无
+ * 函数功能 ：主程序入口函数，各个模块初始化以及各个模块分支子函数的轮询
+ ***********************************************************************/
+ 
+int main(void)
+{
+	SystemInit();
+  //spim_comm_test();
+
+    while(1)
+    {
+        ;
+    }
+}
+

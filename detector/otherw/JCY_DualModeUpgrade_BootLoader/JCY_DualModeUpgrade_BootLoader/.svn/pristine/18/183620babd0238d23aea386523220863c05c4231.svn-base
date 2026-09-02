@@ -1,0 +1,459 @@
+#include "esp8266_config.h"
+#include "bsp_usart3.h"
+#include "ota_firmware_updata.h"
+#include "menu_show.h"
+#include "bsp_eflash.h"
+
+#define WiFi_printf(fmt, ...)  UART_printf(UART3, fmt, ##__VA_ARGS__)
+#define WIFI_SET_RST_IO      (GPIO_SetBits(GPIOB, GPIO_PIN_1))
+#define WIFI_RESET_RST_IO    (GPIO_ResetBits(GPIOB, GPIO_PIN_1))
+
+WifiInfo_t Wifi_Info = 
+{
+	"goodgood",
+	"dayday",
+	SmartConfig_Uncompleted
+};
+
+void Get_WifiInfo(void)
+{
+	EflashReadByte(WIFI_SSID_Addr, 36, (uint32_t *)Wifi_Info.SSID);
+	EflashReadByte(WIFI_Password_Addr, 36, (uint32_t *)Wifi_Info.Password);
+}
+
+/*-------------------------------------------------*/
+/*函数名：初始化WiFi的复位IO                       */
+/*参  数：无                                       */
+/*返回值：无                                       */
+/*-------------------------------------------------*/
+void WiFi_IO_Init(void)
+{
+    GPIO_InitTypeDef GPIO_Handle;
+    System_Module_Enable(EN_GPIOAB);
+
+    GPIO_Handle.Pin       = GPIO_PIN_1;
+    GPIO_Handle.Mode      = GPIO_MODE_OUTPUT_PP;
+    GPIO_Handle.Pull      = GPIO_NOPULL;
+    GPIO_Handle.Alternate = GPIO_FUNCTION_0;
+
+    GPIO_Init(GPIOB, &GPIO_Handle);
+	
+	Get_WifiInfo();
+}
+
+/*-------------------------------------------------*/
+/*函数名：WiFi发送设置指令                         */
+/*参  数：cmd：指令                                */
+/*参  数：timeout：超时时间（100ms的倍数）         */
+/*返回值：0：正确   其他：错误                     */
+/*-------------------------------------------------*/
+static uint8_t WiFi_SendCmd(uint8_t *cmd, int16_t timeout)
+{
+    uint8_t   Rx_Buffer[2048];
+    uint16_t  Rx_Buffer_Index = 0;
+    int rbCanReadLen;
+
+    memset(Rx_Buffer, 0, 2048);
+    WiFi_printf("%s\r\n", cmd);                         //发送指令
+#ifdef DEBUG_ESP
+    printf("%s\r\n", cmd);
+#endif
+    while (timeout--)                                   //等待超时时间到0
+    {
+        System_Delay_MS(10);                                   //延时10ms
+
+        //获取网络芯片返回的数据个数
+        rbCanReadLen = rbCanRead(&rb_t_ssl);
+        //有缓存的数据
+        if (rbCanReadLen > 0)
+        {
+            //只返回当前有的
+            rbRead(&rb_t_ssl, &Rx_Buffer[Rx_Buffer_Index], rbCanReadLen);
+            Rx_Buffer_Index += rbCanReadLen;
+
+            if (strstr((char *)Rx_Buffer, "OK"))          //如果接收到OK表示指令成功
+            {
+                //打印信息
+#ifdef DEBUG_ESP
+                for (uint32_t i = 0; i < Rx_Buffer_Index; i++)
+                {
+                    UART_SendData(UART1, Rx_Buffer[i]);
+                }
+#endif
+                break;                                      //主动跳出while循环
+            }
+        }
+
+    }
+    if (timeout <= 0)
+    {
+        return 1;                                       //如果timeout<=0，说明超时时间到了，也没能收到OK，返回1
+    }
+    else
+    {
+        return 0;                                       //反之，表示正确，说明收到OK，通过break主动跳出while
+    }
+}
+
+/*-------------------------------------------------*/
+/*函数名：WiFi加入路由器指令                       */
+/*参  数：timeout：超时时间（1s的倍数）            */
+/*返回值：0：正确   其他：错误                     */
+/*-------------------------------------------------*/
+static uint8_t WiFi_JoinAP(int16_t timeout)
+{
+    char Tx_Buffer[200];
+	
+	if((Wifi_Info.SSID[0] == 0xFF) || (Wifi_Info.Password[0] == 0xFF))
+	{
+		return 1;
+	}
+	
+	Wifi_Info.SSID[33] = '\0';
+	Wifi_Info.Password[33] = '\0';
+	
+	sprintf(Tx_Buffer, "AT+CWJAP=\"%s\",\"%s\"", Wifi_Info.SSID, Wifi_Info.Password);
+	if (WiFi_SendCmd((uint8_t*)Tx_Buffer, timeout))       
+	{
+		return 2;
+	}
+	
+    return 0;                                                     //正确，返回0
+}
+
+
+
+/*-------------------------------------------------*/
+/*函数名：一键智能配网                       	   */
+/*参  数：NULL            						   */
+/*返回值：0：正确   其他：错误                      */
+/*-------------------------------------------------*/
+static uint8_t SmartConifg(void)
+{
+    uint16_t timeout = 3000 * 6;
+    uint8_t   Rx_Buffer[512];
+    uint16_t  Rx_Buffer_Index = 0;
+    int rbCanReadLen;
+	
+    //配网
+    if (WiFi_SendCmd((uint8_t*)"AT", 10))                       //测试AT
+    {
+        return 1;
+    }
+
+    if (WiFi_SendCmd((uint8_t*)"ATE0", 50))                     //关闭回显
+    {
+        return 2;
+    }
+
+    if (WiFi_SendCmd((uint8_t*)"AT+CWMODE=1", 10))          //WIFI模块设置为STA模式
+    {
+        return 3;
+    }
+
+    if (WiFi_SendCmd((uint8_t*)"AT+CWAUTOCONN=0", 50))           //取消自动连接，10ms超时单位，总计500ms超时时间
+    {
+        return 4;                                      //返回2，取消自动连接失败
+    }
+
+	WIFI_ConnectShow();
+	if (WiFi_JoinAP(1500) == 0)        
+	{
+		WIFI_ConnectSuccesShow();
+		return 0;
+	}
+	
+	SmartConfig_RequestShow();
+	
+	if (WiFi_SendCmd((uint8_t*)"AT+CWSTARTSMART=2", 50))
+	{
+		return 6;
+	}
+#ifdef DEBUG_ESP
+	printf("Start SmartConfig:\r\n");
+#endif
+	memset(Rx_Buffer, 0, 512);
+	//等待配网，3分钟超时退出
+	while (timeout)
+	{
+		timeout--;
+		System_Delay_MS(10);
+		//获取网络芯片返回的数据个数
+		rbCanReadLen = rbCanRead(&rb_t_ssl);
+		//有缓存的数据
+		if (rbCanReadLen > 0)
+		{
+			//只返回当前有的
+			rbRead(&rb_t_ssl, &Rx_Buffer[Rx_Buffer_Index], rbCanReadLen);
+			Rx_Buffer_Index += rbCanReadLen;
+#ifdef DEBUG_ESP
+			//打印信息
+			printf("%s\r\n", Rx_Buffer);
+#endif
+			if (strstr((char *)Rx_Buffer, "Smart get wifi info") == NULL) //获取到wfi信息
+			{
+				continue;
+			}
+
+			//判断连接wifi
+			if (strstr((const char*)Rx_Buffer, "connected wifi")) //成功连接到wifi
+			{
+				if (WiFi_SendCmd((uint8_t*)"AT+CWSTOPSMART", 50)) //停止SmartConfig
+				{
+					return 5;
+				}
+#ifdef DEBUG_ESP
+				printf("stop SmartConfig\r\n");
+#endif
+				if(Parse_SSID_Password(Rx_Buffer, &Wifi_Info))
+				{
+					return 6;
+				}
+				break;
+			}
+		}
+	}
+	if (timeout <= 0)
+	{
+		SmartConfig_ErrorShow();
+		return 6;
+	}
+    SmartConfig_SuccessShow();
+    return 0;
+}
+
+/*-------------------------------------------------*/
+/*函数名：连接TCP服务器，并进入透传模式            */
+/*参  数：WiFiServerIP： 服务器IP                  */
+/*参  数：WiFiServerPort：服务器端口号             */
+/*参  数：timeout： 超时时间（100ms的倍数）        */
+/*返回值：0：正确  其他：错误                      */
+/*-------------------------------------------------*/
+uint8_t WiFi_Connect_Server(char *WiFiServerIP, uint16_t WiFiServerPort, int16_t timeout)
+{
+    int rbCanReadLen;
+    uint8_t   Rx_Buffer[512];
+    uint16_t  Rx_Buffer_Index = 0;
+
+    memset(Rx_Buffer, 0, 512);
+
+    WiFi_printf("AT+CIPSTART=\"TCP\",\"%s\",%d\r\n", WiFiServerIP, WiFiServerPort); //发送连接服务器指令
+#ifdef DEBUG_ESP
+    printf("AT+CIPSTART=\"TCP\",\"%s\",%d\r\n", WiFiServerIP, WiFiServerPort);
+#endif
+    while (timeout--)                                           //等待超时与否
+    {
+        System_Delay_MS(100);
+
+        //获取网络芯片返回的数据个数
+        rbCanReadLen = rbCanRead(&rb_t_ssl);
+        //有缓存的数据
+        if (rbCanReadLen > 0)
+        {
+            //只返回当前有的
+            rbRead(&rb_t_ssl, &Rx_Buffer[Rx_Buffer_Index], rbCanReadLen);
+            Rx_Buffer_Index += rbCanReadLen;
+#ifdef DEBUG_ESP
+			//打印信息
+            printf("%s\r\n", Rx_Buffer);
+#endif
+            if (strstr((char *)Rx_Buffer, "CONNECT"))             //如果接受到CONNECT表示连接成功
+            {
+                break;                                              //跳出while循环
+            }
+            if (strstr((char *)Rx_Buffer, "CLOSED"))              //如果接受到CLOSED表示服务器未开启
+            {
+                return 1;                                           //服务器未开启返回1
+            }
+            if (strstr((char *)Rx_Buffer, "ALREADY CONNECTED"))   //如果接受到ALREADY CONNECTED已经建立连接
+            {
+                return 2;                                           //已经建立连接返回2
+            }
+        }
+
+    }
+    if (timeout <= 0)
+    {
+        return 3;                                               //超时错误，返回3
+    }
+    else                                                        //连接成功，准备进入透传
+    {
+        if (WiFi_SendCmd((uint8_t*)"AT+CIPSEND", 5))
+        {
+            return 4;
+        }
+    }
+    return 0;                                                   //成功返回0
+}
+
+
+/*-------------------------------------------------*/
+/*函数名：WiFi退出透传模式                         */
+/*参  数：无                                       */
+/*返回值：0：正确  其他：错误                      */
+/*-------------------------------------------------*/
+static uint8_t WiFi_QuitTrans(void)
+{
+    int16_t timeout = 5;
+
+    while (timeout--)                                             //等待超时时间到0
+    {
+        WiFi_printf("+++");
+        System_Delay_MS(1000);                                           //等待500ms太少 要1000ms才可以退出
+        if (WiFi_SendCmd((uint8_t*)"AT", 50) == 0)                          //退出透传判断
+        {
+            break;
+        }
+    }
+
+    if (timeout <= 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+/*-------------------------------------------------*/
+/*函数名：WiFi连接服务器                           */
+/*参  数：WiFiIoTServerIP： 服务器IP               */
+/*参  数：WiFiIoTServerPort：服务器端口号          */
+/*返回值：0：正确   其他：错误                     */
+/*-------------------------------------------------*/
+uint8_t WiFi_Connect_IoTServer(char *WiFiServerIP, uint16_t WiFiServerPort, int16_t timeout)
+{
+	uint8_t   Rx_Buffer[512];
+    uint16_t  Rx_Buffer_Index = 0;
+    u8 ret;
+
+    WIFI_RESET_RST_IO;                                //复位IO拉低电平
+    System_Delay_MS(50);                              //延时，至少200us以上低电平
+    WIFI_SET_RST_IO;                                  //复位IO拉高电平
+    System_Delay_MS(1500);                             //延时
+    rbCreate(&rb_t_ssl, rb_t_ssl_buff, rb_t_ssl_buff_len);
+
+	if(Wifi_Info.SmartConfig_Flag == SmartConfig_Uncompleted)
+	{
+		if(SmartConifg() == 0)
+		{
+			Wifi_Info.SmartConfig_Flag = SmartConfig_Completed;
+			goto wifi_continue;
+		}
+		else
+		{
+			return 11;
+		}
+	}
+	
+    //配网
+    if (WiFi_SendCmd((uint8_t*)"AT", 10))                       //测试AT
+    {
+        return 1;
+    }
+
+    if (WiFi_SendCmd((uint8_t*)"ATE0", 50))                     //关闭回显
+    {
+        return 2;
+    }
+
+    if (WiFi_SendCmd((uint8_t*)"AT+CWMODE=1", 10))          //WIFI模块设置为STA模式
+    {
+        return 3;
+    }
+
+    if (WiFi_SendCmd((uint8_t*)"AT+CWAUTOCONN=0", 50))           //取消自动连接，10ms超时单位，总计500ms超时时间
+    {
+        return 4;                                      //返回2，取消自动连接失败
+    }
+
+	if (WiFi_JoinAP(3000))        
+	{
+		return 5;
+	}
+	
+wifi_continue:
+	if (WiFi_SendCmd((uint8_t*)"AT+CIPSNTPCFG=1,8,\"ntp1.aliyun.com\"", 50))       
+	{
+		return 6;
+	}
+
+	if (WiFi_SendCmd((uint8_t*)"AT+CIPSNTPTIME?", 50))       
+	{
+		return 7;
+	}
+
+    if (WiFi_SendCmd((uint8_t*)"AT+CIPMODE=1", 50))    //设置透传，10ms超时单位，总计500ms超时时间
+    {
+        return 8;                                      //返回4，设置透传失败
+    }
+
+    if (WiFi_SendCmd((uint8_t*)"AT+CIPMUX=0", 50))     //关闭多路连接，10ms超时单位，总计500ms超时时间
+    {
+        return 9;                                      //返回5，关闭多路连接失败
+    }
+
+    ret = WiFi_Connect_Server(WiFiServerIP, WiFiServerPort, timeout);
+    if (ret)
+    {
+        return 10;
+    }
+
+    return 0;
+}
+
+u8 Parse_SSID_Password(u8* buffer, WifiInfo_t* wifi_info)
+{
+	 char *ssid_start_point = strstr((char*)buffer,  "ssid:");
+     char *pwd_start_point = strstr((char*)buffer, "password:");
+	 u8 len;
+	
+	 memset(wifi_info, '\0', sizeof(WifiInfo_t));
+	
+	 if (ssid_start_point == NULL || pwd_start_point == NULL) 
+	 {
+        return 1; 
+     }
+	
+	 ssid_start_point += 5;
+	 pwd_start_point += 9;
+	 char *ssid_end_point = ssid_start_point;
+	 char *pwd_end_point = pwd_start_point;
+	
+	 while(*ssid_end_point != '\0')
+	 {
+		 ssid_end_point++;
+		 if(*(ssid_end_point) == 0x0D && *(ssid_end_point + 1) == 0x0A)
+		 {
+			 break;
+		 }
+	 }
+	 len = ssid_end_point - ssid_start_point;
+	 if(len > 32)
+	 {
+		 return 2;
+	 }
+	 memcpy(wifi_info->SSID, ssid_start_point, len);
+	 
+	 while(*pwd_end_point != '\0')
+	 {
+		 pwd_end_point++;
+		 if(*(pwd_end_point) == 0x0D && *(pwd_end_point + 1) == 0x0A)
+		 {
+			 break;
+		 }
+	 }
+	 len = pwd_end_point - pwd_start_point;
+	 if(len > 32)
+	 {
+		 return 3;
+	 }
+	 memcpy(wifi_info->Password, pwd_start_point, len);
+	 
+	 EflashWriteByte(WIFI_SSID_Addr, 36, (uint8_t *)wifi_info->SSID);
+	 EflashWriteByte(WIFI_Password_Addr, 36, (uint8_t *)wifi_info->Password);
+	 
+	 return 0;
+}
+

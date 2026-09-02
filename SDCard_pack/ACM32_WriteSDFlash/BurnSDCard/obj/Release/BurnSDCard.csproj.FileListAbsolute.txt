@@ -1,0 +1,10 @@
+e:\SDCARD\new\BurnSDCard\bin\Release\BurnSDCard.exe.config
+e:\SDCARD\new\BurnSDCard\bin\Release\BurnSDCard.exe
+e:\SDCARD\new\BurnSDCard\bin\Release\BurnSDCard.pdb
+e:\SDCARD\new\BurnSDCard\obj\Release\BurnSDCard.csproj.AssemblyReference.cache
+e:\SDCARD\new\BurnSDCard\obj\Release\BurnSDCard.Form1.resources
+e:\SDCARD\new\BurnSDCard\obj\Release\BurnSDCard.Properties.Resources.resources
+e:\SDCARD\new\BurnSDCard\obj\Release\BurnSDCard.csproj.GenerateResource.cache
+e:\SDCARD\new\BurnSDCard\obj\Release\BurnSDCard.csproj.CoreCompileInputs.cache
+e:\SDCARD\new\BurnSDCard\obj\Release\BurnSDCard.exe
+e:\SDCARD\new\BurnSDCard\obj\Release\BurnSDCard.pdb

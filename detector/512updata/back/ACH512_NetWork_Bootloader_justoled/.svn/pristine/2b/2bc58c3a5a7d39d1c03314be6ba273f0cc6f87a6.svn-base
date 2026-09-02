@@ -1,0 +1,94 @@
+#ifndef _OTA_FIRMWARE_UPDATE_H
+#define _OTA_FIRMWARE_UPDATE_H
+
+#include "common.h"
+
+#define DEVICE_NAME_SIZE             12
+#define OTA_SERVER_PORT	             443			             //腾讯云连接HTTPS服务器所使用的端口号：HTTP:80  HTTPS:443
+#define	FIRMWARE_VERSION_SIZE        13                          //固件包的版本名大小
+#define WRITE_W25Q_SIZE              2048U			             //单次写入W25Q卡的大小, 改变写入大小前，需要前往user_cong.c改变W5500的接收缓存区的大小，不然无法接收全部的数据
+#define DOWNLOAD_SIZE_ONCE           (WRITE_W25Q_SIZE + 2U)	     //单次下载的字节数量 WRITE_SD_SIZE + 2位CRC
+#define CRC_ERROR_COUNT              5							 //CRC出错后的判断次数
+#define PARTITION_VERSION_SIZE       24                          //表头文件名长度
+#define DOWNLOAD_SIZE_HREADER        32                          //固件包表头大小
+
+/***********************************************************************************************
+ *                                  数据上报云平台的模板                                         *
+************************************************************************************************/
+#define THING_UPLOAD_TEMPLATE             "{\"method\":\"report\",\"clientToken\":\"123\",\"timestamp\":1628646783,\"params\":{\"FV\":\"%s\",\"DV\":\"%s\",\"DS\":\"%s\"}}"
+#define OTA_UPLOAD_VERSION_TEMPLATE	      "{\"type\": \"report_version\",\"report\":{\"version\": \"%s\"}}"			//上报版本时，报文数据部分的格式
+#define OTA_UPLOAD_RESULT_TEMPLATE        "{\"type\": \"report_progress\",\"report\":{\"progress\":{\"state\":\"%s\",\"result_code\":\"%s\",\"result_msg\":\"\"},\"version\": \"%s\"}}"
+
+//HTTP的请求报文. GET：后面跟随URL标识的资源; HTTP/1.1:为HTTP的版本; HOST:请求的目的主机域名或IP; Range:请求下载的起始地址和结束地址.
+#define HTTP_UPLOAD_TEMPLATE              "GET %s HTTP/1.1\r\nHOST: %s\r\nRange: bytes=%d-%d\r\n\r\n"	
+#define HTTP_ACK_PACKET	                  "HTTP/1.1 206 Partial Content\r\n"					       //206表示HTTP请求成功
+
+/***********************************************************************************************
+ *                                OTA下发的固件包信息的结构体                                    *
+************************************************************************************************/
+#pragma pack(1)
+typedef struct OAT_INFO {
+    u32 FileSize;								  //文件大小
+    char Md5Sum[64];						      //服务器下发的md5
+    char Host[64];								  //OTA下载固件包的URL的服务器域名
+	char URLABuff[512];                           //固件包的URL的资源地址
+    char Version[FIRMWARE_VERSION_SIZE];		  //OTA版本信息
+} OTA_INFO_t;
+#pragma pack()
+
+
+/***********************************************************************************************
+ *                                  HTTP下载时的记录结构体                                      *
+************************************************************************************************/
+typedef struct HTTP_PACKET{
+	u32 DownloadCount;			           //总共需要下载的次数
+	u32 DownloadNum;			           //已经下载的次数
+}HTTP_PACKET_t;
+
+
+
+/***********************************************************************************************
+ *                                    函数返回值的枚举集合                                       *
+************************************************************************************************/
+enum {
+	OTA_SUCCESS = 0, 
+	OTA_CONNECT_SERVER_ERR = 1, 				//连接服务器失败标志
+	OTA_SSL_ERR = 2,			                //SLL握手失败
+	OTA_CONNECT_MQTT_ERR = 3,                   //连接MQTT服务器失败
+	OTA_COMMAND_ERR = 4,
+	OTA_LOSE_INFO = 5,                              // 
+	OTA_HTTP_ERROR,
+	OTA_CRC_ERROR,	
+	OTA_WRITE_ERROR,
+	OTA_FIRM_CRC_ERR,
+	OTA_LINK_ERR,
+	OTA_NEW_VERSION,
+	OTA_DONT_UPDATA,
+	OTA_COMMAND_ADD,
+	OTA_COMMAND_UPDATA,
+	OTA_COMMAND_ANALYSIS,
+	OTA_ADD_SERIES_ZERO,
+	OTA_HTTP_SUCCESS,
+	OTA_CONNECT_TIMEOUT,
+	OTA_COMMAND_DELETE_UPDATE,
+	OTA_DOWNLOAD_ONCE_SUCCES,
+	OTA_FIRMWARE_VERIFY_ERROR,
+	OTA_FIRMWARE_VERIFY_SUCCES,
+	OTA_LINK_CLOUD_ERROR,
+	OTA_USER_CANCEL,
+	OTA_FIRMWARE_EMPTY,
+	OTA_JUMP_APP_ERROR,
+	OTA_WRITE_FLASH_ERROR,
+	OTA_DEVICE_ABNORMAL,
+};
+
+u8 ConnectTencentCloud(void);
+u8 GetOtaInfo(void);
+u8 StartDownloadFirmware(void);
+void DisconnectTencentCloud(void);
+void InitialFirmwareInfo(void);
+u8 FactoryReset(void);
+void HandleFirmwareInfo(void);
+u8 UploadFirmwareVersion(void);
+#endif
+

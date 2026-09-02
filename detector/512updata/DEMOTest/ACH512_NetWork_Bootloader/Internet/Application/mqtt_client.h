@@ -1,0 +1,54 @@
+#ifndef __IOT_MQTT_H_
+#define __IOT_MQTT_H_
+
+#include "common.h"
+#include "cloud_platform_para.h"
+
+enum  
+{
+	MQTT_SUCCESS = 0,
+	CONNECT_ERROR,
+	DISCONNECT_ERROR,
+	PUB_TOPIC_ERROR,
+    SUB_TOPIC_ERROR,
+    GET_SUB_TOPIC_DATA,
+    DONT_SUB_TOPIC_DATA,
+};
+
+/*******************************************************
+ * @brief    连接云平台客户端，并订阅指定的主题
+ * @param    xxx:xxx
+ * @return   CONNECT_ERROR： 连接云平台时，出现错误
+			 SUB_TOPIC_ERROR：订阅主题时，出现错误
+			 MQTT_SUCCESS： 连接并订阅主题成功
+********************************************************/
+u8 ConnectMqttClient(void);
+
+/*******************************************************
+ * @brief    断开云平台的连接
+ * @param    无
+ * @return   DISCONNECT_ERROR：断开失败
+			 MQTT_SUCCESS：断开成功
+********************************************************/
+u8 DisconnectMqttClient(void);
+
+/****************************************************************
+ * @brief    向指定发布主题上报消息
+ * @param    PubUploadData: 发布主题上报时的数据格式
+ * @return   PUB_TOPIC_ERROR：向主题发布消息失败
+ *           MQTT_SUCCESS: 发布消息成功
+****************************************************************/
+u8 SendPubTopicInfo(const char* PubTopic, const char* PubUploadData);
+
+/*****************************************************************************
+ * @brief    向主题上报并获取该主题下发的消息
+ * @param    PubTopic：发布主题
+             PubUploadData：主题发布时的数据格式
+             RxBuff：   订阅的主题下发数据的缓存区
+ * @return   PUB_TOPIC_ERROR：向主题发布消息失败
+			 GET_SUB_TOPIC_DATA：得到主题下发的数据
+			 DONT_SUB_TOPIC_DATA：主题没有下发数据
+******************************************************************************/
+u8 GetSubTopicInfo(const char* PubTopic, SUB_TOPIC_MAP_t SubTopicNum, const char* PubUploadData, char* RxBuff);
+#endif
+

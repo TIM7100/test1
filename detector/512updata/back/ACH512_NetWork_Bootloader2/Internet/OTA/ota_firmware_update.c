@@ -1,0 +1,678 @@
+#include "ota_firmware_update.h"
+#include "ssl_direct.h"
+#include "tcp_client.h"
+#include "mqtt_client.h"
+#include "cJSON.h"
+#include "w5500_user_conf.h"
+#include "ota_firmware_handle.h"
+#include "ssl_direct.h"
+#include "delay.h"
+#include "ExternalFlash.h"
+#include "crc.h"
+#include "lcd.h"
+#include "menu_show.h"
+#include "my_aes_ecb.h"
+#include "rtc.h"
+#include "w5500_user_conf.h"
+#include "eflash.h"
+
+#define HEADER_LOCK_FLAG      0x3435
+#define SHADOW_LOCK_FLAG      0x45464546
+
+static OTA_INFO_t OtaInfo = {0};
+static HTTP_PACKET_t HttpPacketInfo = {0};                          //存放HTTP的下载进度
+extern firmware_info_t firmware_info;
+static SHADOW_INFO_t shadow_info = {0};
+/*******************************************************
+ * @brief    初始化表头信息
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+void InitialFirmwareInfo(void)
+{
+    memset(&firmware_info, 0, sizeof(firmware_info));
+    strncpy(firmware_info.local_firmware_version, "000000000000", 12);
+    firmware_info.KeyFlag = HEADER_LOCK_FLAG;
+}
+
+/*******************************************************
+ * @brief    上报当前设备固件版本
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 UploadFirmwareVersion(void)
+{
+    char OTA_TxBuff[1024] = {0};
+    u8 TimeOut = 3;
+
+    while (ConnectTencentCloud() != OTA_SUCCESS)
+    {
+        if ((TimeOut--) == 0)
+        {
+            ConnectTencentCloudShow();
+            return OTA_LINK_CLOUD_ERROR;
+        }
+    }
+    sprintf(OTA_TxBuff, OTA_UPLOAD_VERSION_TEMPLATE, firmware_info.local_firmware_version);  //上报固件版本
+    SendPubTopicInfo(OTA_PUB_TOPIC, OTA_TxBuff);
+    UploadThingData();
+    DisconnectTencentCloud();
+
+    return OTA_SUCCESS;
+}
+/*******************************************************
+ * @brief    对本地Firmware表头信息进行加密后放入W25Q
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+void HandleFirmwareInfo(void)
+{
+    u16 cal_crc;
+    u8 EncryptData[512];
+	  u8 eflashBuffer[512];
+
+    cal_crc = GetCrc16((char *)&firmware_info, 510);
+    firmware_info.crc[0] = cal_crc >> 8;
+    firmware_info.crc[1] = (u8)cal_crc;
+
+    EncryptDataByAesECB((u8*)&firmware_info, ONCE_HANDLE_SIZE, EncryptData);
+	
+    if (firmware_info.FirmwareAreaFlag == 0 || 2)                //判断从哪个外部flash开始恢复出厂
+    {
+        ExFlashWrite(EncryptData, 0, ONCE_HANDLE_SIZE);          //更改两次标志位以恢复出厂两个外部flash
+        firmware_info.FirmwareAreaFlag = 1 ;
+        ExFlashWrite(EncryptData, 0, ONCE_HANDLE_SIZE);
+			  firmware_info.FirmwareAreaFlag = 0;
+			  
+			  eflashBuffer[0] = firmware_info.FirmwareAreaFlag;        
+        EflashWritePageHandle(FLASHSWITCHAddr, 512, eflashBuffer);//擦除开机固件检测的标志位
+			  
+    }
+    else
+    {
+        ExFlashWrite(EncryptData, 0, ONCE_HANDLE_SIZE);
+        firmware_info.FirmwareAreaFlag = 0 ;
+        ExFlashWrite(EncryptData, 0, ONCE_HANDLE_SIZE);
+			  firmware_info.FirmwareAreaFlag = 0;
+			
+			  eflashBuffer[0] = firmware_info.FirmwareAreaFlag;
+        EflashWritePageHandle(FLASHSWITCHAddr, 512, eflashBuffer);
+    }
+
+}
+
+/*******************************************************
+ * @brief    初始化表头信息并上报当前设备固件版本
+ * @param    xxx:xxx
+ * @return
+ *           OTA_CONNECT_SERVER_ERR     连接服务器失败
+ *           OTA_SUCCESS                连接服务器成功
+********************************************************/
+u8 FactoryReset(void)
+{
+    /*判断网线是否连接，确保版本同步*/
+    W5500Reset();
+    if (W5500PhyLinkCheck() == 0)
+    {
+        return OTA_CONNECT_SERVER_ERR;
+    }
+
+    InitialFirmwareInfo();
+    HandleFirmwareInfo();
+    if (UploadFirmwareVersion() != OTA_SUCCESS)
+    {
+        return OTA_CONNECT_SERVER_ERR;
+    }
+
+    return OTA_SUCCESS;
+}
+
+/*******************************************************
+ * @brief    上传物理模型
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+void UploadThingData(void)
+{
+    char OTA_TxBuff[1024] = {0};
+
+    sprintf(OTA_TxBuff, (const char*)THING_UPLOAD_TEMPLATE, DEVICE_VERSION, shadow_info.ShadowCount);
+    SendPubTopicInfo(THING_PUB_TOPIC, OTA_TxBuff);
+}
+
+/*******************************************************
+ * @brief    查询剩余点数
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u16 GetDeviceRemainCount(void)
+{
+    return shadow_info.ShadowCount;
+}
+
+/*******************************************************
+ * @brief    初始化点数升级
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+void DeviceShadowCountInit(void)
+{
+    u8 eflashBuffer[512];
+
+    EflashReadPage(DATA_AREA_ADDR, 512, (u32*)eflashBuffer);
+    memcpy(&shadow_info, eflashBuffer, sizeof(shadow_info));
+    /*首次上电会进行锁定*/
+    if (shadow_info.Lock != SHADOW_LOCK_FLAG)
+    {
+        memset(&shadow_info, 0, sizeof(shadow_info));
+        shadow_info.Lock = SHADOW_LOCK_FLAG;
+        memcpy(eflashBuffer, &shadow_info, sizeof(shadow_info));
+        EflashWritePageHandle(DATA_AREA_ADDR, 512, eflashBuffer);
+    }
+}
+
+/*******************************************************
+ * @brief    设置升级点数
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 SetDeviceShadowCount(u32 Receive_Version, u32 Receive_Count)
+{
+    u8 eflashBuffer[512];
+
+    /*接收到的影子消息版本不等于当前保存的版本，则进行更新*/
+    if (shadow_info.Version != Receive_Version)
+    {
+        if (shadow_info.CountValidFlag != 0)   /*未被取走*/
+        {
+            shadow_info.ShadowCount +=  Receive_Count;
+        }
+        else                                   /*已被取走*/
+        {
+            shadow_info.ShadowCount =  Receive_Count;
+        }
+        shadow_info.Version = Receive_Version;      //保存版本
+        shadow_info.CountValidFlag = 1;
+
+        EflashReadPage(DATA_AREA_ADDR, 512, (u32*)eflashBuffer);
+        memcpy(eflashBuffer, &shadow_info, sizeof(shadow_info));
+        EflashWritePageHandle(DATA_AREA_ADDR, 512, eflashBuffer);
+        UploadThingData();
+        return SHADOW_SET_SUCCESS;
+    }
+    return SHADOW_VERSION_ERROR;
+}
+
+/*******************************************************
+ * @brief    连接腾讯云云平台
+ * @param    xxx:xxx
+ * @return   OTA_CONNECT_SERVER_ERR：连接服务器失败
+ *           OTA_SSL_ERR：    SSL握手失败
+ *           OTA_SUCCESS：    连接腾讯云云平台成功
+********************************************************/
+u8 ConnectTencentCloud(void)
+{
+    u8 Ret = 0;
+
+    SSL_Init();                                                    //初始化SSL配置
+
+    Ret = EthernetConnectServer(NULL, 0);                          //连接腾讯云服务器
+    if (Ret != CONNECT_SUCCESS)
+    {
+        return OTA_CONNECT_SERVER_ERR;
+    }
+    //SSL轮询握手
+    if (SSL_HandshakeAwait())
+    {
+        return OTA_SSL_ERR;
+    }
+
+    Ret = ConnectMqttClient();                                       //连接腾讯云云平台并订阅主题
+    if (Ret != MQTT_SUCCESS)
+    {
+        return OTA_CONNECT_MQTT_ERR;
+    }
+    return OTA_SUCCESS;
+}
+/*******************************************************
+ * @brief    断开服务器连接
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+void DisconnectTencentCloud(void)
+{
+    //断开云平台连接
+    if (DisconnectMqttClient() == DISCONNECT_ERROR)
+    {
+        //printfS("断开云平台失败, 错误编号: %d\r\n", Ret);
+    }
+    disconnect(SOCK_TCPS);                                              //断开服务器连接
+    close(SOCK_TCPS);                                                   //关闭Socket口
+}
+
+/*******************************************************
+ * @brief    等待HTTP服务器的回应报文
+ * @param    xxx:xxx
+ * @return   WAIT_HTTP_ACK_TIMEOUT： 等待时间超时，代表没有接收到回应
+ *           OTA_SUCCESS：代表接收到了回应报文，可以进行数据的解析
+********************************************************/
+static u8 WaitHttpAck(void)
+{
+    u8 Timeout = 20;
+    u16 Len = 0;
+
+    Timer0DelayMs(20);
+    Len = getSn_RX_RSR(SOCK_TCPS);
+    while (Len == 0)
+    {
+        Len = getSn_RX_RSR(SOCK_TCPS);
+        Timeout--;
+        if (Timeout == 0)
+        {
+            return OTA_HTTP_ERROR;
+        }
+        Timer0DelayMs(10);
+    }
+    return OTA_HTTP_SUCCESS;
+}
+
+/*******************************************************************************
+ * @brief    解析NTP服务器下发的数据包，获取其中的关键信息
+ * @param    无
+ * @return   OTA_LOSE_INFO: 获取的数据包信息错误
+ *           OTA_DONT_UPDATA: 没有接收到可用于解析关键信息的数据包
+ *           OTA_SUCCESS: 解析到时间戳，并成功写入
+********************************************************************************/
+u8 GetNTPTime(void)
+{
+    char OTA_RxBuff[1024] = {0};
+    char OTA_TxBuff[200] = {0};
+    char *ota_StartInfo;
+    cJSON *Data, *ntptime2;
+    char *bufferEnd;
+    u64 NTPTime;
+
+    sprintf(OTA_TxBuff, OTA_UPLOAD_NTP_TEMPLATE);    //拼接NTP报文数据包
+    if (GetSubTopicInfo(SYS_PUB_TOPIC, SUB_SYS_NUM, OTA_TxBuff, OTA_RxBuff) != GET_SUB_TOPIC_DATA)
+    {
+        return OTA_DONT_UPDATA;
+    }
+    //提取NTP JSON信息
+    ota_StartInfo = OTA_RxBuff;
+    bufferEnd = ota_StartInfo + strlen(OTA_RxBuff);
+    while ((ota_StartInfo < bufferEnd) && (*ota_StartInfo != '{'))
+    {
+        ota_StartInfo++;
+    }
+    if (ota_StartInfo >= bufferEnd)  //超出长度
+    {
+        return OTA_LOSE_INFO;
+    }
+    // cJSON解析
+    Data = cJSON_Parse(ota_StartInfo);
+    if (Data == NULL)
+    {
+        return OTA_LOSE_INFO;
+    }
+    else
+    {
+        ntptime2 = cJSON_GetObjectItem(Data, "ntptime2");
+        if (ntptime2 == NULL)
+        {
+            cJSON_Delete(Data);
+            return OTA_LOSE_INFO;
+        }
+        NTPTime = (u64)ntptime2->valuedouble;
+        RTC_Set(NTPTime / 1000);
+        cJSON_Delete(Data);
+        return OTA_SUCCESS;
+    }
+    return OTA_LOSE_INFO;
+}
+
+/*******************************************************************************
+ * @brief    解析OTA下发的数据包，获取其中的关键信息
+ * @param    无
+ * @return   OTA_LOSE_INFO: 获取的OTA固件包的信息错误
+ *           OTA_DONT_UPDATA: 没有固件包信息, 代表没有新版本的固件包需要更新
+ *           OTA_COMMAND_ERR: 固件包信息错误
+ *           OTA_SUCCESS: 获取到新的OTA固件包更新信息
+********************************************************************************/
+u8 GetOtaInfo(void)
+{
+    char OTA_RxBuff[1024] = {0};
+    char OTA_TxBuff[200] = {0};
+    char *ota_StartInfo;
+    cJSON *Data, *fw_type, *file_size, *md5sum, *task_id, *type, *url, *version;
+    char * url_index_start;
+    char * url_index_end;
+    char *bufferEnd;
+
+    //1. 向云平台上报当前设备的固件版本, 并获取最新的固件版本信息
+    sprintf(OTA_TxBuff, OTA_UPLOAD_VERSION_TEMPLATE, firmware_info.local_firmware_version);    //拼接报文数据包
+    if (GetSubTopicInfo(OTA_PUB_TOPIC, SUB_OTA_NUM, OTA_TxBuff, OTA_RxBuff) != GET_SUB_TOPIC_DATA)
+    {
+        return OTA_DONT_UPDATA;
+    }
+    //提取OTA升级时的信息，包括文件大小、URL信息、更新指令和版本号
+    ota_StartInfo = OTA_RxBuff;
+    bufferEnd = ota_StartInfo + strlen(OTA_RxBuff);
+    while ((ota_StartInfo < bufferEnd) && (*ota_StartInfo != '{'))
+    {
+        ota_StartInfo++;
+    }
+    if (ota_StartInfo >= bufferEnd)  //超出长度
+    {
+        return OTA_LOSE_INFO;
+    }
+    // cJSON解析
+    Data = cJSON_Parse(ota_StartInfo);
+    if (Data == NULL)
+    {
+        return OTA_LOSE_INFO;
+    }
+    else
+    {
+        file_size = cJSON_GetObjectItem(Data, "file_size");
+        fw_type = cJSON_GetObjectItem(Data, "fw_type");
+        md5sum = cJSON_GetObjectItem(Data, "md5sum");
+        task_id = cJSON_GetObjectItem(Data, "task_id");
+        type = cJSON_GetObjectItem(Data, "type");
+        url = cJSON_GetObjectItem(Data, "url");
+        version = cJSON_GetObjectItem(Data, "version");
+        if (file_size == NULL || url == NULL || version == NULL)
+        {
+            cJSON_Delete(Data);
+            return OTA_LOSE_INFO;
+        }
+        OtaInfo.FileSize = file_size->valueint;
+        strncpy(OtaInfo.Md5Sum, md5sum->valuestring, sizeof(OtaInfo.Md5Sum));
+        strncpy(OtaInfo.Version, version->valuestring, sizeof(OtaInfo.Version));
+
+        url_index_start = url->valuestring;
+        bufferEnd = url_index_start + strlen(url_index_start);
+        while ((url_index_start < bufferEnd) && ((*url_index_start != '/') || (*(url_index_start + 1) != '/')))
+        {
+            url_index_start++;
+        }
+        if (url_index_start >= bufferEnd)  //超出长度
+        {
+            cJSON_Delete(Data);
+            return OTA_COMMAND_ERR;
+        }
+
+        url_index_start += 2;   //跳过"//"
+
+        url_index_end = url_index_start;
+        bufferEnd = url_index_end + strlen(url_index_end);
+        while ((url_index_end < bufferEnd) && (*url_index_end != '/'))
+        {
+            url_index_end++;
+        }
+        if (url_index_end >= bufferEnd)  //超出长度
+        {
+            cJSON_Delete(Data);
+            return OTA_COMMAND_ERR;
+        }
+
+        strncpy(OtaInfo.Host, url_index_start, url_index_end - url_index_start);  //解析得到Host
+        OtaInfo.Host[url_index_end - url_index_start] = '\0';
+        strcpy(OtaInfo.URLABuff, url_index_end);                                  //解析得到URLABuff
+        //记录接收到的固件包版本
+        strncpy(firmware_info.firmware_version, OtaInfo.Version, strlen(OtaInfo.Version));
+        //清理内存
+        cJSON_Delete(Data);
+        return OTA_SUCCESS;
+    }
+    return OTA_LOSE_INFO;
+}
+
+/*******************************************************************************
+ * @brief    解析影子设备下发的数据包，获取其中的关键信息
+ * @param    无
+ * @return   OTA_LOSE_INFO: 获取的影子设备数据包信息错误
+ *           OTA_DONT_UPDATA: 没有接收到可用于解析关键信息的数据包
+ *           SHADOW_VERSION_ERROR: 影子设备更新点数版本错误
+ *           SHADOW_SET_SUCCESS: 解析到影子设备版本和点数，并成功写入
+********************************************************************************/
+u8 GetShadowInfo(void)
+{
+    char OTA_RxBuff[1024] = {0};
+    char *ota_StartInfo;
+    cJSON *Data, *payload, *version, *state, *desired, *SJY_COUNT;
+    char *bufferEnd;
+
+    //获取影子设备数据
+    if (GetSubTopicInfo(SHADOW_PUB_TOPIC, SUB_SHADOW_NUM, SHADOW_DATA_MODE, OTA_RxBuff) != GET_SUB_TOPIC_DATA)
+    {
+        return OTA_DONT_UPDATA;
+    }
+    //提取影子设备JSON信息
+    ota_StartInfo = OTA_RxBuff;
+    bufferEnd = ota_StartInfo + strlen(OTA_RxBuff);
+    while ((ota_StartInfo < bufferEnd) && (*ota_StartInfo != '{'))
+    {
+        ota_StartInfo++;
+    }
+    if (ota_StartInfo >= bufferEnd)  //超出长度
+    {
+        return OTA_LOSE_INFO;
+    }
+    Data = cJSON_Parse(ota_StartInfo);
+    if (Data == NULL)
+    {
+        return OTA_LOSE_INFO;
+    }
+    else
+    {
+        payload = cJSON_GetObjectItem(Data, "payload");
+        if (payload == NULL)
+        {
+            cJSON_Delete(Data);
+            return OTA_LOSE_INFO;
+        }
+        version = cJSON_GetObjectItem(payload, "version");
+        if (version == NULL)
+        {
+            cJSON_Delete(Data);
+            return OTA_LOSE_INFO;
+        }
+        state = cJSON_GetObjectItem(payload, "state");
+        if (state == NULL)
+        {
+            cJSON_Delete(Data);
+            return OTA_LOSE_INFO;
+        }
+        desired = cJSON_GetObjectItem(state, "desired");
+        if (desired == NULL)
+        {
+            cJSON_Delete(Data);
+            return OTA_LOSE_INFO;
+        }
+        SJY_COUNT = cJSON_GetObjectItem(desired, "SJY_COUNT");
+        if (SJY_COUNT == NULL)
+        {
+            cJSON_Delete(Data);
+            return OTA_LOSE_INFO;
+        }
+
+        if (SetDeviceShadowCount(version->valueint, SJY_COUNT->valueint) != SHADOW_SET_SUCCESS)
+        {
+            cJSON_Delete(Data);
+            return SHADOW_VERSION_ERROR;
+        }
+        cJSON_Delete(Data);
+        return SHADOW_SET_SUCCESS;
+    }
+    return OTA_LOSE_INFO;
+}
+/******************************************************************
+ * @brief    开始下载固件包
+ * @param    xxx:xxx
+ * @return   OTA_SUCCESS：固件包下载成功
+ *           OTA_CONNECT_SERVER_ERR: 连接HTTP服务器失败
+ *           OTA_SSL_ERR：   SSL握手失败
+ *           OTA_HTTP_ERROR：下载固件包失败，原因是HTTP连接状态错误
+ *           OTA_CRC_ERROR:  下载固件包失败，原因是CRC校验失败
+ *           OTA_WRITE_ERROR：下载固件包失败，原因是写入SD卡失败
+********************************************************************/
+u8 StartDownloadFirmware(void)
+{
+    u8  DownloadState = OTA_COMMAND_UPDATA;                     //记录连接HTTP下载固件包的过程状态
+    u16 DownloadCount = 0;                                      //记录了本次固件包分段下载的次数
+    u32 StartAddress;                                           //每次分段下载的开始地址
+    u32 EndAddress;                                             //每次分段下载的结束地址
+    u32 AckStartAddress = 0;                                    //HTTP响应的开始地址
+    u32 AckEndAddress = 0;                                      //HTTP响应的结束地址
+    u8  CrcErrCount = CRC_ERROR_COUNT;                          //允许每次分段下载的数据CRC校验失败后的重试次数
+    u16 CurrentCRC = 0;                                         //分段下载的数据计算出来的CRC
+    char DataBuff[DOWNLOAD_SIZE_ONCE + 512];                    //数据缓存区
+    u8  *TxPoint = 0;
+    u32 Write_W25q_Start_Addr;
+
+    RunningShow(DOWNLOAD_RUNNING); //加载进度条
+
+    //连接HTTP服务器前，需要先断开其他连接的服务器
+    SSL_Init();
+    DownloadState = EthernetConnectServer((const char*)OtaInfo.Host, OTA_SERVER_PORT);          //连接OTA下载服务器HTTP协议
+    if (DownloadState != CONNECT_SUCCESS)
+    {
+        printfS("连接服务器失败, 错误编号: %d\r\n", DownloadState);
+        return OTA_CONNECT_SERVER_ERR;
+    }
+    //SSL轮询握手
+    if (SSL_HandshakeAwait())
+    {
+        return OTA_SSL_ERR;
+    }
+    //获取写入地址
+    Write_W25q_Start_Addr = GET_NEXT_FIRMWARE_WRITE_ADDRESS(firmware_info.FirmwareAreaFlag);
+    //计算分段下载次数
+    DownloadCount = OtaInfo.FileSize / DOWNLOAD_SIZE_ONCE;
+    if (OtaInfo.FileSize % DOWNLOAD_SIZE_ONCE != 0)
+    {
+        DownloadCount += 1;
+    }
+    //判断下载次数, 并确定是否有意外掉线导致未下载成功的数据
+    if ((HttpPacketInfo.DownloadCount != DownloadCount) || (HttpPacketInfo.DownloadNum == 0))
+    {
+        /* 上次更新成功, 重新计算下载次数 */
+        HttpPacketInfo.DownloadCount = DownloadCount;
+        HttpPacketInfo.DownloadNum = 0;
+    }
+    else
+    {
+        /* 记录了上次下载的停止的位置, 继续执行下方的操作 */
+    }
+
+    //开始分段请求固件包进行下载
+    for (; HttpPacketInfo.DownloadNum < HttpPacketInfo.DownloadCount; HttpPacketInfo.DownloadNum++)
+    {
+        CrcErrCount = CRC_ERROR_COUNT;
+        DownloadState = OTA_COMMAND_UPDATA;
+        /*计算本次下载要下载固件包中的起始地址和结束地址*/
+        StartAddress = HttpPacketInfo.DownloadNum * DOWNLOAD_SIZE_ONCE;
+        if (HttpPacketInfo.DownloadNum != HttpPacketInfo.DownloadCount - 1)
+        {
+            EndAddress = StartAddress + DOWNLOAD_SIZE_ONCE - 1;
+        }
+        else
+        {
+            //若本次下载为最后一次下载，则请求的固件包的结束地址为固件包的大小
+            EndAddress = OtaInfo.FileSize - 1;
+        }
+AgainSend:
+        /* 清空socket接收缓存区, 清空数据缓存区, 拼接HTTP请求报文, 并发送到HTTP服务器 */
+        //SSL_ReadData((u8 *)DataBuff, sizeof(DataBuff));
+        memset(DataBuff, 0, sizeof(DataBuff));
+        sprintf(DataBuff, HTTP_UPLOAD_TEMPLATE, OtaInfo.URLABuff, OtaInfo.Host, (int)StartAddress, (int)EndAddress);
+        SSL_SendData((u8*)DataBuff, strlen((const char*)DataBuff));
+        //等待接收Http回应报文, 若HTTP回应超时，下载状态为OTA_HTTP_ERROR
+        if (WaitHttpAck() == OTA_HTTP_ERROR)
+        {
+            DownloadState = OTA_HTTP_ERROR;
+            break;
+        }
+        /*Http回应，接收数据并解析数据是否正确 */
+        memset(DataBuff, 0, sizeof(DataBuff));
+        SSL_ReadData((u8 *)DataBuff, sizeof(DataBuff));                //接收数据
+        if (strstr(DataBuff, HTTP_ACK_PACKET) != NULL)                 //判断回应的数据是否正确
+        {
+            //Content-Range: bytes StartAddress-EndAddress/108616获取本次下载的字节数在固件包中的起始位
+            if ((sscanf(strstr(DataBuff, "Content-Range"), "Content-Range: bytes %d-%d/%*d", &AckStartAddress, &AckEndAddress) == 2))
+            {
+                /*判断HTTP回应的下载地址是否错误*/
+                if (AckStartAddress != StartAddress || AckEndAddress != EndAddress)
+                {
+                    DownloadState = OTA_HTTP_ERROR;
+                    break;
+                }
+                //偏移到数据存放的地址
+                TxPoint = (u8 *)strstr(DataBuff, "\r\n\r\n") + 4;           //获取携带的数据的开始地址，标志为\r\n\r\n
+                /* 处理CRC */
+                CurrentCRC = GetCrc16((char *)TxPoint, WRITE_W25Q_SIZE);
+                if (CurrentCRC != ((TxPoint[EndAddress - StartAddress - 1] << 8) + TxPoint[EndAddress - StartAddress]))
+                {
+                    printfS("CRC 校验出错\r\n");
+                    DownloadState = OTA_CRC_ERROR;
+                    break;
+                }
+                //开始写入25q
+                if (ExFlashWrite(TxPoint, Write_W25q_Start_Addr + HttpPacketInfo.DownloadNum * (WRITE_W25Q_SIZE), EndAddress - StartAddress - 1) != W25Q_SUCC)
+                {
+                    DownloadState = OTA_WRITE_ERROR;
+                    break;
+                }
+                ProgressBarShow(HttpPacketInfo.DownloadCount, HttpPacketInfo.DownloadNum + 1);                      //加载进度条
+            }
+        }
+        /* 接收到的回应出错，置下载状态为OTA_HTTP_ERROR错误状态*/
+        else
+        {
+            DownloadState = OTA_HTTP_ERROR;
+            break;
+        }
+    }
+    /* 下载状态异常处理, 有时连接的HTTP会意外掉线, 为防止出现错误, 需要保存下载的进度, 以便下次进行下载 */
+    switch (DownloadState)
+    {
+    case OTA_HTTP_ERROR:                                       //HTTP连接状态错误，重新连接HTTP服务器
+        DownloadState = ConnectServerAgain();
+        if (DownloadState == CONNECT_SUCCESS)                 //连接成功，重新下载
+        {
+            DownloadState = OTA_CONNECT_TIMEOUT;
+            goto AgainSend;
+            break;
+        }
+        else if (DownloadState == SOCKET_CONNECT_ERROR)        //HTTP连接失败
+        {
+            DownloadState = OTA_HTTP_ERROR;
+        }
+        else if (DownloadState == NETWORK_CABLE_LINK_ERROR)    //网线意外掉落
+        {
+            DownloadState = OTA_LINK_ERR;
+        }
+        break;
+    case OTA_CRC_ERROR:
+        if (CrcErrCount-- != 0)
+        {
+            DownloadState = OTA_CRC_ERROR;
+            goto AgainSend;
+            break;
+        }
+        break;
+    }
+    /* 下载成功 */
+    disconnect(SOCK_TCPS);              //断开HTTPS服务器连接
+    if (DownloadState == OTA_COMMAND_UPDATA)
+    {
+        DownloadState = OTA_COMMAND_ANALYSIS;    //固件包下载成功，开始解析阶段
+        printfS("Download Count:%d\r\nReality Download Count: %d\r\n", HttpPacketInfo.DownloadCount, HttpPacketInfo.DownloadNum);
+        HttpPacketInfo.DownloadCount = 0;
+        HttpPacketInfo.DownloadNum = 0;
+    }
+    return DownloadState;
+}
+
+
+

@@ -1,0 +1,16 @@
+.\Out_Files\cloud_platform_para.o: APP\cloud_platform_para.c
+.\Out_Files\cloud_platform_para.o: APP\cloud_platform_para.h
+.\Out_Files\cloud_platform_para.o: .\COMMON\common.h
+.\Out_Files\cloud_platform_para.o: .\COMMON\stdio.h
+.\Out_Files\cloud_platform_para.o: C:\keil\ARM\RV31\Inc\string.h
+.\Out_Files\cloud_platform_para.o: .\COMMON\types.h
+.\Out_Files\cloud_platform_para.o: .\ACH512\system\sys_config.h
+.\Out_Files\cloud_platform_para.o: .\ACH512\system\ach512.h
+.\Out_Files\cloud_platform_para.o: .\CMSIS\Include\core_cm3.h
+.\Out_Files\cloud_platform_para.o: C:\keil\ARM\RV31\Inc\stdint.h
+.\Out_Files\cloud_platform_para.o: .\CMSIS\Include\core_cmInstr.h
+.\Out_Files\cloud_platform_para.o: .\CMSIS\Include\cmsis_armcc.h
+.\Out_Files\cloud_platform_para.o: .\CMSIS\Include\core_cmFunc.h
+.\Out_Files\cloud_platform_para.o: .\ACH512\system\system_ach512.h
+.\Out_Files\cloud_platform_para.o: .\COMMON\common.h
+.\Out_Files\cloud_platform_para.o: .\ACH512\driver\eflash.h

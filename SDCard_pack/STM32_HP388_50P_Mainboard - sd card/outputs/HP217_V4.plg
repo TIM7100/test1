@@ -1,0 +1,1528 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\XXY-YF-02\Desktop\HP217_Mainboard\pro\HP388_50P.uvproj
+Project File Date:  06/28/2022
+
+<h2>Output:</h2>
+Build target 'HP217'
+assembling startup_stm32f10x_xl.s...
+compiling core_cm3.c...
+compiling misc.c...
+compiling stm32f10x_crc.c...
+compiling stm32f10x_dac.c...
+compiling stm32f10x_flash.c...
+compiling stm32f10x_fsmc.c...
+compiling stm32f10x_gpio.c...
+compiling stm32f10x_i2c.c...
+compiling stm32f10x_it.c...
+compiling stm32f10x_pwr.c...
+compiling stm32f10x_rcc.c...
+compiling stm32f10x_rtc.c...
+compiling stm32f10x_sdio.c...
+compiling stm32f10x_spi.c...
+compiling stm32f10x_tim.c...
+compiling system_stm32f10x.c...
+compiling stm32f10x_usart.c...
+compiling stm32f10x_bkp.c...
+compiling MainSlaveInterface.c...
+compiling BurnFunction.c...
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+compiling main.c...
+compiling menu.c...
+compiling UserFunctionInterface.c...
+compiling CommonFunction.c...
+compiling crc.c...
+compiling usart_lcd.c...
+compiling user_OS.c...
+compiling flash.c...
+compiling rtc.c...
+compiling Timer0.c...
+compiling user_Peripheral.c...
+compiling user_system_init.c...
+compiling w25qxx.c...
+linking...
+Program Size: Code=35050 RO-data=43302 RW-data=11780 ZI-data=35348  
+FromELF: creating hex file...
+"..\outputs\HP388_50P.axf" - 0 Error(s), 1 Warning(s).
+Build target 'HP217'
+compiling BurnFunction.c...
+linking...
+Program Size: Code=35038 RO-data=43298 RW-data=11780 ZI-data=35348  
+FromELF: creating hex file...
+"..\outputs\HP388_50P.axf" - 0 Error(s), 0 Warning(s).
+Build target 'HP217'
+compiling menu.c...
+linking...
+Program Size: Code=35038 RO-data=43298 RW-data=11780 ZI-data=35348  
+FromELF: creating hex file...
+"..\outputs\HP388_50P.axf" - 0 Error(s), 0 Warning(s).
+Build target 'HP217'
+linking...
+Program Size: Code=35038 RO-data=43298 RW-data=11780 ZI-data=35348  
+FromELF: creating hex file...
+"..\outputs\HP388_50P.axf" - 0 Error(s), 0 Warning(s).
+Load "..\\outputs\\HP388_50P.AXF" 
+* JLink Info: Device "STM32F103VG" selected (1024 KB flash, 96 KB RAM).
+Set JLink Project File to "C:\Users\XXY-YF-02\Desktop\HP217_Mainboard\pro\JLinkSettings.ini"
+ 
+JLink info:
+------------
+DLL: V4.40c, compiled Jan 24 2012 09:30:33
+Firmware: J-Link ARM V8 compiled Jan 31 2018 18:34:52
+Hardware: V8.00
+S/N : 20080643 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFull 
+ 
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+ROMTableAddr = 0xE00FF003
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+ 
+Target info:
+------------
+Device: STM32F103VG
+VTarget = 3.287V
+State of Pins: 
+TCK: 1, TDI: 0, TDO: 0, TMS: 0, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 9600 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+* JLink Info: TotalIRLen = 9, IRPrint = 0x0011
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+* JLink Info: TPIU fitted.
+* JLink Info: ETM fitted.
+* JLink Info:   FPUnit: 6 code (BP) slots and 2 literal slots
+Application running ...
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling main.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling menu.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\menu.c(14): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(14): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(14): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(14): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(14): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(15): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(15): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(15): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(15): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(15): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(16): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(16): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(16): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(16): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(16): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(17): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(17): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(17): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(17): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(17): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(18): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(18): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(18): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(18): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(18): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(24): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(24): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(24): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(24): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling usart_lcd.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling user_OS.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling rtc.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling w25qxx.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling main.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling menu.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "TOSHIBAProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "TOSHIBATestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(23): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(23): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(24): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(24): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(39): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(36): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(46): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(43): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(54): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(50): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(61): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(57): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling usart_lcd.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling user_OS.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling rtc.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling w25qxx.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+Target not created
+"F:\AStyle代码自动对齐\AStyle\bin\astyle.exe" ..\CodeFile\UserFunction\menu.c --style=ansi --indent=spaces=4 -p -j -H -c -w -U "menu.c"
+格式化  ..\CodeFile\UserFunction\menu.c
+没有文件可处理 menu.c
+Artistic Style 已经终止运行
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling main.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling menu.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(23): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(23): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(24): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(24): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(39): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(36): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(46): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(43): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(54): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(50): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(61): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(57): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling usart_lcd.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling user_OS.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling rtc.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling w25qxx.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling main.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling menu.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(23): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(23): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(24): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(24): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(29): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(30): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(39): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(36): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(46): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(43): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(54): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(50): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(61): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(57): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(67): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling usart_lcd.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling user_OS.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling rtc.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling w25qxx.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling main.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling menu.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(23): error:  #20: identifier "T2323ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(24): error:  #20: identifier "T2309ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(25): error:  #146: too many initializer values
+..\CodeFile\UserFunction\menu.c(25): error:  #20: identifier "TOU2323ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(41): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(38): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(48): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(45): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(56): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(52): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(63): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(59): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling usart_lcd.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling user_OS.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling rtc.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling w25qxx.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling main.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling menu.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(23): error:  #20: identifier "T2323ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(24): error:  #20: identifier "T2309ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(25): error:  #146: too many initializer values
+..\CodeFile\UserFunction\menu.c(25): error:  #20: identifier "TOU2323ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(41): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(38): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(48): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(45): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(56): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(52): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(63): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(59): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling usart_lcd.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling user_OS.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling rtc.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling w25qxx.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling main.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling menu.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(23): error:  #20: identifier "T2323ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(24): error:  #20: identifier "T2309ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(25): error:  #20: identifier "TOU2323ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(31): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(32): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(41): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(38): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(48): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(45): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(56): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(52): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(63): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(59): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(69): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(75): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling usart_lcd.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling user_OS.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling rtc.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+compiling w25qxx.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling main.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling menu.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(23): error:  #20: identifier "OEMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(24): error:  #20: identifier "NonOEMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(25): error:  #20: identifier "CanonProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(26): error:  #20: identifier "HPCOMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(32): error:  #20: identifier "OEMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(33): error:  #20: identifier "NonOEMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(34): error:  #20: identifier "CanonTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(35): error:  #20: identifier "HPCOMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(44): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(41): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(51): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(48): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(59): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(55): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(66): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(62): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(83): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(28): warning:  #550-D: variable "AreaCodeSel" was set but never used
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): warning:  #550-D: variable "VersionCode" was set but never used
+compiling usart_lcd.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling user_OS.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling rtc.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling w25qxx.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling main.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling menu.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(23): error:  #20: identifier "OEMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(24): error:  #20: identifier "NonOEMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(25): error:  #20: identifier "CanonProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(26): error:  #20: identifier "HPCOMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(32): error:  #20: identifier "OEMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(33): error:  #20: identifier "NonOEMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(34): error:  #20: identifier "CanonTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(35): error:  #20: identifier "HPCOMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(44): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(41): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(51): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(48): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(59): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(55): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(66): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(62): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(83): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(55): error:  #20: identifier "RTC_TIME_SET" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(60): error:  #20: identifier "RTC_TIME_VIWE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(28): warning:  #550-D: variable "AreaCodeSel" was set but never used
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): warning:  #550-D: variable "VersionCode" was set but never used
+compiling usart_lcd.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling user_OS.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling rtc.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling w25qxx.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling main.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling menu.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(23): error:  #20: identifier "OEMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(24): error:  #20: identifier "NonOEMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(25): error:  #20: identifier "CanonProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(26): error:  #20: identifier "HPCOMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(32): error:  #20: identifier "OEMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(33): error:  #20: identifier "NonOEMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(34): error:  #20: identifier "CanonTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(35): error:  #20: identifier "HPCOMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(44): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(41): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(51): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(48): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(59): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(55): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(66): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(62): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(83): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(46): error:  #20: identifier "CLEARSECURITYCODE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(55): error:  #20: identifier "RTC_TIME_SET" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(60): error:  #20: identifier "RTC_TIME_VIWE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(28): warning:  #550-D: variable "AreaCodeSel" was set but never used
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): warning:  #550-D: variable "VersionCode" was set but never used
+compiling usart_lcd.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling user_OS.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling rtc.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling w25qxx.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling main.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling menu.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(23): error:  #20: identifier "OEMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(24): error:  #20: identifier "NonOEMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(25): error:  #20: identifier "CanonProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(26): error:  #20: identifier "HPCOMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(32): error:  #20: identifier "OEMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(33): error:  #20: identifier "NonOEMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(34): error:  #20: identifier "CanonTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(35): error:  #20: identifier "HPCOMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(44): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(41): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(51): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(48): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(59): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(55): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(66): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(62): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(46): error:  #20: identifier "CLEARSECURITYCODE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(55): error:  #20: identifier "RTC_TIME_SET" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(60): error:  #20: identifier "RTC_TIME_VIWE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(28): warning:  #550-D: variable "AreaCodeSel" was set but never used
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): warning:  #550-D: variable "VersionCode" was set but never used
+compiling usart_lcd.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling user_OS.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling rtc.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling w25qxx.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling main.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling menu.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(23): error:  #20: identifier "OEMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(24): error:  #20: identifier "NonOEMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(25): error:  #20: identifier "CanonProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(26): error:  #20: identifier "HPCOMProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(32): error:  #20: identifier "OEMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(33): error:  #20: identifier "NonOEMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(34): error:  #20: identifier "CanonTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(35): error:  #20: identifier "HPCOMTestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(44): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(41): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(51): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(48): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(59): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(55): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(66): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(62): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(72): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "int" cannot be used to initialize an entity of type "unsigned char *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "char *" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "void (*)(void)" cannot be used to initialize an entity of type "struct MenuItem *"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u8"
+..\CodeFile\UserFunction\menu.c(78): error:  #144: a value of type "struct MenuItem *" cannot be used to initialize an entity of type "const u32"
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(46): error:  #20: identifier "CLEARSECURITYCODE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(55): error:  #20: identifier "RTC_TIME_SET" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(60): error:  #20: identifier "RTC_TIME_VIWE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(28): warning:  #550-D: variable "AreaCodeSel" was set but never used
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): warning:  #550-D: variable "VersionCode" was set but never used
+compiling usart_lcd.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling user_OS.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling rtc.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling w25qxx.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+compiling main.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling menu.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(45): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(41): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(51): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(47): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(57): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(53): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(63): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(59): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(69): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(65): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(76): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(72): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(82): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(78): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(89): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(85): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(46): error:  #20: identifier "CLEARSECURITYCODE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(55): error:  #20: identifier "RTC_TIME_SET" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(60): error:  #20: identifier "RTC_TIME_VIWE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(28): warning:  #550-D: variable "AreaCodeSel" was set but never used
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): warning:  #550-D: variable "VersionCode" was set but never used
+compiling usart_lcd.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling user_OS.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling rtc.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling w25qxx.c...
+..\CodeFile\UserFunction\inc\menu.h(36): error:  #20: identifier "CommandMenuType" is undefined
+..\CodeFile\UserFunction\inc\menu.h(53): error:  #20: identifier "data" is undefined
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling CheckFunction.c...
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling main.c...
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling menu.c...
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(45): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(41): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(51): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(47): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(57): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(53): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(63): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(59): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(69): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(65): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(76): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(72): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(82): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(78): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(89): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(85): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+compiling UserFunctionInterface.c...
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(33): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(46): error:  #20: identifier "CLEARSECURITYCODE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(55): error:  #20: identifier "RTC_TIME_SET" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(60): error:  #20: identifier "RTC_TIME_VIWE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(28): warning:  #550-D: variable "AreaCodeSel" was set but never used
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): warning:  #550-D: variable "VersionCode" was set but never used
+compiling usart_lcd.c...
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+compiling user_OS.c...
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling rtc.c...
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+compiling w25qxx.c...
+..\CodeFile\UserPeripheral\inc\w25qxx.h(139): error:  #169: expected a declaration
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling main.c...
+compiling menu.c...
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(45): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(41): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(51): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(47): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(57): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(53): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(63): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(59): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(69): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(65): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(76): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(72): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(82): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(78): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(89): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(85): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(32): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(33): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(46): error:  #20: identifier "CLEARSECURITYCODE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(55): error:  #20: identifier "RTC_TIME_SET" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(60): error:  #20: identifier "RTC_TIME_VIWE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(28): warning:  #550-D: variable "AreaCodeSel" was set but never used
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): warning:  #550-D: variable "VersionCode" was set but never used
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+compiling user_OS.c...
+compiling rtc.c...
+compiling w25qxx.c...
+Target not created
+Build target 'HP217'
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling menu.c...
+..\CodeFile\UserFunction\menu.c(14): error:  #20: identifier "HP388ProMenu" is undefined
+..\CodeFile\UserFunction\menu.c(15): error:  #20: identifier "HP388TestMenu" is undefined
+..\CodeFile\UserFunction\menu.c(45): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(41): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(51): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(47): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(57): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(53): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(63): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(59): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(69): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(65): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(76): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(72): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(82): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(78): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(89): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(85): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(42): error:  #127: expected a statement
+..\CodeFile\UserFunction\UserFunctionInterface.c(426): error:  #36: the #if for this directive is missing
+..\CodeFile\UserFunction\UserFunctionInterface.c(1430): warning:  #12-D: parsing restarts here after previous syntax error
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling main.c...
+compiling menu.c...
+..\CodeFile\UserFunction\menu.c(45): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(41): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(51): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(47): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(57): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(53): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(63): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(59): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(69): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(65): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(76): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(72): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(82): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(78): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(89): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(85): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(42): error:  #127: expected a statement
+..\CodeFile\UserFunction\UserFunctionInterface.c(426): error:  #36: the #if for this directive is missing
+..\CodeFile\UserFunction\UserFunctionInterface.c(1430): warning:  #12-D: parsing restarts here after previous syntax error
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+compiling user_OS.c...
+..\CodeFile\ScreenOS\user_OS.c(119): error:  #20: identifier "Program_list" is undefined
+..\CodeFile\ScreenOS\user_OS.c(119): error:  #20: identifier "Text_list" is undefined
+compiling rtc.c...
+compiling w25qxx.c...
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling main.c...
+compiling menu.c...
+..\CodeFile\UserFunction\menu.c(51): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(47): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(57): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(53): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(63): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(59): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(69): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(65): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(76): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(72): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(82): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(78): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(89): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(85): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(42): error:  #127: expected a statement
+..\CodeFile\UserFunction\UserFunctionInterface.c(426): error:  #36: the #if for this directive is missing
+..\CodeFile\UserFunction\UserFunctionInterface.c(1430): warning:  #12-D: parsing restarts here after previous syntax error
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+compiling user_OS.c...
+..\CodeFile\ScreenOS\user_OS.c(119): error:  #20: identifier "Program_list" is undefined
+..\CodeFile\ScreenOS\user_OS.c(119): error:  #20: identifier "Text_list" is undefined
+compiling rtc.c...
+compiling w25qxx.c...
+Target not created
+Build target 'HP217'
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling menu.c...
+..\CodeFile\UserFunction\menu.c(57): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(53): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(63): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(59): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(69): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(65): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(76): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(72): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(82): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(78): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+..\CodeFile\UserFunction\menu.c(89): error:  #29: expected an expression
+..\CodeFile\UserFunction\menu.c(85): error:  #1514: an empty initializer is invalid for an array with unspecified bound
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(42): error:  #127: expected a statement
+..\CodeFile\UserFunction\UserFunctionInterface.c(426): error:  #36: the #if for this directive is missing
+..\CodeFile\UserFunction\UserFunctionInterface.c(1430): warning:  #12-D: parsing restarts here after previous syntax error
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+compiling user_OS.c...
+..\CodeFile\ScreenOS\user_OS.c(119): error:  #20: identifier "Program_list" is undefined
+..\CodeFile\ScreenOS\user_OS.c(119): error:  #20: identifier "Text_list" is undefined
+Target not created
+Build target 'HP217'
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling menu.c...
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(42): error:  #127: expected a statement
+..\CodeFile\UserFunction\UserFunctionInterface.c(426): error:  #36: the #if for this directive is missing
+..\CodeFile\UserFunction\UserFunctionInterface.c(1430): warning:  #12-D: parsing restarts here after previous syntax error
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+compiling user_OS.c...
+..\CodeFile\ScreenOS\user_OS.c(119): error:  #20: identifier "Program_list" is undefined
+..\CodeFile\ScreenOS\user_OS.c(119): error:  #20: identifier "Text_list" is undefined
+Target not created
+compiling user_OS.c...
+..\CodeFile\ScreenOS\user_OS.c - 0 Error(s), 0 Warning(s).
+Build target 'HP217'
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(42): error:  #127: expected a statement
+..\CodeFile\UserFunction\UserFunctionInterface.c(426): error:  #36: the #if for this directive is missing
+..\CodeFile\UserFunction\UserFunctionInterface.c(1430): warning:  #12-D: parsing restarts here after previous syntax error
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(42): error:  #127: expected a statement
+..\CodeFile\UserFunction\UserFunctionInterface.c(60): warning:  #12-D: parsing restarts here after previous syntax error
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling main.c...
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(42): error:  #127: expected a statement
+..\CodeFile\UserFunction\UserFunctionInterface.c(60): warning:  #12-D: parsing restarts here after previous syntax error
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+compiling user_OS.c...
+compiling rtc.c...
+compiling w25qxx.c...
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling main.c...
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(42): error:  #127: expected a statement
+..\CodeFile\UserFunction\UserFunctionInterface.c(60): warning:  #12-D: parsing restarts here after previous syntax error
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+compiling user_OS.c...
+compiling rtc.c...
+compiling w25qxx.c...
+Target not created
+Build target 'HP217'
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(42): error:  #127: expected a statement
+..\CodeFile\UserFunction\UserFunctionInterface.c(60): warning:  #12-D: parsing restarts here after previous syntax error
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(43): error:  #20: identifier "CLEARSECURITYCODE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(44): error:  #20: identifier "AreaCodeSel" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(44): error:  #140: too many arguments in function call
+..\CodeFile\UserFunction\UserFunctionInterface.c(50): error:  #20: identifier "RTC_TIME_SET" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(53): error:  #20: identifier "RTC_TIME_VIWE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(61): error:  #20: identifier "AreaCodeSel" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(61): error:  #20: identifier "VersionCode" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(66): error:  #127: expected a statement
+..\CodeFile\UserFunction\UserFunctionInterface.c(70): warning:  #12-D: parsing restarts here after previous syntax error
+..\CodeFile\UserFunction\UserFunctionInterface.c(71): error:  #127: expected a statement
+..\CodeFile\UserFunction\UserFunctionInterface.c(89): warning:  #12-D: parsing restarts here after previous syntax error
+..\CodeFile\UserFunction\UserFunctionInterface.c(90): error: At end of source:  #67: expected a "}"
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(43): error:  #20: identifier "CLEARSECURITYCODE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(44): error:  #20: identifier "AreaCodeSel" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(44): error:  #140: too many arguments in function call
+..\CodeFile\UserFunction\UserFunctionInterface.c(50): error:  #20: identifier "RTC_TIME_SET" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(53): error:  #20: identifier "RTC_TIME_VIWE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(61): error:  #20: identifier "AreaCodeSel" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(61): error:  #20: identifier "VersionCode" is undefined
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(43): error:  #20: identifier "CLEARSECURITYCODE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(44): error:  #20: identifier "AreaCodeSel" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(44): error:  #140: too many arguments in function call
+..\CodeFile\UserFunction\UserFunctionInterface.c(50): error:  #20: identifier "RTC_TIME_SET" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(53): error:  #20: identifier "RTC_TIME_VIWE" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(61): error:  #20: identifier "AreaCodeSel" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(61): error:  #20: identifier "VersionCode" is undefined
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(54): error:  #20: identifier "AreaCodeSel" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(54): error:  #20: identifier "VersionCode" is undefined
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+"F:\AStyle代码自动对齐\AStyle\bin\astyle.exe" ..\CodeFile\UserFunction\UserFunctionInterface.c --style=ansi --indent=spaces=4 -p -j -H -c -w -U "UserFunctionInterface.c"
+格式化  ..\CodeFile\UserFunction\UserFunctionInterface.c
+没有文件可处理 UserFunctionInterface.c
+Artistic Style 已经终止运行
+Build target 'HP217'
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(35): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\CheckFunction.c(36): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\CheckFunction.c(53): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(54): error:  #20: identifier "AreaCodeSel" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(54): error:  #20: identifier "VersionCode" is undefined
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling CheckFunction.c...
+..\CodeFile\UserFunction\CheckFunction.c(46): warning:  #550-D: variable "CrcFlag" was set but never used
+compiling ClearFunction.c...
+..\CodeFile\UserFunction\ClearFunction.c(51): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\ClearFunction.c(58): error:  #20: identifier "IndexType" is undefined
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(31): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(54): error:  #20: identifier "AreaCodeSel" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(54): error:  #20: identifier "VersionCode" is undefined
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling ClearFunction.c...
+ClearFunction.c: Error:  #5: cannot open source input file "..\CodeFile\UserFunction\ClearFunction.c": No such file or directory
+Target not created
+Build target 'HP217'
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(13): error:  #5: cannot open source input file "ClearFunction.h": No such file or directory
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(29): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(53): error:  #20: identifier "AreaCodeSel" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(53): error:  #20: identifier "VersionCode" is undefined
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(29): error:  #136: struct "MenuItem" has no field "Index_Type"
+..\CodeFile\UserFunction\UserFunctionInterface.c(30): error:  #20: identifier "IndexType" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(53): error:  #20: identifier "AreaCodeSel" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(53): error:  #20: identifier "VersionCode" is undefined
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling UserFunctionInterface.c...
+..\CodeFile\UserFunction\UserFunctionInterface.c(52): error:  #20: identifier "AreaCodeSel" is undefined
+..\CodeFile\UserFunction\UserFunctionInterface.c(52): error:  #20: identifier "VersionCode" is undefined
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling UserFunctionInterface.c...
+compiling usart_lcd.c...
+..\CodeFile\ScreenOS\usart_lcd.c(376): error:  #20: identifier "IndexType" is undefined
+Target not created
+Build target 'HP217'
+compiling usart_lcd.c...
+linking...
+..\outputs\HP388_50P.axf: Error: L6218E: Undefined symbol Main_Board_Version (referred from burnfunction.o).
+Target not created
+Build target 'HP217'
+linking...
+..\outputs\HP388_50P.axf: Error: L6218E: Undefined symbol Main_Board_Version (referred from burnfunction.o).
+Target not created
+Build target 'HP217'
+compiling main.c...
+linking...
+Program Size: Code=14522 RO-data=1170 RW-data=732 ZI-data=34476  
+FromELF: creating hex file...
+"..\outputs\HP388_50P.axf" - 0 Error(s), 0 Warning(s).
+Build target 'HP217'
+compiling BurnFunction.c...
+compiling menu.c...
+linking...
+Program Size: Code=14266 RO-data=1170 RW-data=732 ZI-data=34476  
+FromELF: creating hex file...
+"..\outputs\HP388_50P.axf" - 0 Error(s), 0 Warning(s).
+"F:\AStyle代码自动对齐\AStyle\bin\astyle.exe" ..\CodeFile\UserFunction\BurnFunction.c --style=ansi --indent=spaces=4 -p -j -H -c -w -U "BurnFunction.c"
+格式化  ..\CodeFile\UserFunction\BurnFunction.c
+没有文件可处理 BurnFunction.c
+Artistic Style 已经终止运行
+Build target 'HP217'
+compiling BurnFunction.c...
+linking...
+Program Size: Code=14266 RO-data=1170 RW-data=732 ZI-data=34476  
+FromELF: creating hex file...
+"..\outputs\HP388_50P.axf" - 0 Error(s), 0 Warning(s).
+Build target 'HP217'
+linking...
+Program Size: Code=14266 RO-data=1170 RW-data=732 ZI-data=34476  
+FromELF: creating hex file...
+"..\outputs\HP388_50P.axf" - 0 Error(s), 0 Warning(s).
+Build target 'HP217'
+compiling BurnFunction.c...
+linking...
+Program Size: Code=14198 RO-data=1170 RW-data=732 ZI-data=34476  
+FromELF: creating hex file...
+"..\outputs\HP388_50P.axf" - 0 Error(s), 0 Warning(s).
+Build target 'HP217'
+compiling BurnFunction.c...
+linking...
+Program Size: Code=14102 RO-data=1170 RW-data=732 ZI-data=34476  
+FromELF: creating hex file...
+"..\outputs\HP388_50P.axf" - 0 Error(s), 0 Warning(s).
+Build target 'HP217'
+compiling BurnFunction.c...
+..\CodeFile\UserFunction\BurnFunction.c(73): error:  #20: identifier "MainCount" is undefined
+..\CodeFile\UserFunction\BurnFunction.c(81): error:  #20: identifier "backdoor_buf" is undefined
+Target not created
+Build target 'HP217'
+compiling BurnFunction.c...
+linking...
+Program Size: Code=14102 RO-data=1170 RW-data=732 ZI-data=34476  
+FromELF: creating hex file...
+"..\outputs\HP388_50P.axf" - 0 Error(s), 0 Warning(s).
+Build target 'HP217'
+compiling BurnFunction.c...
+linking...
+Program Size: Code=14042 RO-data=1170 RW-data=732 ZI-data=34476  
+FromELF: creating hex file...
+"..\outputs\HP388_50P.axf" - 0 Error(s), 0 Warning(s).
+Build target 'HP217'
+compiling BurnFunction.c...
+linking...
+Program Size: Code=14042 RO-data=1170 RW-data=732 ZI-data=34476  
+FromELF: creating hex file...
+"..\outputs\HP388_50P.axf" - 0 Error(s), 0 Warning(s).
+"F:\AStyle代码自动对齐\AStyle\bin\astyle.exe" ..\CodeFile\UserFunction\BurnFunction.c --style=ansi --indent=spaces=4 -p -j -H -c -w -U "BurnFunction.c"
+格式化  ..\CodeFile\UserFunction\BurnFunction.c
+没有文件可处理 BurnFunction.c
+Artistic Style 已经终止运行

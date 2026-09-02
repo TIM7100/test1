@@ -1,0 +1,13 @@
+K 10
+svn:author
+V 2
+DS
+K 8
+svn:date
+V 27
+2025-05-23T08:19:59.179884Z
+K 7
+svn:log
+V 78
+Head_Handle()函数中遍历2.0以上版本24CXX系列时有问题，已解决
+END

@@ -1,0 +1,1 @@
+工程路径为..\STM32\XF_CODE\project\XF_Code.uvproj ,请用KEIL4（MDK4）以上版本打开

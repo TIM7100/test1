@@ -1,0 +1,12 @@
+.\Out_Files\platform.o: Mbedtls\library\platform.c
+.\Out_Files\platform.o: .\Mbedtls\include\mbedtls\config.h
+.\Out_Files\platform.o: .\Mbedtls\include\mbedtls\check_config.h
+.\Out_Files\platform.o: C:\keil\ARM\RV31\Inc\limits.h
+.\Out_Files\platform.o: .\Mbedtls\include\mbedtls\platform.h
+.\Out_Files\platform.o: .\Mbedtls\include\mbedtls\platform_time.h
+.\Out_Files\platform.o: C:\keil\ARM\RV31\Inc\time.h
+.\Out_Files\platform.o: C:\keil\ARM\RV31\Inc\stdio.h
+.\Out_Files\platform.o: C:\keil\ARM\RV31\Inc\stdlib.h
+.\Out_Files\platform.o: .\Mbedtls\include\mbedtls\platform_util.h
+.\Out_Files\platform.o: C:\keil\ARM\RV31\Inc\stddef.h
+.\Out_Files\platform.o: .\Mbedtls\include\mbedtls\error.h

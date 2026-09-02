@@ -1,0 +1,23 @@
+#include "menu_app.h"
+#include "bsp_timer7.h"
+#include "bsp_usart1.h"
+#include "w5500_user_conf.h"
+
+int main(void)
+{
+    __set_PRIMASK(0);                           //开启全局中断
+    System_Init();
+    System_Module_Enable(EN_GPIOAB);
+    System_Module_Enable(EN_GPIOCD);
+
+    UART1_Init(115200);
+    MenuBspInit();
+    Timer7_Init();
+    W5500Config();
+
+    while (1)
+    {
+        MenuOperatingSystem();
+    }
+}
+

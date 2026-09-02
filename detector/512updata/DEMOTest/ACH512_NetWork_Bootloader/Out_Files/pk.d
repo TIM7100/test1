@@ -1,0 +1,13 @@
+.\Out_Files\pk.o: Mbedtls\library\pk.c
+.\Out_Files\pk.o: .\Mbedtls\include\mbedtls\config.h
+.\Out_Files\pk.o: .\Mbedtls\include\mbedtls\check_config.h
+.\Out_Files\pk.o: C:\keil\ARM\RV31\Inc\limits.h
+.\Out_Files\pk.o: .\Mbedtls\include\mbedtls\pk.h
+.\Out_Files\pk.o: .\Mbedtls\include\mbedtls\md.h
+.\Out_Files\pk.o: C:\keil\ARM\RV31\Inc\stddef.h
+.\Out_Files\pk.o: .\Mbedtls\include\mbedtls\rsa.h
+.\Out_Files\pk.o: .\Mbedtls\include\mbedtls\bignum.h
+.\Out_Files\pk.o: C:\keil\ARM\RV31\Inc\stdint.h
+.\Out_Files\pk.o: .\Mbedtls\include\mbedtls\pk_internal.h
+.\Out_Files\pk.o: .\Mbedtls\include\mbedtls\platform_util.h
+.\Out_Files\pk.o: .\Mbedtls\include\mbedtls\error.h

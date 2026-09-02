@@ -1,0 +1,106 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.39.0.0
+Copyright (C) 2023 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: 111 XXY-XM2504271, 111, LIC=GMZI6-DS8RF-X7KRZ-JM0ZU-Y0SQ5-0INT5
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.39.0.0
+Toolchain Path:  D:\KEIL5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.21
+Assembler:       Armasm.exe V6.21
+Linker/Locator:  ArmLink.exe V6.21
+Library Manager: ArmAr.exe V6.21
+Hex Converter:   FromElf.exe V6.21
+CPU DLL:         
+Dialog DLL:      
+Target DLL:      CMSIS_AGDI_V8M.DLL V1.8.1.0
+Dialog DLL:      TCM.DLL V1.56.4.0
+ 
+<h2>Project:</h2>
+G:\JCY_DualModeUpgrade_BootLoader\TEST_MAC\PRO.uvprojx
+Project File Date:  07/27/2026
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.21', folder: 'D:\KEIL5\ARM\ARMCLANG\Bin'
+Rebuild target 'Recogner'
+compiling fxx_tim.c...
+compiling fxx_eflash.c...
+assembling startup_f4_f3.s...
+App/delay.c(1): warning: In file included from...
+App/delay.h(5): warning: In file included from...
+App/crc.h(6): warning: redefinition of typedef 'u8' is a C11 feature [-Wtypedef-redefinition]
+    6 | typedef uint8_t u8;
+      |                 ^
+./Libraries/StdPeriph_Driver/Inc/fxx_i2c.h(17): note: previous definition is here
+   17 | typedef unsigned char       u8;
+      |                             ^
+App/delay.c(1): warning: In file included from...
+App/delay.h(5): warning: In file included from...
+App/crc.h(7): warning: redefinition of typedef 'u16' is a C11 feature [-Wtypedef-redefinition]
+    7 | typedef uint16_t u16;
+      |                  ^
+./Libraries/StdPeriph_Driver/Inc/fxx_i2c.h(18): note: previous definition is here
+   18 | typedef unsigned short      u16;
+      |                             ^
+App/delay.c(1): warning: In file included from...
+App/delay.h(5): warning: In file included from...
+App/crc.h(8): warning: redefinition of typedef 'u32' is a C11 feature [-Wtypedef-redefinition]
+    8 | typedef uint32_t u32;
+      |                  ^
+./Libraries/StdPeriph_Driver/Inc/fxx_i2c.h(19): note: previous definition is here
+   19 | typedef unsigned int        u32;
+      |                             ^
+3 warnings generated.
+compiling delay.c...
+compiling main.c...
+App/uart.c(2): warning: In file included from...
+App/crc.h (6): warning: redefinition of typedef 'u8' is a C11 feature [-Wtypedef-redefinition]
+    6 | typedef uint8_t u8;
+      |                 ^
+./Libraries/StdPeriph_Driver/Inc/fxx_i2c.h(17): note: previous definition is here
+   17 | typedef unsigned char       u8;
+      |                             ^
+App/uart.c(2): warning: In file included from...
+App/crc.h (7): warning: redefinition of typedef 'u16' is a C11 feature [-Wtypedef-redefinition]
+    7 | typedef uint16_t u16;
+      |                  ^
+./Libraries/StdPeriph_Driver/Inc/fxx_i2c.h(18): note: previous definition is here
+   18 | typedef unsigned short      u16;
+      |                             ^
+App/uart.c(2): warning: In file included from...
+App/crc.h (8): warning: redefinition of typedef 'u32' is a C11 feature [-Wtypedef-redefinition]
+    8 | typedef uint32_t u32;
+      |                  ^
+./Libraries/StdPeriph_Driver/Inc/fxx_i2c.h(19): note: previous definition is here
+   19 | typedef unsigned int        u32;
+      |                             ^
+3 warnings generated.
+compiling uart.c...
+compiling fxx_uart.c...
+compiling fxx_rtc.c...
+compiling fxx_i2c.c...
+compiling system_f4_f3.c...
+compiling fxx_gpio.c...
+linking...
+Program Size: Code=10164 RO-data=520 RW-data=8 ZI-data=6176  
+FromELF: creating hex file...
+".\Objects\PRO.axf" - 0 Error(s), 6 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: Aisinochip
+                
+                Aisinochip::ACM32FP4@1.0.0
+                Aisinochip ACM32FP4 ARMv8-M Device Family Pack
+
+<h2>Collection of Component include folders:</h2>
+
+<h2>Collection of Component Files used:</h2>
+Build Time Elapsed:  00:00:00
+</pre>
+</body>
+</html>

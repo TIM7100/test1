@@ -1,0 +1,21 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+E:\detector\otherw\Modify_Bouad\demo\ACH512.uvproj
+Project File Date:  08/04/2026
+
+<h2>Output:</h2>
+Build target 'project'
+compiling main.c...
+linking...
+Program Size: Code=8702 RO-data=738 RW-data=24 ZI-data=6240  
+FromELF: creating hex file...
+".\Out_Files\ACH512.axf" - 0 Error(s), 0 Warning(s).
+Build target 'project'
+compiling main.c...
+linking...
+Program Size: Code=8702 RO-data=738 RW-data=24 ZI-data=6240  
+FromELF: creating hex file...
+".\Out_Files\ACH512.axf" - 0 Error(s), 0 Warning(s).

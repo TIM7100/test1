@@ -1,0 +1,223 @@
+#include "menu_app.h"
+
+#include "menu_show.h"
+#include "bsp_uart_lcd.h"
+#include "bsp_key.h"
+#include "bsp_eflash.h"
+#include "UserFunctionInterface.h"
+#include "handle_firmware.h"
+#include "ota_firmware_updata.h"
+#include "bsp_sdcard.h"
+//#include "shadow.h"
+//#define VERSION               "202409091459"
+
+
+__IO MenuItem *MenuPoint;                    //结构体指针,指向结构体后由内部函数指针指向功能函数
+__IO unsigned char NodeNum = 0;              //用户所选菜单节点
+
+__IO unsigned char MaxNodes;                 //所选菜单下节点的数量
+
+__IO unsigned char ShowCount = 5;            //同屏显示时允许的菜单节点数量
+__IO unsigned char DisplayStart = 0;         //同屏显示时的起始菜单节点
+__IO unsigned char DisplayEnd = 0;           //同屏显示时的最后一个菜单节点
+
+__IO u8  SelectPoint;                        //同屏显示时选中的节点
+__IO u8  RefreshFlag;                        //界面显示更新标志
+__IO u8  NodeChangFlag;                      //用户选择节点变化标志
+extern FIRMWARE_INFO_t LocalFirmwareInfo;
+u8 *LanguageChoose = (u8 *)LANGUAGE_ADDRESS;
+u8 KeyValue;
+
+
+
+
+
+
+void MenuBspInit(void)
+{
+    LCD_UartInit(115200);
+    KeyInit();
+}
+
+void DeviceInit(void)
+{
+    u8 Language = Chinese;
+
+    DeviceInitShow();
+    CheckSDCardShow();                  //显示查看SD卡界面，并检查有没有SD卡就绪
+    GetLocalFirmwareInfo();             //读取本地设备固件信息和固件包情况
+//    UpdataCountParameterInit();       //初始化本设备计数值
+    printfS("LanguageChoose: %d\r\n", *LanguageChoose);
+    if ((*LanguageChoose) >= 2)
+    {
+        EflashEraseArea(LANGUAGE_ADDRESS, 512);                      // 擦除存放语言标志位的Flash
+        EflashWritePage(LANGUAGE_ADDRESS, 1, &Language);             // 写入默认语言标志位 China == 1
+    }
+
+    System_Delay_MS(500);
+}
+
+void MainMenu(void)
+{
+    //--------开始界面，按任意键才能显示接下来的界面--------//
+    MainPageShow(*LanguageChoose, LocalFirmwareInfo.LocalFirmVersion);
+    while (1)
+    {
+        KeyValue =  KeyScan();
+        if (KeyValue == KEY_ENTER_VALUE)
+        {
+            break;
+        }
+    }
+    System_Delay_MS(200);
+}
+
+void MenuOperatingSystem(void)
+{
+    //--------显示参数初始化--------//
+    MenuPoint = FunctionMenu;
+    MaxNodes = MenuPoint->MenuCount;
+    NodeNum = 0;
+    DisplayStart = 0;
+    RefreshFlag = 1;                //更新界面
+
+    DeviceInit();
+    MainMenu();
+    //--------主界面显示--------//
+    while (1)
+    {
+        KeyValue =  KeyScan();
+        switch (KeyValue)
+        {
+        case KEY_ENTER_VALUE:
+        {
+            RefreshFlag = 1;
+            if (MenuPoint[NodeNum].ChildrenMenus == &NullMenuItem) //--------无子层menu，进入基础界面--------//
+            {
+                /*功能执行区*/
+                UserFunctionInterface(MenuPoint[NodeNum].FunctionCode, NodeNum);
+                NodeNum = 0;
+                DisplayStart = 0;
+            }
+            else if (MenuPoint[NodeNum].ChildrenMenus != &NullMenuItem) //--------有子层menu，继续进入子menu--------//
+            {
+                MenuPoint = MenuPoint[NodeNum].ChildrenMenus;
+                NodeNum = 0;
+                DisplayStart = 0;
+            }
+            break;
+        }
+
+        case KEY_ESC_VALUE:
+        {
+            RefreshFlag = 1;
+
+            if (MenuPoint[0].ParentMenus != &NullMenuItem)     //--------有父目录, 进入父目录--------//
+            {
+                MenuPoint = MenuPoint[0].ParentMenus;
+                NodeNum   = 0;
+                DisplayStart = 0;
+            }
+            else if (MenuPoint[0].ParentMenus == &NullMenuItem)
+            {
+                MainMenu();
+            }
+            break;
+        }
+
+        case KEY_UP_VALUE:                 //--------光标向上移动，不断显示界面变化--------//
+        {
+            NodeNum--;
+
+            if (NodeNum == 0xff)           //--------这个条件如果用 <0 则需要为有符号数 --------//
+            {
+                NodeNum = MaxNodes - 1;
+            }
+            NodeChangFlag = 1;
+            break;
+        }
+
+        case KEY_DOWN_VALUE:              //--------光标向下移动，不断显示界面变化--------//
+        {
+            NodeNum++;
+
+            if (NodeNum == MaxNodes)
+            {
+                NodeNum = 0;
+            }
+            NodeChangFlag = 1;
+            break;
+        }
+        default:
+            break;
+        }
+
+        /* 选中节点处理 */
+        if ((NodeNum == 0) && (DisplayStart == 0))          //切换到新菜单时，获取菜单参数
+        {
+            MaxNodes = MenuPoint[0].MenuCount;
+            if ((MaxNodes / ShowCount) != 0)                //计算当前菜单下可同屏显示的节点数
+            {
+                DisplayEnd = ShowCount;
+            }
+            else
+            {
+                DisplayEnd = MaxNodes;
+            }
+            SelectPoint = 1;                            //同屏显示时的节点选择
+        }
+        else if ((NodeNum >= DisplayStart) && (NodeNum < DisplayEnd))
+        {
+            SelectPoint =  NodeNum - DisplayStart + 1;
+        }
+        else if (NodeNum < DisplayStart)            //往回退过页时，更新显示
+        {
+            RefreshFlag = 1;
+            if (NodeNum <= 4)
+            {
+                if (NodeNum == 0)
+                {
+                    SelectPoint = 1;
+                }
+                else
+                {
+                    SelectPoint = DisplayStart;
+                }
+                DisplayStart = 0;
+                if ((MaxNodes / ShowCount) != 0)
+                {
+                    DisplayEnd = ShowCount;
+                }
+                else
+                {
+                    DisplayEnd = MaxNodes;
+                }
+            }
+            else
+            {
+                DisplayStart -= ShowCount;
+                DisplayEnd = DisplayStart + ShowCount;
+                SelectPoint = ShowCount;
+            }
+        }
+        else if (NodeNum >= DisplayEnd)             //往前进过页时，更新显示
+        {
+            RefreshFlag = 1;
+            if ((MaxNodes - NodeNum) < ShowCount)
+            {
+                DisplayStart = MaxNodes - ShowCount;
+                DisplayEnd = MaxNodes;
+                SelectPoint = 6 + NodeNum - MaxNodes;
+            }
+            else
+            {
+                DisplayStart += ShowCount;
+                DisplayEnd = DisplayStart + ShowCount;
+                SelectPoint = 1;
+            }
+        }
+        MenuShow(*LanguageChoose);
+    }
+}
+
+

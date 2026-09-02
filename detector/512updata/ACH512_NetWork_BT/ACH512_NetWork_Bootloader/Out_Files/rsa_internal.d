@@ -1,0 +1,10 @@
+.\Out_Files\rsa_internal.o: Mbedtls\library\rsa_internal.c
+.\Out_Files\rsa_internal.o: .\Mbedtls\include\mbedtls\config.h
+.\Out_Files\rsa_internal.o: .\Mbedtls\include\mbedtls\check_config.h
+.\Out_Files\rsa_internal.o: C:\keil\ARM\RV31\Inc\limits.h
+.\Out_Files\rsa_internal.o: .\Mbedtls\include\mbedtls\rsa.h
+.\Out_Files\rsa_internal.o: .\Mbedtls\include\mbedtls\bignum.h
+.\Out_Files\rsa_internal.o: C:\keil\ARM\RV31\Inc\stddef.h
+.\Out_Files\rsa_internal.o: C:\keil\ARM\RV31\Inc\stdint.h
+.\Out_Files\rsa_internal.o: .\Mbedtls\include\mbedtls\md.h
+.\Out_Files\rsa_internal.o: .\Mbedtls\include\mbedtls\rsa_internal.h

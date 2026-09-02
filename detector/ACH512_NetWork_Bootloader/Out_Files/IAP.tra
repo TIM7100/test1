@@ -1,0 +1,85 @@
+*** Creating Trace Output File '.\Out_Files\IAP.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\out_files\startup.o"'
+### List of Objects: adding '".\out_files\system_ach512.o"'
+### List of Objects: adding '".\out_files\common.o"'
+### List of Objects: adding '".\out_files\uart.o"'
+### List of Objects: adding '".\out_files\eflash.o"'
+### List of Objects: adding '".\out_files\lcd.o"'
+### List of Objects: adding '".\out_files\gpio.o"'
+### List of Objects: adding '".\out_files\delay.o"'
+### List of Objects: adding '".\out_files\rtc.o"'
+### List of Objects: adding '".\out_files\main.o"'
+### List of Objects: adding '".\out_files\userfunctioninterface.o"'
+### List of Objects: adding '".\out_files\cloud_platform_para.o"'
+### List of Objects: adding '".\out_files\crc.o"'
+### List of Objects: adding '".\out_files\my_aes_ecb.o"'
+### List of Objects: adding '".\out_files\xxyspi.o"'
+### List of Objects: adding '".\out_files\externalflash.o"'
+### List of Objects: adding '".\out_files\menu.o"'
+### List of Objects: adding '".\out_files\user_os.o"'
+### List of Objects: adding '".\out_files\menu_show.o"'
+### List of Objects: adding '".\out_files\socket.o"'
+### List of Objects: adding '".\out_files\w5500.o"'
+### List of Objects: adding '".\out_files\wizchip_conf.o"'
+### List of Objects: adding '".\out_files\w5500_user_conf.o"'
+### List of Objects: adding '".\out_files\dhcp.o"'
+### List of Objects: adding '".\out_files\dns.o"'
+### List of Objects: adding '".\out_files\tcp_client.o"'
+### List of Objects: adding '".\out_files\ssl_direct.o"'
+### List of Objects: adding '".\out_files\mqtt_client.o"'
+### List of Objects: adding '".\out_files\mqtt_fun.o"'
+### List of Objects: adding '".\out_files\mqttpacket.o"'
+### List of Objects: adding '".\out_files\mqttserializepublish.o"'
+### List of Objects: adding '".\out_files\mqttconnectclient.o"'
+### List of Objects: adding '".\out_files\mqttsubscribeclient.o"'
+### List of Objects: adding '".\out_files\cjson.o"'
+### List of Objects: adding '".\out_files\aes.o"'
+### List of Objects: adding '".\out_files\platform.o"'
+### List of Objects: adding '".\out_files\platform_util.o"'
+### List of Objects: adding '".\out_files\ssl_msg.o"'
+### List of Objects: adding '".\out_files\ssl_tls.o"'
+### List of Objects: adding '".\out_files\ssl_cli.o"'
+### List of Objects: adding '".\out_files\ssl_ciphersuites.o"'
+### List of Objects: adding '".\out_files\ctr_drbg.o"'
+### List of Objects: adding '".\out_files\debug.o"'
+### List of Objects: adding '".\out_files\entropy.o"'
+### List of Objects: adding '".\out_files\pk.o"'
+### List of Objects: adding '".\out_files\pk_wrap.o"'
+### List of Objects: adding '".\out_files\rsa.o"'
+### List of Objects: adding '".\out_files\rsa_internal.o"'
+### List of Objects: adding '".\out_files\bignum.o"'
+### List of Objects: adding '".\out_files\oid.o"'
+### List of Objects: adding '".\out_files\md.o"'
+### List of Objects: adding '".\out_files\md5.o"'
+### List of Objects: adding '".\out_files\sha256.o"'
+### List of Objects: adding '".\out_files\sha512.o"'
+### List of Objects: adding '".\out_files\sha1.o"'
+### List of Objects: adding '".\out_files\x509_crt.o"'
+### List of Objects: adding '".\out_files\x509.o"'
+### List of Objects: adding '".\out_files\asn1parse.o"'
+### List of Objects: adding '".\out_files\cipher_wrap.o"'
+### List of Objects: adding '".\out_files\pkparse.o"'
+### List of Objects: adding '".\out_files\gcm.o"'
+### List of Objects: adding '".\out_files\cipher.o"'
+### List of Objects: adding '".\out_files\utils_hmac.o"'
+### List of Objects: adding '".\out_files\utils_md5.o"'
+### List of Objects: adding '".\out_files\utils_sha1.o"'
+### List of Objects: adding '".\out_files\ota_firmware_update.o"'
+### List of Objects: adding '".\out_files\ota_firmware_handle.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 ".\out_files\startup.o" ".\out_files\system_ach512.o" ".\out_files\common.o" ".\out_files\uart.o" ".\out_files\eflash.o" ".\out_files\lcd.o" ".\out_files\gpio.o" ".\out_files\delay.o" ".\out_files\rtc.o" ".\out_files\main.o" ".\out_files\userfunctioninterface.o" ".\out_files\cloud_platform_para.o" ".\out_files\crc.o" ".\out_files\my_aes_ecb.o" ".\out_files\xxyspi.o" ".\out_files\externalflash.o" ".\out_files\menu.o" ".\out_files\user_os.o" ".\out_files\menu_show.o" ".\out_files\socket.o" ".\out_files\w5500.o" ".\out_files\wizchip_conf.o" ".\out_files\w5500_user_conf.o" ".\out_files\dhcp.o" ".\out_files\dns.o" ".\out_files\tcp_client.o" ".\out_files\ssl_direct.o" ".\out_files\mqtt_client.o" ".\out_files\mqtt_fun.o" ".\out_files\mqttpacket.o" ".\out_files\mqttserializepublish.o" ".\out_files\mqttconnectclient.o" ".\out_files\mqttsubscribeclient.o" ".\out_files\cjson.o" ".\out_files\aes.o" ".\out_files\platform.o" ".\out_files\platform_util.o" ".\out_files\ssl_msg.o" ".\out_files\ssl_tls.o" ".\out_files\ssl_cli.o" ".\out_files\ssl_ciphersuites.o" ".\out_files\ctr_drbg.o" ".\out_files\debug.o" ".\out_files\entropy.o" ".\out_files\pk.o" ".\out_files\pk_wrap.o" ".\out_files\rsa.o" ".\out_files\rsa_internal.o" ".\out_files\bignum.o" ".\out_files\oid.o" ".\out_files\md.o" ".\out_files\md5.o" ".\out_files\sha256.o" ".\out_files\sha512.o" ".\out_files\sha1.o" ".\out_files\x509_crt.o" ".\out_files\x509.o" ".\out_files\asn1parse.o" ".\out_files\cipher_wrap.o" ".\out_files\pkparse.o" ".\out_files\gcm.o" ".\out_files\cipher.o" ".\out_files\utils_hmac.o" ".\out_files\utils_md5.o" ".\out_files\utils_sha1.o" ".\out_files\ota_firmware_update.o" ".\out_files\ota_firmware_handle.o" --library_type=microlib --strict --scatter ".\Out_Files\IAP.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\IAP.map" -o ".\Out_Files\IAP.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\Out_Files\IAP.axf'
+### ADS-LD Command File: '.\Out_Files\IAP.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\Out_Files\IAP.lnp', Handle=0x000005CC
+### Writing '.lnp' file
+### ADS-LD Command file '.\Out_Files\IAP.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

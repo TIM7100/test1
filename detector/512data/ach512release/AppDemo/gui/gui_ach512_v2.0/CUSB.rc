@@ -1,0 +1,545 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\CUSB.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\CUSB.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 CUSB"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "CUSB 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2006",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_CUSB_DIALOG DIALOGEX 0, 0, 339, 473
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "ACH512 Appdemo V2.0"
+FONT 9, "宋体"
+BEGIN
+    PUSHBUTTON      "Connect USB",IDC_USB_BUTTON_CONNECT,7,13,62,15
+    PUSHBUTTON      "Exit",IDC_USB_BUTTON_EXIT,277,13,55,15
+    CONTROL         "Tab1",IDC_USB_MY_TAB,"SysTabControl32",0x0,7,138,325,
+                    328
+    GROUPBOX        "",IDC_STATIC,7,55,325,61
+    EDITTEXT        IDC_USB_EDIT_INPUTFILEPATH,69,68,192,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_USB_EDIT_OUTPUTFILEPATH,69,91,192,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse",IDC_USB_BUTTON_OUTPUTFILE,268,91,41,13
+    PUSHBUTTON      "Browse",IDC_USB_BUTTON_INPUTFILE,268,68,41,13
+    LTEXT           "Input  File",IDC_STATIC,19,72,45,8
+    LTEXT           "Output File",IDC_STATIC,19,95,44,8
+    PUSHBUTTON      "Disconnect USB",IDC_USB_BUTTON_DISCONNECT,7,34,62,15
+END
+
+IDD_DESDLG DIALOG DISCARDABLE  0, 0, 254, 271
+STYLE WS_CHILD
+FONT 10, "宋体"
+BEGIN
+    EDITTEXT        IDC_DES_EDIT_KEY1,40,17,200,13,ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC,7,7,240,67
+    LTEXT           "KEY1",IDC_STATIC,13,19,16,11
+    EDITTEXT        IDC_DES_EDIT_KEY2,40,35,200,13,ES_AUTOHSCROLL
+    LTEXT           "KEY2",IDC_STATIC,13,37,16,11
+    EDITTEXT        IDC_DES_EDIT_KEY3,40,53,200,13,ES_AUTOHSCROLL
+    LTEXT           "KEY3",IDC_STATIC,13,55,16,11
+    GROUPBOX        "",IDC_STATIC,7,110,240,33
+    EDITTEXT        IDC_DES_EDIT_PLAIN,40,122,200,13,ES_AUTOHSCROLL
+    LTEXT           "Plain",IDC_STATIC,13,124,25,11
+    GROUPBOX        "",IDC_STATIC,7,145,240,33
+    EDITTEXT        IDC_DES_EDIT_CIPHER,40,157,200,13,ES_AUTOHSCROLL
+    LTEXT           "Cipher",IDC_STATIC,13,159,25,11
+    GROUPBOX        "",IDC_STATIC,7,75,240,33
+    EDITTEXT        IDC_DES_EDIT_IV,40,87,200,13,ES_AUTOHSCROLL
+    LTEXT           "IV",IDC_STATIC,13,89,25,11
+    GROUPBOX        "",IDC_STATIC,7,231,240,33
+    EDITTEXT        IDC_DES_EDIT_OUTPUT,40,243,200,13,ES_AUTOHSCROLL
+    LTEXT           "Output",IDC_STATIC,13,245,25,11
+    GROUPBOX        "MODE",IDC_STATIC,7,181,46,47
+    CONTROL         "ECB",IDC_DES_RADIO_ECB,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,13,195,28,10
+    CONTROL         "CBC",IDC_DES_RADIO_CBC,"Button",BS_AUTORADIOBUTTON,13,
+                    210,28,10
+    GROUPBOX        "KEY NUM",IDC_STATIC,60,181,46,47
+    CONTROL         "One",IDC_DES_RADIO_KEY1,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,67,191,28,10
+    CONTROL         "Two",IDC_DES_RADIO_KEY2,"Button",BS_AUTORADIOBUTTON,67,
+                    203,28,10
+    CONTROL         "Three",IDC_DES_RADIO_KEY3,"Button",BS_AUTORADIOBUTTON,
+                    67,215,36,10
+    PUSHBUTTON      "Encrypt",IDC_DES_BUTTON_ENC,117,185,50,14
+    PUSHBUTTON      "Decrypt",IDC_DES_BUTTON_DEC,117,209,50,14
+    PUSHBUTTON      "EncryptFile",IDC_DES_BUTTON_ENCFILE,178,185,50,14
+    PUSHBUTTON      "DecryptFile",IDC_DES_BUTTON_DECFILE,178,209,50,14
+END
+
+IDD_SM1DLG DIALOG DISCARDABLE  0, 0, 270, 263
+STYLE WS_CHILD
+FONT 10, "@宋体"
+BEGIN
+    EDITTEXT        IDC_SM1_EDIT_EK,40,17,200,13,ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC,7,7,240,67
+    LTEXT           "EK",IDC_STATIC,13,19,9,11
+    EDITTEXT        IDC_SM1_EDIT_AK,40,35,200,13,ES_AUTOHSCROLL
+    LTEXT           "AK",IDC_STATIC,13,37,9,11
+    EDITTEXT        IDC_SM1_EDIT_SK,40,53,200,13,ES_AUTOHSCROLL
+    LTEXT           "SK",IDC_STATIC,13,55,9,11
+    GROUPBOX        "",IDC_STATIC,7,110,240,33
+    EDITTEXT        IDC_SM1_EDIT_PLAIN,40,122,200,13,ES_AUTOHSCROLL
+    LTEXT           "Plain",IDC_STATIC,13,124,23,11
+    GROUPBOX        "",IDC_STATIC,7,145,240,33
+    EDITTEXT        IDC_SM1_EDIT_CIPHER,40,157,200,13,ES_AUTOHSCROLL
+    LTEXT           "Cipher",IDC_STATIC,13,159,23,11
+    GROUPBOX        "",IDC_STATIC,7,224,240,33
+    EDITTEXT        IDC_SM1_EDIT_OUTPUT,40,236,200,13,ES_AUTOHSCROLL
+    LTEXT           "Output",IDC_STATIC,13,238,23,11
+    GROUPBOX        "SK MODE",IDC_STATIC,7,182,66,41
+    CONTROL         "Inner Param",IDC_SM1_RADIO_INNER,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,13,192,55,12
+    CONTROL         "Outer Param",IDC_SM1_RADIO_OUTER,"Button",
+                    BS_AUTORADIOBUTTON,13,207,55,12
+    PUSHBUTTON      "Encrypt",IDC_SM1_BUTTON_ENC,126,186,50,14
+    PUSHBUTTON      "Decrypt",IDC_SM1_BUTTON_DEC,126,207,50,14
+    PUSHBUTTON      "EncryptFile",IDC_SM1_BUTTON_ENCFILE,186,186,50,14
+    PUSHBUTTON      "DecryptFile",IDC_SM1_BUTTON_DECFILE,186,207,50,14
+    GROUPBOX        "",IDC_STATIC,7,75,240,33
+    EDITTEXT        IDC_SM1_EDIT_IV,40,87,200,13,ES_AUTOHSCROLL
+    LTEXT           "IV",IDC_STATIC,13,89,23,11
+    CONTROL         "ECB",IDC_SM1_RADIO_ECB,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,88,192,28,10
+    CONTROL         "CBC",IDC_SM1_RADIO_CBC,"Button",BS_AUTORADIOBUTTON,88,
+                    207,28,10
+    GROUPBOX        "MODE",IDC_STATIC,78,182,43,41
+END
+
+IDD_SM4DLG DIALOG DISCARDABLE  0, 0, 270, 233
+STYLE WS_CHILD
+FONT 10, "@宋体"
+BEGIN
+    EDITTEXT        IDC_SM4_EDIT_KEY,40,19,200,13,ES_AUTOHSCROLL
+    LTEXT           "Key",IDC_STATIC,13,21,17,11
+    EDITTEXT        IDC_SM4_EDIT_IV,40,53,200,13,ES_AUTOHSCROLL
+    LTEXT           "IV",IDC_STATIC,13,55,9,11
+    GROUPBOX        "",IDC_STATIC,7,75,240,33
+    EDITTEXT        IDC_SM4_EDIT_PLAIN,40,87,200,13,ES_AUTOHSCROLL
+    LTEXT           "Plain",IDC_STATIC,13,89,23,11
+    GROUPBOX        "",IDC_STATIC,7,110,240,33
+    EDITTEXT        IDC_SM4_EDIT_CIPHER,40,122,200,13,ES_AUTOHSCROLL
+    LTEXT           "Cipher",IDC_STATIC,13,124,25,11
+    GROUPBOX        "",IDC_STATIC,7,192,240,33
+    EDITTEXT        IDC_SM4_EDIT_OUTPUT,40,204,200,13,ES_AUTOHSCROLL
+    LTEXT           "Output",IDC_STATIC,13,206,23,11
+    GROUPBOX        "MODE",IDC_STATIC,7,147,50,41
+    CONTROL         "ECB",IDC_SM4_RADIO_ECB,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,13,157,32,12
+    CONTROL         "CBC",IDC_SM4_RADIO_CBC,"Button",BS_AUTORADIOBUTTON,13,
+                    172,32,12
+    PUSHBUTTON      "Encrypt",IDC_SM4_BUTTON_ENC,80,151,50,14
+    PUSHBUTTON      "Decrypt",IDC_SM4_BUTTON_DEC,80,172,50,14
+    PUSHBUTTON      "EncryptFile",IDC_SM4_BUTTON_ENCFILE,140,151,50,14
+    PUSHBUTTON      "DecryptFile",IDC_SM4_BUTTON_DECFILE,140,172,50,14
+    GROUPBOX        "",IDC_STATIC,7,7,240,33
+    GROUPBOX        "",IDC_STATIC,7,41,240,33
+END
+
+IDD_SSF33DLG DIALOG DISCARDABLE  0, 0, 277, 244
+STYLE WS_CHILD
+FONT 10, "@宋体"
+BEGIN
+    GROUPBOX        "",IDC_STATIC,7,7,240,48
+    EDITTEXT        IDC_SSF33_EDIT_PARA,40,17,200,13,ES_AUTOHSCROLL
+    LTEXT           "Para",IDC_STATIC,13,19,19,11
+    EDITTEXT        IDC_SSF33_EDIT_KEY,40,35,200,13,ES_AUTOHSCROLL
+    LTEXT           "Key",IDC_STATIC,13,37,17,11
+    GROUPBOX        "",IDC_STATIC,7,90,240,33
+    EDITTEXT        IDC_SSF33_EDIT_PLAIN,40,102,200,13,ES_AUTOHSCROLL
+    LTEXT           "Plain",IDC_STATIC,13,104,23,11
+    GROUPBOX        "",IDC_STATIC,7,124,240,33
+    EDITTEXT        IDC_SSF33_EDIT_CIPHER,40,136,200,13,ES_AUTOHSCROLL
+    LTEXT           "Cipher",IDC_STATIC,13,138,26,11
+    GROUPBOX        "",IDC_STATIC,7,204,240,33
+    EDITTEXT        IDC_SSF33_EDIT_OUTPUT,40,216,200,13,ES_AUTOHSCROLL
+    LTEXT           "Output",IDC_STATIC,13,218,26,13
+    GROUPBOX        "SK MODE",IDC_STATIC,7,161,66,41
+    CONTROL         "Inner Param",IDC_SSF33_RADIO_INNER,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,13,172,55,12
+    CONTROL         "Outer Param",IDC_SSF33_RADIO_OUTER,"Button",
+                    BS_AUTORADIOBUTTON,13,187,55,12
+    PUSHBUTTON      "Encrypt",IDC_SSF33_BUTTON_ENC,126,166,50,14
+    PUSHBUTTON      "Decrypt",IDC_SSF33_BUTTON_DEC,126,186,50,14
+    PUSHBUTTON      "EncryptFile",IDC_SSF33_BUTTON_ENCFILE,186,166,50,14
+    PUSHBUTTON      "DecryptFile",IDC_SSF33_BUTTON_DECFILE,186,186,50,14
+    GROUPBOX        "",IDC_STATIC,7,56,240,33
+    EDITTEXT        IDC_SSF33_EDIT_IV,40,68,200,13,ES_AUTOHSCROLL
+    LTEXT           "IV",IDC_STATIC,13,70,23,11
+    CONTROL         "ECB",IDC_SSF33_RADIO_ECB,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,88,172,28,10
+    CONTROL         "CBC",IDC_SSF33_RADIO_CBC,"Button",BS_AUTORADIOBUTTON,88,
+                    187,28,10
+    GROUPBOX        "MODE",IDC_STATIC,78,161,43,41
+END
+
+IDD_RSADLG DIALOG DISCARDABLE  0, 0, 264, 287
+STYLE WS_CHILD
+FONT 10, "宋体"
+BEGIN
+    GROUPBOX        "Key",IDC_STATIC,7,15,240,160
+    EDITTEXT        IDC_RSA_EDIT_N,40,41,200,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_RSA_EDIT_E,40,57,200,14,ES_AUTOHSCROLL
+    LTEXT           "N",IDC_STATIC,13,43,8,14
+    LTEXT           "E",IDC_STATIC,13,59,8,14
+    CONTROL         "1024 bit",IDC_RSA_RADIO_1024BIT,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,13,25,49,11
+    CONTROL         "2048 bit",IDC_RSA_RADIO_2048BIT,"Button",
+                    BS_AUTORADIOBUTTON,64,25,45,11
+    PUSHBUTTON      "Generate Key",IDC_RSA_BUTTON_KEYGEN,166,22,56,14
+    EDITTEXT        IDC_RSA_EDIT_PLAIN,40,186,200,13,ES_MULTILINE | 
+                    WS_VSCROLL
+    GROUPBOX        "Crypt",IDC_STATIC,7,176,240,99
+    EDITTEXT        IDC_RSA_EDIT_CIPHER,40,202,200,13,ES_MULTILINE | 
+                    WS_VSCROLL
+    EDITTEXT        IDC_RSA_EDIT_OUTPUT,40,233,200,36,ES_MULTILINE | 
+                    WS_VSCROLL
+    LTEXT           "Plain",IDC_STATIC,13,188,21,15
+    LTEXT           "Cipher",IDC_STATIC,13,204,25,15
+    LTEXT           "Output",IDC_STATIC,13,247,25,15
+    PUSHBUTTON      "Encrypt",IDC_RSA_BUTTON_ENC,66,216,50,14
+    PUSHBUTTON      "Decrypt",IDC_RSA_BUTTON_DEC,143,216,50,14
+    EDITTEXT        IDC_RSA_EDIT_P,40,89,200,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_RSA_EDIT_Q,40,105,200,14,ES_AUTOHSCROLL
+    LTEXT           "p",IDC_STATIC,13,91,8,14
+    LTEXT           "q",IDC_STATIC,13,107,8,14
+    EDITTEXT        IDC_RSA_EDIT_DP,40,121,200,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_RSA_EDIT_DQ,40,137,200,14,ES_AUTOHSCROLL
+    LTEXT           "dp",IDC_STATIC,13,123,8,14
+    LTEXT           "dq",IDC_STATIC,13,139,8,14
+    EDITTEXT        IDC_RSA_EDIT_QINV,40,153,200,14,ES_AUTOHSCROLL
+    LTEXT           "qInv",IDC_STATIC,13,155,18,14
+    CONTROL         "Use CRT",IDC_RSA_CHECK_CRT,"Button",BS_AUTOCHECKBOX | 
+                    BS_TOP | WS_TABSTOP,115,25,52,13
+    GROUPBOX        "",IDC_STATIC,7,7,240,276
+    EDITTEXT        IDC_RSA_EDIT_D,40,73,200,14,ES_AUTOHSCROLL
+    LTEXT           "D",IDC_STATIC,13,75,8,11
+END
+
+IDD_SM2DLG DIALOGEX 0, 0, 322, 319
+STYLE WS_CHILD
+EXSTYLE WS_EX_APPWINDOW
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "Key",IDC_STATIC,7,3,308,60
+    EDITTEXT        IDC_SM2_EDIT_PRIVKEY,32,14,274,12
+    LTEXT           "d",IDC_STATIC,13,15,8,8
+    EDITTEXT        IDC_SM2_EDIT_PUBX,32,30,274,12
+    LTEXT           "Qx",IDC_STATIC,13,31,8,8
+    EDITTEXT        IDC_SM2_EDIT_PUBY,32,46,274,12
+    LTEXT           "Qy",IDC_STATIC,13,47,8,8
+    GROUPBOX        "Sign Output",IDC_STATIC,7,66,308,45
+    EDITTEXT        IDC_SM2_EDIT_SIGNR,32,78,274,12
+    LTEXT           "r",IDC_STATIC,13,79,8,8
+    EDITTEXT        IDC_SM2_EDIT_SIGNS,32,94,274,12
+    LTEXT           "s",IDC_STATIC,13,95,8,8
+    GROUPBOX        "Message(String)",IDC_STATIC,7,115,308,61
+    EDITTEXT        IDC_SM2_EDIT_MSG,32,127,274,28,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | WS_VSCROLL
+    LTEXT           "msg",IDC_STATIC,13,135,14,8
+    EDITTEXT        IDC_SM2_EDIT_ID,32,159,274,12
+    LTEXT           "id",IDC_STATIC,13,160,8,8
+    GROUPBOX        "Ciphertext(encrypt from msg)",IDC_STATIC,7,180,308,61
+    EDITTEXT        IDC_SM2_EDIT_CIPHER,32,192,274,44,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | WS_VSCROLL
+    LTEXT           "Enc Data",IDC_STATIC,13,206,17,16
+    GROUPBOX        "Plaintext(decrypt from Enc Data)",IDC_STATIC,7,245,308,
+                    45
+    EDITTEXT        IDC_SM2_EDIT_PLAIN,32,257,274,28,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
+    LTEXT           "Dec Data",IDC_STATIC,13,262,16,18
+    PUSHBUTTON      "KeyGen",IDC_SM2_BUTTON_KEYGEN,53,294,38,14
+    PUSHBUTTON      "Sign",IDC_SM2_BUTTON_SIGN,97,294,38,14
+    PUSHBUTTON      "Verify",IDC_SM2_BUTTON_VERIFY,141,294,38,14
+    PUSHBUTTON      "Encrypt",IDC_SM2_BUTTON_ENC,185,294,38,14
+    PUSHBUTTON      "Decrypt",IDC_SM2_BUTTON_DEC,229,294,38,14
+END
+
+IDD_SM3DLG DIALOG DISCARDABLE  0, 0, 270, 216
+STYLE WS_CHILD
+FONT 10, "@宋体"
+BEGIN
+    GROUPBOX        "",IDC_STATIC,7,154,240,33
+    EDITTEXT        IDC_SM3_EDIT_OUTPUT,40,166,200,13,ES_AUTOHSCROLL
+    LTEXT           "Output",IDC_STATIC,13,168,23,11
+    PUSHBUTTON      "SM3 Hash",IDC_SM3_BUTTON_HASH,22,193,60,14
+    PUSHBUTTON      "Hash For SM2",IDC_SM3_BUTTON_HASHFORSM2,172,193,60,14
+    GROUPBOX        "",IDC_STATIC,7,7,240,48
+    EDITTEXT        IDC_SM3_EDIT_PUBX,40,17,200,13,ES_AUTOHSCROLL
+    LTEXT           "Qx",IDC_STATIC,13,19,19,11
+    EDITTEXT        IDC_SM3_EDIT_PUBY,40,35,200,13,ES_AUTOHSCROLL
+    LTEXT           "Qy",IDC_STATIC,13,37,17,11
+    GROUPBOX        "Message(Ascii)",IDC_STATIC,7,56,240,63
+    EDITTEXT        IDC_SM3_EDIT_MSG,40,68,200,26,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | WS_VSCROLL
+    LTEXT           "msg",IDC_STATIC,13,75,20,9
+    EDITTEXT        IDC_SM3_EDIT_ID,40,99,200,13
+    LTEXT           "id",IDC_STATIC,13,101,14,8
+    GROUPBOX        "",IDC_STATIC,7,120,240,33
+    EDITTEXT        IDC_SM3_EDIT_INPUTFILEPATH,40,132,166,13,ES_AUTOHSCROLL
+    LTEXT           "FileIn",IDC_STATIC,13,134,25,11
+    PUSHBUTTON      "Browse",IDC_SM3_BUTTON_INPUTFILE,210,132,30,12
+    PUSHBUTTON      "SM3 Hash File",IDC_SM3_BUTTON_HASHFILE,97,193,60,14
+END
+
+IDD_HRNGDLG DIALOG DISCARDABLE  0, 0, 270, 124
+STYLE WS_CHILD
+FONT 10, "@宋体"
+BEGIN
+    GROUPBOX        "Register",IDC_STATIC,7,7,240,52
+    EDITTEXT        IDC_HRNG_EDIT_REGADDR,48,19,70,13,ES_AUTOHSCROLL
+    LTEXT           "Addr: 0x",IDC_STATIC,13,21,33,11
+    PUSHBUTTON      "Get Hrng data",IDC_HRNG_BUTTON_GETHRNGDATA,97,93,60,14
+    GROUPBOX        "Hrng data",IDC_STATIC,7,62,240,52
+    EDITTEXT        IDC_HRNG_EDIT_OUTPUTFILEPATH,48,74,158,13,ES_AUTOHSCROLL
+    LTEXT           "FileOut",IDC_STATIC,13,76,28,11
+    PUSHBUTTON      "Browse",IDC_HRNG_BUTTON_OUTPUTFILE,210,74,30,12
+    PUSHBUTTON      "Read Reg",IDC_HRNG_BUTTON_READREG,97,38,60,14
+    EDITTEXT        IDC_HRNG_EDIT_REGVALUE,171,19,70,13,ES_AUTOHSCROLL
+    LTEXT           "Value: 0x",IDC_STATIC,130,21,37,11
+END
+
+IDD_ISO7816DLG DIALOG DISCARDABLE  0, 0, 254, 155
+STYLE WS_CHILD
+FONT 10, "@宋体"
+BEGIN
+    PUSHBUTTON      "Reset",IDC_ISO7816_BUTTON_RESET,13,18,38,14
+    EDITTEXT        IDC_ISO7816_EDIT_ATR,59,19,180,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "PPS",IDC_ISO7816_BUTTON_PPS,13,54,38,14
+    EDITTEXT        IDC_ISO7816_EDIT_PPS,59,55,180,13,ES_AUTOHSCROLL
+    LTEXT           "Response",IDC_STATIC,13,72,33,15
+    EDITTEXT        IDC_ISO7816_EDIT_PPSRESPONSE,59,71,180,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "APDU",IDC_ISO7816_BUTTON_APDU,13,105,38,14
+    EDITTEXT        IDC_ISO7816_EDIT_APDU,59,106,180,13,ES_AUTOHSCROLL
+    LTEXT           "Response",IDC_STATIC,13,123,35,14
+    EDITTEXT        IDC_ISO7816_EDIT_APDURESPONSE,59,122,180,13,
+                    ES_AUTOHSCROLL
+    GROUPBOX        "ATR",IDC_STATIC,7,7,240,33
+    GROUPBOX        "PPS",IDC_STATIC,7,43,240,48
+    GROUPBOX        "APDU",IDC_STATIC,7,94,240,48
+END
+
+IDD_AESDLG DIALOG DISCARDABLE  0, 0, 254, 238
+STYLE WS_CHILD
+FONT 10, "宋体"
+BEGIN
+    EDITTEXT        IDC_AES_EDIT_KEY,40,19,200,13,ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC,7,7,240,33
+    LTEXT           "KEY",IDC_STATIC,13,21,16,11
+    GROUPBOX        "",IDC_STATIC,7,77,240,33
+    EDITTEXT        IDC_AES_EDIT_PLAIN,40,89,200,13,ES_AUTOHSCROLL
+    LTEXT           "Plain",IDC_STATIC,13,91,25,11
+    GROUPBOX        "",IDC_STATIC,7,112,240,33
+    EDITTEXT        IDC_AES_EDIT_CIPHER,40,124,200,13,ES_AUTOHSCROLL
+    LTEXT           "Cipher",IDC_STATIC,13,126,25,11
+    GROUPBOX        "",IDC_STATIC,7,42,240,33
+    EDITTEXT        IDC_AES_EDIT_IV,40,54,200,13,ES_AUTOHSCROLL
+    LTEXT           "IV",IDC_STATIC,13,56,25,11
+    GROUPBOX        "",IDC_STATIC,7,198,240,33
+    EDITTEXT        IDC_AES_EDIT_OUTPUT,40,210,200,13,ES_AUTOHSCROLL
+    LTEXT           "Output",IDC_STATIC,13,212,25,11
+    GROUPBOX        "MODE",IDC_STATIC,7,148,46,47
+    CONTROL         "ECB",IDC_AES_RADIO_ECB,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,13,162,28,10
+    CONTROL         "CBC",IDC_AES_RADIO_CBC,"Button",BS_AUTORADIOBUTTON,13,
+                    177,28,10
+    GROUPBOX        "KEY NUM",IDC_STATIC,60,148,46,47
+    CONTROL         "Key128",IDC_AES_RADIO_KEY128,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,67,158,40,10
+    CONTROL         "Key192",IDC_AES_RADIO_KEY192,"Button",
+                    BS_AUTORADIOBUTTON,67,170,40,10
+    CONTROL         "Key256",IDC_AES_RADIO_KEY256,"Button",
+                    BS_AUTORADIOBUTTON,67,182,40,10
+    PUSHBUTTON      "Encrypt",IDC_AES_BUTTON_ENC,117,152,50,14
+    PUSHBUTTON      "Decrypt",IDC_AES_BUTTON_DEC,117,176,50,14
+    PUSHBUTTON      "EncryptFile",IDC_AES_BUTTON_ENCFILE,178,152,50,14
+    PUSHBUTTON      "DecryptFile",IDC_AES_BUTTON_DECFILE,178,176,50,14
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "CUSB Microsoft 基础类应用程序\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "CUSB\0"
+            VALUE "LegalCopyright", "版权所有 (C) 2006\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "CUSB.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "CUSB 应用程序\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_SM4DLG, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 230
+    END
+
+    IDD_AESDLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 247
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 231
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 CUSB(&A)..."
+END
+
+#endif    // Chinese (中国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\CUSB.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

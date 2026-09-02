@@ -1,0 +1,86 @@
+
+;--------- Version Section ---------------------------------------------------
+
+[Version]
+Signature="$Windows NT$"
+Provider=%ProviderName%
+Class=USB
+ClassGUID={108D8180-D429-450B-AFA4-AC19039FC98F}
+DriverVer   = 04/10/2012,1.1.0.0
+CatalogFile.NTx86   = anusb64.cat
+CatalogFile.NTIA64  = anusb64.cat
+CatalogFile.NTAMD64 = anusb64.cat
+
+;--------- SourceDiskNames and SourceDiskFiles Section -----------------------
+
+[SourceDisksNames.amd64]
+1 = %InstallDisk%,"",,
+
+[SourceDisksFiles]
+aisncusb64.sys = 1,,
+
+;--------- ClassInstall/ClassInstall32 Section -------------------------------
+
+; NT Style
+[ClassInstall32]
+Addreg=Class_AddReg
+
+[Class_AddReg]
+HKR,,,,%DeviceClassName%
+HKR,,Icon,,"-5"
+
+;--------- DestinationDirs Section -------------------------------------------
+
+[DestinationDirs]
+DefaultDestDir = 12;10, System32\Drivers
+
+;--------- Manufacturer and Models Sections ----------------------------------
+
+[Manufacturer]
+%MfgName%=Mfg0,NTamd64
+
+[Mfg0]
+%DeviceDesc0%=anusb64_DDI, USB\VID_1234&PID_ABCD
+[Mfg0.NTamd64]
+%DeviceDesc0%=anusb64_DDI, USB\VID_1234&PID_ABCD
+
+;---------- DDInstall Sections -----------------------------------------------
+; --------- Windows NT -----------------
+
+[anusb64_DDI.NT]
+CopyFiles=anusb64_Files_Driver
+AddReg=anusb64_NT_AddReg
+
+[anusb64_DDI.NT.Services]
+Addservice = anusb64, 0x00000002, anusb64_AddService
+
+[anusb64_AddService]
+DisplayName    = %SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\aisncusb64.sys
+
+[anusb64_NT_AddReg]
+HKLM, "System\CurrentControlSet\Control\Class\{108D8180-D429-450B-AFA4-AC19039FC98F}\0000",\
+"DriverDate", 0x00000000,"04-10-2012"
+HKLM, "System\CurrentControlSet\Control\Class\{108D8180-D429-450B-AFA4-AC19039FC98F}\0000",\
+"Icon", 0x00000000,"0"
+
+
+; --------- Files (common) -------------
+
+[anusb64_Files_Driver]
+aisncusb64.sys,,,2		;Don't allow user to skip file.
+
+
+;--------- Strings Section ---------------------------------------------------
+
+[Strings]
+InstallDisk = "Aisncusb Device Installation Disk"
+ProviderName="AisinoChip"
+MfgName="AisinoChip"
+DeviceDesc="AisinoChip USB"
+DeviceDesc0="AisinoChip USB "
+DeviceClassName="AisinoChip USB"
+SvcDesc="AisinoChip USB"

@@ -1,0 +1,98 @@
+#include "aes.h"
+#include "my_aes_cbc.h"
+
+
+#define ChipSnAddress          0x00080208                           //芯片的SN号在Flash的地址
+
+//解密密钥, 需要同上位机的密钥保持一致  b23.tv/tjy7VzB
+const u8 APP_DecryptKey[16] = {0x2F, 0x2F, 0x62, 0x32, 0x33, 0x2E, 0x74, 0x76, 0x2F, 0x74, 0x6A, 0x79, 0x37, 0x56, 0x7A, 0x42};
+
+static u8 *SV_EncryptKey    = (u8 *)ChipSnAddress;              //加密密钥, 根据芯片的SV序列号生成密钥
+
+/*******************************************************
+ * @brief    对输入的数据进行加密
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 EncryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutEncryptedData, u8 *IV)
+{
+    mbedtls_aes_context AesContext;
+    int Result = 0;
+    int Padding = 0;
+
+    Padding = 16 - (DataLength % 16);
+    if (Padding != 16)
+    {
+        printfS("Failed to Padding\r\n");
+        return Padding_ERR;
+    }
+    //配置参数
+    mbedtls_aes_init(&AesContext);                                                //初始化
+    Result = mbedtls_aes_setkey_enc(&AesContext, SV_EncryptKey, 128);             //设置加密密钥
+    if (Result != 0)
+    {
+        printfS("failed to set key:");
+        mbedtls_aes_free(&AesContext);
+        return SET_KEY_ERR;
+    }
+    //开始加密
+    Result = mbedtls_aes_crypt_cbc(&AesContext, MBEDTLS_AES_ENCRYPT, DataLength, IV, InData, OutEncryptedData);
+    if (Result != 0)
+    {
+        printfS("failed to encrypt data:");
+        mbedtls_aes_free(&AesContext);
+        return ENC_CBC_ERR;
+    }
+    mbedtls_aes_free(&AesContext);
+    //返回密文长度
+    return DataLength;
+}
+
+
+/*******************************************************
+ * @brief    对输入的数据进行解密
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 DecryptDataByAesCBC(u8 *InData, u16 DataLength, u8 *OutDecryptedData, u8 *IV, u8 Key)
+{
+    mbedtls_aes_context AesContext;
+    int Result = 0;
+    int Padding = 0;
+
+    Padding = 16 - (DataLength % 16);
+    if (Padding != 16)
+    {
+        printfS("Failed to Padding\r\n");
+        return Padding_ERR;
+    }
+    //配置参数
+    mbedtls_aes_init(&AesContext);                                                  //初始化
+    if (Key == APP_KEY)
+    {
+        Result = mbedtls_aes_setkey_dec(&AesContext, APP_DecryptKey, 128);              //设置解密密钥
+    }
+    else if (Key == SV_KEY)
+    {
+        Result = mbedtls_aes_setkey_dec(&AesContext, SV_EncryptKey, 128);               //设置解密密钥
+    }
+    if (Result != 0)
+    {
+        printfS("failed to set key:");
+        mbedtls_aes_free(&AesContext);
+        return SET_KEY_ERR;
+    }
+
+    //开始解密
+    Result = mbedtls_aes_crypt_cbc(&AesContext, MBEDTLS_AES_DECRYPT, DataLength, IV, InData, OutDecryptedData);
+    if (Result != 0)
+    {
+        printfS("failed to encrypt data:");
+        mbedtls_aes_free(&AesContext);
+        return DEC_CBC_ERR;
+    }
+    mbedtls_aes_free(&AesContext);
+    //返回明文长度
+    return DataLength;
+}
+

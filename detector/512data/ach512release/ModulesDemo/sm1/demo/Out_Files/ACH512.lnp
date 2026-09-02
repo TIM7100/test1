@@ -1,0 +1,13 @@
+--cpu Cortex-M3
+".\out_files\startup.o"
+".\out_files\system_ach512.o"
+".\out_files\uart.o"
+".\ACH512\driver\hrng_20170804.lib"
+".\ACH512\driver\sm1_20170420.lib"
+".\out_files\common.o"
+".\out_files\app.o"
+".\out_files\main.o"
+--strict --scatter ".\Out_Files\ACH512.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\ACH512.map" -o .\Out_Files\ACH512.axf

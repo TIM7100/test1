@@ -1,0 +1,39 @@
+/*---------------------------------------------------------------------------------------------------------*/
+/* Includes of local headers                                                                               */
+/*---------------------------------------------------------------------------------------------------------*/
+#include "menu.h"
+
+const u8 EmptyHex[2] = {0x00, 0x00}; /* 空的Hex */
+
+struct MenuItem NullMenuItem;       /* 空的Menu */
+/* 第一级Menu *******************************************************************************************************************/
+struct MenuItem MainMenu[] =
+{
+    /*MenuCount     DisplayString           ChildrenMenus            ParentMenus             Command            */
+    {3,             "01.SeriesMenu",         Series_list,             &NullMenuItem,          CMD_RESERVE},
+    {3,             "02.UpdateFirmware",     &NullMenuItem,           &NullMenuItem,          OTA_EVENT},
+	{3,             "03.FactoryReset",       &NullMenuItem,           &NullMenuItem,          FACTORY_RESET_EVENT},
+};
+/* 第二级Menu */
+struct MenuItem Series_list[] = 
+{
+    /*MenuCount         DisplayString         ChildrenMenus              ParentMenus                    Command*/
+    {1,                 "01.EA6",             &NullMenuItem,             MainMenu,                       JUMP_APP},
+};
+
+void NullSubs(void)  /* 空函数 */
+{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,263 @@
+#include "UserFunctionInterface.h"
+#include "ota_firmware_update.h"
+#include "ota_firmware_handle.h"
+#include "cloud_platform_para.h"
+#include "ExternalFlash.h"
+#include "delay.h"
+#include "my_aes_ecb.h"
+#include "menu_show.h"
+#include "gpio.h"
+#include "crc.h"
+#include "eflash.h"
+#include "w5500_user_conf.h"
+
+firmware_info_t firmware_info = {0};
+__IO u8 NetWork_Flag = ESP8266;
+
+void FLASH_readinit(void)
+{
+    u8 eflashBuffer[512];
+    EflashReadPage(FLASHSWITCHAddr, 512, (u32*)eflashBuffer);    //先读内部flash的flash切换标志位
+    firmware_info.FirmwareAreaFlag = eflashBuffer[0x00];  // FLASHSWITCHAddr偏移
+}
+
+
+/*通过读取W25Q表头信息判断设备状态，上电初始状态为正常*/
+static u8 isDeviceNormalFlag = DEVICE_NORMAL;
+/*******************************************************
+ * @brief    设备初始化
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+// void DeviceInit(void)
+// {
+//  u8 DecryBuffer[512];
+//  u16 CalCrc;
+//  u16 GetCrc;
+
+//    DeviceInitShow();
+//  ExFlashRead((u8 *)&firmware_info, 0, 512);
+
+//  DecryptDataByAesECB((u8 *)&firmware_info, sizeof(firmware_info), DecryBuffer);
+//  memcpy(&firmware_info, DecryBuffer, 512);
+//  CalCrc = GetCrc16((char *)&firmware_info, 510);
+//     GetCrc = (firmware_info.crc[0] << 8) + firmware_info.crc[1];
+//  /*判断是否首次上电以及表头信息是否正确*/
+//  if((firmware_info.KeyFlag != 0x3435) || (CalCrc != GetCrc))
+//  {
+//      InitialFirmwareInfo();                  //清空表头信息，避免显示乱码
+//      isDeviceNormalFlag = DEVICE_ABNORMAL;   //标记为异常
+//  }
+//  DeviceLanguageInit();     //设备语言初始化
+//  DeviceShadowCountInit();  //影子点数存储区初始化
+//  LoadDeviceCloudParameter(); //加载设备三元组
+//  LcdMainpage();  //显示首页
+// }
+
+void DeviceInit(void)
+{
+    u8 DecryBuffer[512];
+    u16 CalCrc;
+    u16 GetCrc;
+    u8 found = 0;
+
+    DeviceInitShow();
+
+    ExFlashRead((u8 *)&firmware_info, 0, 512);
+    DecryptDataByAesECB((u8 *)&firmware_info, sizeof(firmware_info), DecryBuffer);
+    memcpy(&firmware_info, DecryBuffer, 512);
+    CalCrc = GetCrc16((char *)&firmware_info, 510);
+    GetCrc = (firmware_info.crc[0] << 8) + firmware_info.crc[1];
+    if ((firmware_info.KeyFlag == 0x3435) && (CalCrc == GetCrc))
+    {
+        found = 1;
+    }
+
+    if (!found)
+    {
+     InitialFirmwareInfo();                  //清空表头信息，避免显示乱码
+     isDeviceNormalFlag = DEVICE_ABNORMAL;   //标记为异常
+    }
+
+    DeviceLanguageInit();     //设备语言初始化
+    DeviceShadowCountInit();  //影子点数存储区初始化
+    LoadDeviceCloudParameter(); //加载设备三元组
+    LcdMainpage();  //显示首页
+}
+
+/*******************************************************
+ * @brief    OTA固件升级
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 OTA_Event_Handle(void)
+{
+    u8 TimeOut = 3;
+    u8 Ret;
+    u8 eflashBuffer[512];
+
+
+    /*操作前先判断设备状态是否正常*/
+    if (isDeviceNormalFlag == DEVICE_ABNORMAL)
+    {
+        DeviveAbnormalShow();
+        return OTA_DEVICE_ABNORMAL;
+    }
+
+    /*连接云服务器*/
+    ConnectShow();
+		
+		W5500Reset();
+		if(W5500PhyLinkCheck())
+		{
+			NetWork_Flag = W5500;
+		}
+		else
+		{
+			NetWork_Flag = ESP8266;
+		}
+		
+    while (ConnectTencentCloud() != OTA_SUCCESS)
+    {
+        if ((TimeOut--) == 0)
+        {
+            ConnectTencentCloudShow();
+            return OTA_LINK_CLOUD_ERROR;
+        }
+    }
+
+		
+    /*获取时间*/
+    GetNTPTime();
+
+    /*获取固件包信息*/
+    Ret = GetOtaInfo();
+    if (Ret != OTA_SUCCESS)
+    {
+        GetOTAInfoShow(Ret);
+        return Ret;
+    }
+
+    /*获取固件包信息成功，准备下载*/
+    if (WaitingUserPress(Download_Firmware) == Key_Esc)
+    {
+        return OTA_USER_CANCEL;
+    }
+    Ret = StartDownloadFirmware();
+    if (Ret != OTA_COMMAND_ANALYSIS)
+    {
+        DownloadFirmwareShow(Ret);
+        return Ret;
+    }
+
+    /*校验固件包*/
+    Ret = VerifyFirmwareHandle();
+
+    eflashBuffer[0] = firmware_info.FirmwareAreaFlag;
+    EflashWritePageHandle(FLASHSWITCHAddr, 512, eflashBuffer); //校验完成后把flash对应的标志写入内部flash
+
+
+    if (Ret != OTA_FIRMWARE_VERIFY_SUCCES)
+    {
+        VerifyFirmwareShow(Ret);
+        return Ret;
+    }
+    ResultShow(Download_Firmware);
+    return Ret;
+}
+
+/*******************************************************
+ * @brief    点数升级
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 CountEventHandle(void)
+{
+    u8 TimeOut = 3;
+    u8 Ret;
+
+    /*操作前先判断设备状态是否正常*/
+    if (isDeviceNormalFlag == DEVICE_ABNORMAL)
+    {
+        DeviveAbnormalShow();
+        return OTA_DEVICE_ABNORMAL;
+    }
+
+    /*连接云服务器*/
+    ConnectShow();
+    while (ConnectTencentCloud() != OTA_SUCCESS)
+    {
+        if ((TimeOut--) == 0)
+        {
+            ConnectTencentCloudShow();
+            return OTA_LINK_CLOUD_ERROR;
+        }
+    }
+    Ret = GetShadowInfo();
+    //断开连接
+    DisconnectTencentCloud();
+    ShadowCountShow(Ret);
+    return Ret;
+}
+
+/*******************************************************
+ * @brief    语言设置
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+void SetLanguageHandle(u8 Language)
+{
+    SetDeviceLanguage(Language);
+    LanguageSetResultShow();
+}
+
+/*******************************************************
+ * @brief    连接服务器，并恢复出厂设置
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 Factory_Reset_Event_Handle(void)
+{
+    if (WaitingUserPress(Factory_Reset) == Key_Esc)
+    {
+        return OTA_USER_CANCEL;
+    }
+    ConnectShow();
+    if (FactoryReset() == OTA_CONNECT_SERVER_ERR)
+    {
+        ConnectTencentCloudShow();
+        return OTA_LINK_CLOUD_ERROR;
+    }
+    ResultShow(Factory_Reset);
+    isDeviceNormalFlag = DEVICE_NORMAL;   //标记为正常
+
+    return OTA_SUCCESS;
+}
+
+/*******************************************************
+ * @brief    搬运固件包至内部FLASH，并跳转APP
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 Jump_App_Handle(void)
+{
+    u8 Ret;
+
+    if (WaitingUserPress(JUMP_APPLICATION) == Key_Esc)
+    {
+        return OTA_USER_CANCEL;
+    }
+
+    /*操作前先判断设备状态是否正常*/
+    if (isDeviceNormalFlag == DEVICE_ABNORMAL)
+    {
+        DeviveAbnormalShow();
+        return OTA_DEVICE_ABNORMAL;
+    }
+
+    Ret = JumpAppAfterDecrypt();
+    JumpAppShow(Ret);
+    return Ret;
+}
+
+

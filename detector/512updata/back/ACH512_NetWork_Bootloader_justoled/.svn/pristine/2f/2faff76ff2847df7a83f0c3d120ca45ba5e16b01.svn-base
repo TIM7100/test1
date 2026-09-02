@@ -1,0 +1,143 @@
+#include "UserFunctionInterface.h"
+#include "ota_firmware_update.h"
+#include "ota_firmware_handle.h"
+#include "ExternalFlash.h"
+#include "delay.h"
+#include "my_aes_cbc.h"
+#include "menu_show.h"
+#include "gpio.h"
+
+firmware_info_t firmware_info = {0};
+
+/*通过读取W25Q表头信息判断设备状态，上电初始状态为正常*/
+static u8 isDeviceNormalFlag = DEVICE_NORMAL;   
+/*******************************************************
+ * @brief    设备初始化
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+void DeviceInit(void)
+{
+	u8 DecryBuffer[512];
+	u16 CalCrc;
+	u16 GetCrc;
+
+    DeviceInitShow();
+	ExFlashRead((u8 *)&firmware_info, 0, 512);
+	DecryptDataByAesECB((u8 *)&firmware_info, sizeof(firmware_info), DecryBuffer);
+	memcpy(&firmware_info, DecryBuffer, 512);
+	CalCrc = GetCrc16((char *)&firmware_info, 510);
+    GetCrc = (firmware_info.crc[0] << 8) + firmware_info.crc[1];
+	/*判断是否首次上电以及表头信息是否正确*/
+	if((firmware_info.KeyFlag != 0x3435) || (CalCrc != GetCrc))
+	{
+		InitialFirmwareInfo();                  //清空表头信息，避免显示乱码           
+		isDeviceNormalFlag = DEVICE_ABNORMAL;   //标记为不正常
+	}
+	LcdMainpage();  //显示首页
+}
+
+/*******************************************************
+ * @brief    OTA固件升级
+ * @param    xxx:xxx
+ * @return	 
+********************************************************/
+u8 OTA_Event_Handle(void)
+{ 
+	u8 TimeOut = 3;
+	u8 Ret;
+	/*操作前先判断设备状态是否正常*/
+	if(isDeviceNormalFlag == DEVICE_ABNORMAL)   
+	{
+		DeviveAbnormalShow();
+		return OTA_DEVICE_ABNORMAL;
+	}
+	
+	/*连接云服务器*/
+	ConnectShow();
+	while(ConnectTencentCloud() != OTA_SUCCESS)  
+	{
+		if ((TimeOut--) == 0)    
+		{
+			ConnectTencentCloudShow();                           
+			return OTA_LINK_CLOUD_ERROR;     
+		}
+	}
+
+// 	/*获取时间*/
+// 	GetNTPTime();
+	
+	/*获取固件包信息*/
+	Ret = GetOtaInfo();
+	if(Ret != OTA_SUCCESS)
+	{
+		GetOTAInfoShow(Ret);
+		return Ret;
+	}
+	
+	/*获取固件包信息成功，准备下载*/
+	if (WaitingUserPress(Download_Firmware) == Key_Esc) 
+	{
+		return OTA_USER_CANCEL;
+	}
+	Ret = StartDownloadFirmware();
+	if(Ret != OTA_COMMAND_ANALYSIS)
+	{
+		DownloadFirmwareShow(Ret);
+		return Ret;
+	}
+	
+	/*校验固件包*/
+	Ret = VerifyFirmwareHandle();
+	if(Ret != OTA_FIRMWARE_VERIFY_SUCCES)
+	{
+		VerifyFirmwareShow(Ret);
+		return Ret;
+	}
+	ResultShow(Download_Firmware);
+	return Ret;
+}
+/*******************************************************
+ * @brief    连接服务器，并恢复出厂设置
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 Factory_Reset_Event_Handle(void)
+{
+	if (WaitingUserPress(Factory_Reset) == Key_Esc) 
+	{
+		return OTA_USER_CANCEL;
+	} 
+	ConnectShow();
+	if (FactoryReset() == OTA_CONNECT_SERVER_ERR)
+	{
+		ConnectTencentCloudShow();
+		return OTA_LINK_CLOUD_ERROR;
+	}
+	ResultShow(Factory_Reset);
+	isDeviceNormalFlag = DEVICE_NORMAL;   //标记为正常
+	
+	return OTA_SUCCESS;
+}
+
+/*******************************************************
+ * @brief    搬运固件包至内部FLASH，并跳转APP
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 Jump_App_Handle(void)
+{
+	u8 Ret;
+	/*操作前先判断设备状态是否正常*/
+	if(isDeviceNormalFlag == DEVICE_ABNORMAL)   
+	{
+		DeviveAbnormalShow();
+		return OTA_DEVICE_ABNORMAL;
+	}
+	
+	Ret = JumpAppAfterDecrypt();
+	JumpAppShow(Ret);
+	return Ret;
+}
+
+

@@ -1,0 +1,108 @@
+#ifndef __IAP_H__
+#define __IAP_H__
+
+#include "ach512.h"
+
+//固件升级状态
+#define STATUS_TRUE                         0x00
+
+//IAP接收错误，①命令不为AA BB CC、接收字节不等于数据长度、计算CRC不等于数据CRC ②通信密钥(三级密钥)的索引不在0x00~0x09之间 ③固件信息长度不为INFO_AREA_LEN ④CMD_IAP_CHECKCRC中数据长度不为16 ⑤烧录HEX、ExFlash的地址或长度大于限制
+#define IAP_REV_FAIL                        0xF1
+//读取EFlash固定密钥区或版本控制区时标志位FLAG错误
+#define EFLASH_FLAG_FAIL                    0xF2
+//EFlash的版本控制区内或上位机传输的固件信息内，①版本型号：app-0.0.0-20210917.1513(模板)
+#define VERSION_INFO_FAIL                   0xF3
+//AES加解密错误，这里均为解密错误
+#define AES_CRYPT_FAIL                      0xF4
+//不允许更新固件，EFlash内的版本控制区与上位机传输的版本控制区：①OTA版本以及系列都一致
+#define UPDATE_NALLOW_FAIL                  0xF5
+//上位机传输的CRC与计算EFlash内HEX的CRC不一致
+#define IAP_APPCRC_FAIL                   	0xF6
+//上位机传输的CRC与计算ExFlash内的CRC不一致
+#define IAP_EXFLASHCRC_FAIL                 0xF7
+//读写ExFlash失败，①读取ExFlashID失败
+#define EXFLASH_RW_FAIL                     0xF8
+//跳转程序失败
+#define LOADAPP_FAIL                        0xF9
+//默认状态
+#define STATUS_SDV                          0xFF
+
+//STM32命令
+#define CMD_READ_CNT					    0xC0  				//获取Ach512各系列剩余计数
+#define CMD_INC_CNT              		    0xC1  				//增加Ach512各系列的剩余计数
+#define CMD_IAP_INFO             		    0xC2   				//IAP固件信息命令
+#define CMD_IAP_HEXBRUN             		0xC3 			    //IAP烧录HEX数据
+#define CMD_IAP_EXFLASHERASE                0xC4  				//IAP擦除外部Flash
+#define CMD_IAP_EXFLASHBRUN      		    0xC5 			    //IAP烧录外部Flash
+#define CMD_IAP_CHECKCRC            		0xC6  			    //IAP校验HEX、ExFlash CRC
+#define CMD_RUN_APP             		    0xC7  				//运行程序APP
+
+
+//区分不同系列升级仪购买计数
+#define HP110_DESIRED                       0x0000    
+#define HP217_DESIRED                       0x0001
+#define HP90X_DESIRED                       0x0002
+#define HP95X_DESIRED                       0x0003
+#define SX404_DESIRED                       0x0004
+
+//信息区大小(固定)
+#define INFO_AREA_LEN                       48
+
+typedef struct                              //上位机传输信息
+{
+	u8 TKE[16];                             //通信密钥
+    u8 Series[2];          	        	    //当前系列
+    u8 OTAVersions[23];                     //OTA版本
+	u8 KeyIndex;							//OTA升级包密钥索引
+} RevInfo;
+
+typedef struct                              //芯片内部存储信息
+{
+	u8 FixedKey[10][8];						//10套固定密钥
+	u8 CommunicationKey[16];				//通信密钥
+	u8 InfoKey[4][16];                      //OTA升级包密钥
+    u8 CurrentSeries[2];                  	//当前系列
+    u8 OTAVersions[23];                     //OTA版本
+} EflashInfo;
+
+typedef  void (*iapfun)(void);              //定义一个函数类型的参数.
+
+//提取芯片内部存储信息
+void ExtractEflashInfo(EflashInfo* ChipInfo);
+
+//提取上位机传输信息
+u8 Add_ResidualCNT(u8* RecData, u16 RecLen, EflashInfo* ChipInfo);
+
+u8 ExtractRevInfo(u8* RecData, u16 RecLen, RevInfo* IapInfo, EflashInfo* ChipInfo);
+
+u8 IapWriteAppBin(u8* BinData, u16 BinLen, RevInfo* IapInfo, EflashInfo* ChipInfo);
+
+u8 IapEraseExFlash(u8* RecData, u16 RecLen, RevInfo* IapInfo);
+
+u8 IapWriteExFlashBin(u8* BinData, u16 BinLen, RevInfo* IapInfo, EflashInfo* ChipInfo);
+
+u8 CompareVersionInfo(RevInfo* IapInfo, EflashInfo* ChipInfo);
+
+void IapWriteVersionArea(RevInfo* IapInfo);
+
+u8 IAPCheckCRC(u8* RecData, u16 RecLen, RevInfo* IapInfo);
+
+u16 ReadEFlashCheckCRC(u32 CheckAddr, u32 CheckLen);
+
+u16 ReadExFlashCheckCRC(u32 CheckAddr, u32 CheckLen);
+
+
+u8 DiscernVersionInfo(u8* VersionInfo);
+
+u8 IapDataProcess(u8* Data, u16 DataLen);
+
+void IapClearSeries(u8 CmdB, u8 Status);
+
+void FirmwareUpdate(void);
+
+void IapLoadApp(u32 Addr);
+
+//设置堆栈地址
+void MSR_MSP(u32 addr);
+
+#endif

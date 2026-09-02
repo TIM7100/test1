@@ -1,0 +1,300 @@
+#include "gpio.h"
+#include "delay.h"
+#include "ota_firmware_handle.h"
+#include  "eflash.h"
+
+u16 LED_Status;
+u8  BeepFlag;
+
+
+//----------------------------LED------------------------------//
+void Multi_LEDInit(void)
+{
+    enable_module(BIT_GPIO);
+    REG_SCU_MUXCTRLC &= ~(0x0F << 4); //GPIO33 GPIO34
+    REG_GPIO_DIR(GPIOB) |= (0x03 << 1);
+    REG_SCU_MUXCTRLB &= ~(0x03U << 30);//GPIO31
+    REG_GPIO_DIR(GPIOA) |= (0x01U << 31);
+    LED_DisPlay(0, 1);
+    LED_DisPlay(1, 1);
+    LED_DisPlay(2, 1);
+    LED_DisPlay(3, 1);
+    LED_DisPlay(4, 1);
+    LED_Update();
+
+    Timer0DelayMs(400);
+    LED_DisPlay(0, 0);
+    LED_DisPlay(1, 0);
+    LED_DisPlay(2, 0);
+    LED_DisPlay(3, 0);
+    LED_DisPlay(4, 0);
+    LED_Update();
+
+    Timer0DelayMs(400);
+    LED_SendBytes(0, 0);
+
+
+}
+
+void LED_SendBytes(uint8_t dat_first, uint8_t dat_second)
+{
+    uint8_t i;
+    for (i = 0 ; i < 8; i++)
+    {
+        SHCP_L;
+        if (dat_first & 0x80)
+        {
+            DS_H;
+        }
+        else
+        {
+            DS_L;
+        }
+        dat_first <<= 1;
+        Timer0DelayUs(1);
+        SHCP_H;
+    }
+
+    for (i = 0 ; i < 8; i++)
+    {
+        SHCP_L;
+        if (dat_second & 0x80)
+        {
+            DS_H;
+        }
+        else
+        {
+            DS_L;
+        }
+        dat_second <<= 1;
+        Timer0DelayUs(1);
+        SHCP_H;
+    }
+
+    STCP_L;
+    Timer0DelayUs(1);
+    STCP_H;
+}
+
+void LED_DisPlay(u8 location, u8 sta)
+{
+
+    if (sta != 0)
+    {
+        LED_Status |= (1 << (location * 2 + 2) % 10);
+        LED_Status &= ~(1 << (((location * 2 + 2) % 10) + 1));
+    }
+    else
+    {
+        LED_Status &= ~(1 << (location * 2 + 2) % 10);
+        LED_Status |= (1 << (((location * 2 + 2) % 10) + 1));
+    }
+}
+
+void LED_Update(void)
+{
+    u8 dat_first;
+    u8 dat_second;
+    dat_first = LED_Status & 0x03;
+    dat_second = (LED_Status >> 2) & 0xFF;
+    LED_SendBytes(dat_first, dat_second);
+}
+
+//----------------------------Beep------------------------------//
+
+typedef struct
+{
+    u16 half_us;   //方波半周期，0=休止
+    u16 cnt;       //脉冲个数，控制音长
+} Note_t;
+
+//开机音乐表
+const Note_t boot_music[] =
+{
+    {477, 30},  //1 do
+    {425, 30},  //2 re
+    {379, 30},  //3 mi
+    {0, 10},    //休止
+    {319, 30},  //5 sol
+    {379, 30},  //3 mi
+    {425, 30},  //2 re
+    {0, 10},    //休止
+    {477, 60},  //1 do 长音结束
+};
+const Note_t boot_music1[] =
+{
+    {189, 28}, {189, 28}, {179, 28}, {159, 28}, //3 3 4 5
+    {159, 28}, {179, 28}, {189, 28}, {212, 28}, //5 4 3 2
+    {238, 28}, {238, 28}, {212, 28}, {189, 28}, //1 1 2 3
+    {189, 28}, {212, 28}, {212, 45}, {0, 12}, //3 2 2 长 +休止
+
+    {189, 28}, {189, 28}, {179, 28}, {159, 28}, //3 3 4 5
+    {159, 28}, {179, 28}, {189, 28}, {212, 28}, //5 4 3 2
+    {238, 28}, {238, 28}, {212, 28}, {189, 28}, //1 1 2 3
+    {212, 28}, {238, 28}, {238, 60},          //2 1 1结尾长音
+};
+//播放音乐函数
+void Beep_PlayMusic(const Note_t *pNote, u16 len)
+{
+    u16 i, j;
+    for (i = 0; i < len; i++)
+    {
+        if (pNote[i].half_us == 0)
+        {
+            //休止符，直接延时
+            Timer0DelayUs(pNote[i].cnt * 200U);
+            continue;
+        }
+        for (j = 0; j < pNote[i].cnt; j++)
+        {
+            BEEP_ON;
+            Timer0DelayUs(pNote[i].half_us);
+            BEEP_OFF;
+            Timer0DelayUs(pNote[i].half_us);
+        }
+        Timer0DelayMs(20); //音符之间短暂停顿
+    }
+}
+
+
+void Beep_Sound1(u8 time)
+{
+    u8 i = 0;
+    u8 j = 0;
+
+
+    for (i = 0; i < time; i++)
+    {
+        for (j = 0; j < 0xFF; j++)
+        {
+            BEEP_ON;
+            Timer0DelayUs(20);
+            BEEP_OFF;
+            Timer0DelayUs(330);
+        }
+        if (time > 1)
+        {
+            Timer0DelayMs(100);
+        }
+    }
+}
+
+
+void Beep_Sound2(u8 time)
+{
+    u8 i = 0;
+    u8 j = 0;
+
+
+    for (i = 0; i < time; i++)
+    {
+        for (j = 0; j < 0xFF; j++)
+        {
+            BEEP_ON;
+            Timer0DelayUs(100);
+            BEEP_OFF;
+            Timer0DelayUs(250);
+        }
+        if (time > 1)
+        {
+            Timer0DelayMs(100);
+        }
+    }
+}
+
+
+void Beep_Sound3(u8 time)
+{
+    u8 i = 0;
+    u8 j = 0;
+
+
+    for (i = 0; i < time; i++)
+    {
+        for (j = 0; j < 0xFF; j++)
+        {
+            BEEP_ON;
+            Timer0DelayUs(175);
+            BEEP_OFF;
+            Timer0DelayUs(175);
+        }
+        if (time > 1)
+        {
+            Timer0DelayMs(100);
+        }
+    }
+}
+
+
+void Beep(void)
+{
+    u8 eflashBuffer[512];
+    EflashReadPage(DATA_AREA_ADDR, 512, (u32*)eflashBuffer);
+    if (eflashBuffer[0xA1] == 1)
+    {
+        BeepFlag   = eflashBuffer[0xA0];
+    }
+    else
+    {
+        BeepFlag = 3;
+    }
+    switch (BeepFlag) 
+    {
+    case 1:
+        Beep_Sound1(1); 
+        break;
+		case 2:
+        Beep_Sound2(1);
+        break;
+		case 3:
+        Beep_Sound3(1);
+        break;
+    }
+}
+void Beeptest(void)
+{
+    u8 eflashBuffer[512];
+    EflashReadPage(DATA_AREA_ADDR, 512, (u32*)eflashBuffer);
+    if (eflashBuffer[0xA1] == 1)
+    {
+        BeepFlag   = eflashBuffer[0xA0];
+    }
+    else
+    {
+        BeepFlag = 3;
+    }
+    switch (BeepFlag) 
+    {
+    case 1:
+        Beep_Sound1(2); 
+        break;
+		case 2:
+        Beep_Sound2(2);
+        break;
+		case 3:
+        Beep_Sound3(2);
+        break;
+    }
+}
+
+
+
+void Beep_Init(void)
+{
+    REG_SCU_MUXCTRLB &= ~(0x03 << 26);   //设置管脚复用为GPIO29
+    REG_SCU_PUCRA &= ~(1 << 29);
+
+    REG_GPIO_DIR(GPIOA) |= (1 << 29);
+    REG_GPIO_CLR(GPIOA) |= (1 << 29);
+
+    Beep();
+// 	  Beep_Sound1(3);
+//  Beep_PlayMusic(boot_music1, sizeof(boot_music1)/sizeof(Note_t));
+}
+
+
+
+
+
+
+

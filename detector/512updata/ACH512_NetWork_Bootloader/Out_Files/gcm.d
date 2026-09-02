@@ -1,0 +1,11 @@
+.\Out_Files\gcm.o: Mbedtls\library\gcm.c
+.\Out_Files\gcm.o: .\Mbedtls\include\mbedtls\config.h
+.\Out_Files\gcm.o: .\Mbedtls\include\mbedtls\check_config.h
+.\Out_Files\gcm.o: C:\keil\ARM\RV31\Inc\limits.h
+.\Out_Files\gcm.o: .\Mbedtls\include\mbedtls\gcm.h
+.\Out_Files\gcm.o: .\Mbedtls\include\mbedtls\cipher.h
+.\Out_Files\gcm.o: C:\keil\ARM\RV31\Inc\stddef.h
+.\Out_Files\gcm.o: .\Mbedtls\include\mbedtls\platform_util.h
+.\Out_Files\gcm.o: C:\keil\ARM\RV31\Inc\stdint.h
+.\Out_Files\gcm.o: .\Mbedtls\include\mbedtls\error.h
+.\Out_Files\gcm.o: C:\keil\ARM\RV31\Inc\string.h

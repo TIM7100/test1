@@ -1,0 +1,10 @@
+.\Out_Files\sha1.o: Mbedtls\library\sha1.c
+.\Out_Files\sha1.o: .\Mbedtls\include\mbedtls\config.h
+.\Out_Files\sha1.o: .\Mbedtls\include\mbedtls\check_config.h
+.\Out_Files\sha1.o: C:\keil\ARM\RV31\Inc\limits.h
+.\Out_Files\sha1.o: .\Mbedtls\include\mbedtls\sha1.h
+.\Out_Files\sha1.o: C:\keil\ARM\RV31\Inc\stddef.h
+.\Out_Files\sha1.o: C:\keil\ARM\RV31\Inc\stdint.h
+.\Out_Files\sha1.o: .\Mbedtls\include\mbedtls\platform_util.h
+.\Out_Files\sha1.o: .\Mbedtls\include\mbedtls\error.h
+.\Out_Files\sha1.o: C:\keil\ARM\RV31\Inc\string.h

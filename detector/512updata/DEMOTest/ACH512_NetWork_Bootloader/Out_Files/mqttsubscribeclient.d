@@ -1,0 +1,11 @@
+.\Out_Files\mqttsubscribeclient.o: Internet\MQTT\MQTTSubscribeClient.c
+.\Out_Files\mqttsubscribeclient.o: Internet\MQTT\MQTTPacket.h
+.\Out_Files\mqttsubscribeclient.o: Internet\MQTT\MQTTConnect.h
+.\Out_Files\mqttsubscribeclient.o: Internet\MQTT\MQTTPublish.h
+.\Out_Files\mqttsubscribeclient.o: Internet\MQTT\MQTTSubscribe.h
+.\Out_Files\mqttsubscribeclient.o: Internet\MQTT\MQTTUnsubscribe.h
+.\Out_Files\mqttsubscribeclient.o: Internet\MQTT\MQTTFormat.h
+.\Out_Files\mqttsubscribeclient.o: Internet\MQTT\StackTrace.h
+.\Out_Files\mqttsubscribeclient.o: C:\keil\ARM\RV31\Inc\stdio.h
+.\Out_Files\mqttsubscribeclient.o: Internet\MQTT\MQTTPacket.h
+.\Out_Files\mqttsubscribeclient.o: C:\keil\ARM\RV31\Inc\string.h

@@ -1,0 +1,11 @@
+.\Out_Files\mqttserializepublish.o: Internet\MQTT\MQTTSerializePublish.c
+.\Out_Files\mqttserializepublish.o: Internet\MQTT\MQTTPacket.h
+.\Out_Files\mqttserializepublish.o: Internet\MQTT\MQTTConnect.h
+.\Out_Files\mqttserializepublish.o: Internet\MQTT\MQTTPublish.h
+.\Out_Files\mqttserializepublish.o: Internet\MQTT\MQTTSubscribe.h
+.\Out_Files\mqttserializepublish.o: Internet\MQTT\MQTTUnsubscribe.h
+.\Out_Files\mqttserializepublish.o: Internet\MQTT\MQTTFormat.h
+.\Out_Files\mqttserializepublish.o: Internet\MQTT\StackTrace.h
+.\Out_Files\mqttserializepublish.o: C:\keil\ARM\RV31\Inc\stdio.h
+.\Out_Files\mqttserializepublish.o: Internet\MQTT\MQTTPacket.h
+.\Out_Files\mqttserializepublish.o: C:\keil\ARM\RV31\Inc\string.h

@@ -1,0 +1,609 @@
+#include "menu_show.h"
+#include "lcd.h"
+#include "gpio.h"
+#include "cloud_platform_para.h"
+#include "delay.h"
+#include "ota_firmware_handle.h"
+#include "eflash.h"
+#include "lcd_show.h"
+#include "hmi_driver.h"
+#include "use_lcd.h"
+
+extern firmware_info_t firmware_info;
+
+/*中英文标志FLAG*/
+static u8 DeviceLanguageFlag;
+
+/*******************************************************
+ * @brief    设备语言初始化
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+void DeviceLanguageInit(void)
+{
+    DeviceLanguageFlag = *(u8*)(DeviceLanguageAddr);
+
+    if ((DeviceLanguageFlag != CN) && (DeviceLanguageFlag != EN))
+    {
+        SetDeviceLanguage(CN);  //默认中文
+    }
+}
+
+/*******************************************************
+ * @brief    设置设备语言
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+void SetDeviceLanguage(u8 Language)
+{
+    u8 eflashBuffer[512];
+
+    EflashReadPage(DATA_AREA_ADDR, 512, (u32*)eflashBuffer);
+    /*中英文标志位*/
+    eflashBuffer[0x10] = Language;
+    EflashWritePageHandle(DATA_AREA_ADDR, 512, eflashBuffer);
+    DeviceLanguageFlag = *(u8*)(DeviceLanguageAddr);
+}
+
+/*******************************************************
+ * @brief    获取当前设备语言
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 GetDeviceLanguage(void)
+{
+    return DeviceLanguageFlag;
+}
+
+/*******************************************************/
+/*                  界面显示                            */
+/*******************************************************/
+void LanguageSetResultShow(void)
+{
+    ClearShow();
+    if (DeviceLanguageFlag == EN)
+    {
+        LCD_UartSend("DC24(192,97,'设置成功',2);\r\n");
+        LCD_UartSend("DC24(156,151,'- \"Cancel\"返回 -',4);\r\n");
+    }
+    else if (DeviceLanguageFlag == CN)
+    {
+        LCD_UartSend("DC24(156,97,'Set Successfully',2);\r\n");
+        LCD_UartSend("DC24(156,151,'- \"Cancel\"Return -',4);\r\n");
+    }
+}
+
+void DeviceInitShow(void)
+{
+    ClearShow();
+    LCD_UartSend("DC24(150,124,'设备初始化中...',2);\r\n");
+    LCD_UartSend("DC24(156,164,'device init...',2);\r\n");
+
+}
+
+
+void ConnectTencentCloudShow(void)
+{
+   Send_SetText(0x0001, str_net_check, sizeof(str_net_check)); // 设备状态异常 
+}
+
+
+
+void DeviveAbnormalShow(void)
+{
+    Send_SetText(0x0001, str_dev_err, sizeof(str_dev_err)); // 设备状态异常 
+	  Send_SetText(0x0002, str_restore_factory, sizeof(str_restore_factory)); // 请恢复出厂设置并重新下载固件      
+}
+
+// void GetOTAInfoShow(u8 Result)
+// {
+//     char ErrCode[15] = {0};
+
+//     ClearShow();
+//     sprintf(ErrCode, "Error Code %d", Result);
+
+//     if (DeviceLanguageFlag == EN)
+//     {
+//         LCD_UartSend("DC24(144,115,'Get Firmware Err',1);\r\n");
+//         LCD_UartSend(CMD_DC24(150, 157, (u8*)ErrCode, 1));
+//     }
+//     else
+//     {
+//         LCD_UartSend("DC24(156,115,'获取固件信息失败',1);\r\n");
+//         LCD_UartSend(CMD_DC24(150, 157, (u8*)ErrCode, 1));
+//     }
+// }
+
+
+// void DownloadFirmwareShow(u8 Result)
+// {
+//     char ErrCode[15] = {0};
+
+//     ClearShow();
+//     sprintf(ErrCode, "Error Code %d", Result);
+//     if (DeviceLanguageFlag == EN)
+//     {
+//         LCD_UartSend("DC24(132,115,'Download Firmware Err',1);\r\n");
+//         LCD_UartSend(CMD_DC24(150, 157, (u8*)ErrCode, 1));
+//     }
+//     else
+//     {
+//         LCD_UartSend("DC24(192,115,'下载固件失败',1);\r\n");
+//         LCD_UartSend(CMD_DC24(150, 157, (u8*)ErrCode, 1));
+//     }
+// }
+
+// void VerifyFirmwareShow(u8 Result)
+// {
+//     char ErrCode[15] = {0};
+
+//     ClearShow();
+//     sprintf(ErrCode, "Error Code %d", Result);
+//     if (DeviceLanguageFlag == EN)
+//     {
+//         LCD_UartSend("DC24(144,115,'Verif Firmware Err',1);\r\n");
+//         LCD_UartSend(CMD_DC24(150, 157, (u8*)ErrCode, 1));
+//     }
+//     else
+//     {
+//         LCD_UartSend("DC24(192,115,'验证固件失败',1);\r\n");
+//         LCD_UartSend(CMD_DC24(150, 157, (u8*)ErrCode, 1));
+//     }
+// }
+
+// void ConnectShow(void)          //连接页面显示
+// {
+//     Interface_Display();
+//     Ethernet_Action();
+//     if (DeviceLanguageFlag == EN)
+//     {
+//         LCD_UartSend("DC24(168,124,'Connecting...',2);\r\n");
+//     }
+//     else
+//     {
+//         LCD_UartSend("DC24(174,124,'正在连接...',2);\r\n");
+//     }
+// }
+
+
+// void ResultShow(u8 Action)
+// {
+//   
+//     if (DeviceLanguageFlag == EN)
+//     {
+//         if (Action == Download_Firmware)
+//         {
+//             LCD_UartSend("DC24(192,97,'Download',2);\r\n");
+//             LCD_UartSend("DC24(174,141,'Successfully',2);\r\n");
+//         }
+//         else if (Action == Factory_Reset)
+//         {
+//             LCD_UartSend("DC24(156,119,'Set Successfully',2);\r\n");
+//         }
+//         LCD_UartSend("DC24(150,183,'- \"Cancel\"Return -',4);\r\n");
+//     }
+//     else
+//     {
+//         if (Action == Download_Firmware)
+//         {
+//             LCD_UartSend("DC24(192,119,'下载成功',2);\r\n");
+//         }
+//         else if (Action == Factory_Reset)
+//         {
+//             LCD_UartSend("DC24(192,119,'设置成功',2);\r\n");
+//         }
+//         LCD_UartSend("DC24(150,183,'- \"Cancel\"返回 -',4);\r\n");
+//     }
+// }
+
+void GetOTAInfoShow(u8 Result)
+{
+    char ErrCode[15] = {0};
+    sprintf(ErrCode, "Error Code %d", Result);
+//     OTAfail();  //跳转到下载失败页显示
+    Send_SetText(0x0001, str_get_fw_info_fail, sizeof(str_get_fw_info_fail)); //获取固件信息失败
+    Send_SetText(0x0002, (u8*)ErrCode, sizeof(ErrCode));
+
+}
+
+void DownloadFirmwareShow(u8 Result)
+{
+    char ErrCode[15] = {0};
+    sprintf(ErrCode, "Error Code %d", Result);
+    OTAfail();
+    Send_SetText(0x0001, str_download_fw_fail, sizeof(str_download_fw_fail)); //下载固件失败
+    Send_SetText(0x0002, (u8*)ErrCode, sizeof(ErrCode));
+ 
+}
+
+
+
+void VerifyFirmwareShow(u8 Result)
+{
+    char ErrCode[15] = {0};
+
+    sprintf(ErrCode, "Error Code %d", Result);
+    OTAfail();
+    Send_SetText(0x0001, str_verify_fw_fail, sizeof(str_verify_fw_fail)); //验证固件失败
+    Send_SetText(0x0002, (u8*)ErrCode, sizeof(ErrCode));
+}
+
+
+
+
+void ConnectShow(void)   //连接页面显示
+{
+         Send_SetText(0x0001, textConnecting, sizeof(textConnecting));	
+}
+
+void ResultShow(u8 Action)
+{
+        if (Action == Download_Firmware)
+        {
+            Send_SetText(0x0001, str_download_ok, sizeof(str_download_ok));
+        }
+        else if (Action == Factory_Reset)
+        {
+            Send_SetText(0x0001, str_set_ok, sizeof(str_set_ok));
+        }
+}
+
+void JumpAppShow(u8 Result)
+{
+
+        if (Result == OTA_FIRMWARE_EMPTY)
+        {
+          Send_SetText(0x0001, str_no_firmware, sizeof(str_no_firmware));// 未检测到固件
+        }
+        else if (Result == OTA_JUMP_APP_ERROR)
+        {
+          Send_SetText(0x0001, str_jump_fail, sizeof(str_jump_fail));// 跳转失败
+        }
+        else if (Result == OTA_WRITE_FLASH_ERROR)
+        {
+          Send_SetText(0x0001, str_write_fail, sizeof(str_write_fail));// 写入失败
+        }
+}
+
+
+void ShadowCountShow(u8 Result)
+{
+    char ErrCode[15] = {0};
+
+    sprintf(ErrCode, "Error Code %d", Result);
+        if (Result == SHADOW_SET_SUCCESS)
+        {
+            Send_SetText(0x0001, textUpdatePointOk, sizeof(textUpdatePointOk));
+        }
+        else
+        {
+             Send_SetText(0x0001, textUpdatePointFail, sizeof(textUpdatePointFail));
+             Send_SetText(0x0002, (u8*)ErrCode, sizeof(ErrCode));
+        }
+    
+}
+
+u32 WaitingUserPress(u8 Action)
+{
+    u32 KeyValue;
+
+    ClearShow();
+
+    if (DeviceLanguageFlag == EN)
+    {
+        if (Action == Download_Firmware)
+        {
+            LCD_UartSend("DC24(144,88,'Download Firmware',2);\r\n");
+        }
+        else if (Action == Factory_Reset)
+        {
+            LCD_UartSend("DC24(144,88,'Restore Factory ?',2);\r\n");
+        }
+        else if (Action == JUMP_APPLICATION)
+        {
+            LCD_UartSend("DC24(144,88,'JUMP APP ?',2);\r\n");
+        }
+        LCD_UartSend("DC24(144,132,'- \"Enter\"Next -',4);\r\n");
+        LCD_UartSend("DC24(144,166,'- \"Cancel\"Return -',4);\r\n");
+    }
+    else
+    {
+        if (Action == Download_Firmware)
+        {
+            LCD_UartSend("DC24(144,88,'新固件包，是否下载',2);\r\n");
+        }
+        else if (Action == Factory_Reset)
+        {
+            LCD_UartSend("DC24(144,88,'是否恢复出厂设置',2);\r\n");
+        }
+        else if (Action == JUMP_APPLICATION)
+        {
+            LCD_UartSend("DC24(144,88,'是否进入应用程序',2);\r\n");
+        }
+        LCD_UartSend("DC24(144,132,'- \"Enter\"继续 -',4);\r\n");
+        LCD_UartSend("DC24(144,166,'- \"Cancel\"返回 -',4);\r\n");
+    }
+
+    while (1)
+    {
+        KeyValue = 0x0000;
+        KeyValue =  wait_Key();
+        if (KeyValue == Key_Enter || KeyValue == Key_Esc)
+        {
+            break;
+        }
+    }
+    return KeyValue;
+}
+
+void RunningShow(u8 Action)          //加载、下载页面显示
+{
+        if (Action == DOWNLOAD_RUNNING)
+        {
+            Send_SetText(0x0001, str_downloading, sizeof(str_downloading));
+        }
+        else if (Action == UPDATE_RUNNING)
+        {
+            Send_SetText(0x0001, str_checking, sizeof(str_checking));
+        }
+        else if (Action == JUMP_APP_RUNNING)
+        {
+            Send_SetText(0x0001, str_waiting, sizeof(str_waiting));
+        }
+
+//     LCD_UartSend("BOX(100,160,380,180,16);\r\n");
+
+}
+
+
+void ProgressBarShow(u32 AllCut, u32 CurrentCut)
+{
+    char BoxBuf[32] = {0};
+//     sprintf(BoxBuf, "BOXF(10,75,%02d,90,5);\r\n", ((140 * CurrentCut) / AllCut) + 10);
+    sprintf(BoxBuf, "BOXF(100,160,%d,180,5);\r\n", 100 + (280 * CurrentCut) / AllCut);
+    LCD_UartSend(BoxBuf);
+}
+
+void Interface_Display(void)
+{
+    int i;
+    char Interface_buf[32];
+    LCD_UartSend("CLR(0);\r\n");        // 清屏
+    LCD_UartSend("DIR(1);\r\n");         // 横屏
+
+    LCD_UartSend("PL(159,49,346,49,2);\r\n");// 线
+    LCD_UartSend("PL(134,74,321,74,2);\r\n");
+
+    LCD_UartSend("PL(159,49,134,74,2);\r\n");
+    LCD_UartSend("PL(346,49,321,74,2);\r\n");
+
+    LCD_UartSend("PL(134,74,134,224,2);\r\n");
+    LCD_UartSend("PL(321,74,321,224,2);\r\n");
+    LCD_UartSend("PL(134,224,321,224,2);\r\n");
+
+    LCD_UartSend("PL(346,49,346,199,2);\r\n");
+    LCD_UartSend("PL(321,224,346,199,2);\r\n");
+
+    for (i = 30; i < 90; i += 3)  // 点
+    {
+        sprintf(Interface_buf, "PS(159,%d,2);\r\n", (i - 30) * 5 / 2 + 49);
+        LCD_UartSend(Interface_buf);
+    }
+
+    for (i = 35; i < 110; i += 3)
+    {
+        sprintf(Interface_buf, "PS(%d,199,2);\r\n", (i - 25) * 5 / 2 + 134);
+        LCD_UartSend(Interface_buf);
+    }
+
+    LCD_UartSend("PS(139,219,2);\r\n");
+    LCD_UartSend("PS(144,214,2);\r\n");
+    LCD_UartSend("PS(149,209,2);\r\n");
+    LCD_UartSend("PS(154,204,2);\r\n");
+
+    LCD_UartSend("PL(346,74,321,99,4);\r\n");  // 端口1
+    LCD_UartSend("PL(346,99,321,124,4);\r\n");
+    LCD_UartSend("PL(346,74,346,99,4);\r\n");
+    LCD_UartSend("PL(321,99,321,124,4);\r\n");
+
+    LCD_UartSend("PL(346,149,321,174,4);\r\n");// 端口2
+    LCD_UartSend("PL(346,174,321,199,4);\r\n");
+    LCD_UartSend("PL(346,149,346,174,4);\r\n");
+    LCD_UartSend("PL(321,174,321,199,4);\r\n");
+
+    LCD_UartSend("PL(326,49,301,74,4);\r\n");// 网口
+    LCD_UartSend("PL(301,49,276,74,4);\r\n");
+    LCD_UartSend("PL(326,49,301,49,4);\r\n");
+    LCD_UartSend("PL(276,74,301,49,4);\r\n");
+
+    LCD_UartSend("PL(196,49,171,74,4);\r\n");// 电源
+    LCD_UartSend("PL(171,49,146,74,4);\r\n");
+    LCD_UartSend("PL(196,49,171,49,4);\r\n");
+    LCD_UartSend("PL(146,74,171,49,4);\r\n");
+
+    LCD_UartSend("PL(251,49,226,74,4);\r\n");// 网口
+    LCD_UartSend("PL(226,49,201,74,4);\r\n");
+    LCD_UartSend("PL(251,49,226,49,4);\r\n");
+    LCD_UartSend("PL(201,74,226,49,4);\r\n");
+}
+
+// void Interface_Display(void)
+// {
+//     int i;
+//     char Interface_buf[32];
+//     LCD_UartSend("CLR(0);\r\n");        // 清屏
+//     LCD_UartSend("DIR(1);\r\n");         // 横屏
+
+//     LCD_UartSend("PL(175,66,325,66,2);\r\n");// 线
+//     LCD_UartSend("PL(155,86,305,86,2);\r\n");
+
+//     LCD_UartSend("PL(175,66,155,86,2);\r\n");
+//     LCD_UartSend("PL(325,66,305,86,2);\r\n");
+
+//     LCD_UartSend("PL(155,86,155,206,2);\r\n");
+//     LCD_UartSend("PL(305,86,305,206,2);\r\n");
+//     LCD_UartSend("PL(155,206,305,206,2);\r\n");
+
+//     LCD_UartSend("PL(325,66,325,186,2);\r\n");
+//     LCD_UartSend("PL(305,206,325,186,2);\r\n");
+
+//     for (i = 30; i < 90; i += 3)  // 点
+//     {
+//         sprintf(Interface_buf, "PS(175,%d,2);\r\n", (i - 30) * 2 + 66);
+//         LCD_UartSend(Interface_buf);
+//     }
+
+//     for (i = 35; i < 110; i += 3)
+//     {
+//         sprintf(Interface_buf, "PS(%d,186,2);\r\n", (i - 25) * 2 + 155);
+//         LCD_UartSend(Interface_buf);
+//     }
+
+//     LCD_UartSend("PS(159,202,2);\r\n");
+//     LCD_UartSend("PS(163,198,2);\r\n");
+//     LCD_UartSend("PS(167,194,2);\r\n");
+//     LCD_UartSend("PS(171,190,2);\r\n");
+
+//     LCD_UartSend("PL(325,86,305,106,4);\r\n");  // 端口1
+//     LCD_UartSend("PL(325,106,305,126,4);\r\n");
+//     LCD_UartSend("PL(325,86,325,106,4);\r\n");
+//     LCD_UartSend("PL(305,106,305,126,4);\r\n");
+
+//     LCD_UartSend("PL(325,146,305,166,4);\r\n");// 端口2
+//     LCD_UartSend("PL(325,166,305,186,4);\r\n");
+//     LCD_UartSend("PL(325,146,325,166,4);\r\n");
+//     LCD_UartSend("PL(305,166,305,186,4);\r\n");
+
+//     LCD_UartSend("PL(309,66,289,86,4);\r\n");// 网口
+//     LCD_UartSend("PL(289,66,269,86,4);\r\n");
+//     LCD_UartSend("PL(309,66,289,66,4);\r\n");
+//     LCD_UartSend("PL(269,86,289,66,4);\r\n");
+
+//     LCD_UartSend("PL(205,66,185,86,4);\r\n");// 电源
+//     LCD_UartSend("PL(185,66,165,86,4);\r\n");
+//     LCD_UartSend("PL(205,66,185,66,4);\r\n");
+//     LCD_UartSend("PL(165,86,185,66,4);\r\n");
+
+//     LCD_UartSend("PL(249,66,229,86,4);\r\n");// 网口
+//     LCD_UartSend("PL(229,66,209,86,4);\r\n");
+//     LCD_UartSend("PL(249,66,229,66,4);\r\n");
+//     LCD_UartSend("PL(209,86,229,66,4);\r\n");
+// }
+
+
+/*
+void Ethernet_Action(void)//网口插入动作
+{
+    char Ethernet_buf[32];
+    int i;
+
+    for (i = 0; i < 25; i += 5)
+    {
+        sprintf(Ethernet_buf, "SBC(0);DCV16(85,%d,'↓',2);\r\n", i);
+        LCD_UartSend(Ethernet_buf);
+
+        Timer0DelayMs(10);
+    }
+
+    if (DeviceLanguageFlag == EN)
+    {
+        LCD_UartSend("DC16(95,5,'Net',2);\r\n");
+    }
+    else
+    {
+        LCD_UartSend("DC16(95,5,'网口',2);\r\n");
+
+    }
+}
+*/
+void Ethernet_Action(void)//网口插入动作
+{
+    char Ethernet_buf[32];
+    int i;
+
+    for (i = 0; i < 25; i += 5)
+    {
+        sprintf(Ethernet_buf, "SBC(0);DC24(310,%d,'↓',2);\r\n", 30 + i);
+        LCD_UartSend(Ethernet_buf);
+        Timer0DelayMs(10);
+    }
+
+    if (DeviceLanguageFlag == EN)
+    {
+        LCD_UartSend("DC24(354,20,'Net',2);\r\n");
+    }
+    else
+    {
+        LCD_UartSend("DC24(334,20,'网口',2);\r\n");
+    }
+}
+/*
+void WIFI_ConnectShow(void)
+{
+	ClearShow();
+    LCD_UartSend("DC16(0,40,'正在连接已保存的WIFI',2);\r\n");
+    LCD_UartSend("DC16(32,70,'WIFI Connect...',2);\r\n");
+}
+
+void WIFI_ConnectSuccesShow(void)
+{
+	ClearShow();
+    LCD_UartSend("DC16(30,40,'连接WIFI成功',2);\r\n");
+	LCD_UartSend("DC16(32,80,继续执行中...',2);\r\n");
+}
+
+
+void SmartConfig_RequestShow(void)
+{
+    ClearShow();
+	LCD_UartSend("DC16(33,20,'无法连接已保存的WIFI，',4);\r\n");
+    LCD_UartSend("DC16(70,40,'请使用小程序进行配网...',4);\r\n");
+	LCD_UartSend("DC16(40,80,'限时3分钟',4);\r\n");
+}
+
+void SmartConfig_SuccessShow(void)
+{
+    ClearShow();
+    LCD_UartSend("DC16(50,30,'配网成功',2);\r\n");
+	LCD_UartSend("DC16(30,50,'已连接至WIFI',2);\r\n");
+	LCD_UartSend("DC16(32,90,继续执行中...',2);\r\n");
+}
+
+void SmartConfig_ErrorShow(void)
+{
+    ClearShow();
+	LCD_UartSend("DC16(50,40,'配网失败',1);\r\n");
+    LCD_UartSend("DC16(35,80,'退出/重试中...',4);\r\n");
+}
+*/
+void WIFI_ConnectShow(void)
+{
+	Send_SetText(0x0001, textConnecting, sizeof(textConnecting));
+}
+
+void WIFI_ConnectSuccesShow(void)
+{
+	Send_SetText(0x0001, textWIFIOk, sizeof(textWIFIOk));
+}
+
+void SmartConfig_RequestShow(void)
+{
+    ClearShow();
+	LCD_UartSend("DC24(114,80,'无法连接已保存的WIFI，',4);\r\n");
+    LCD_UartSend("DC24(102,124,'请使用小程序进行配网...',4);\r\n");
+	LCD_UartSend("DC24(186,168,'限时3分钟',4);\r\n");
+}
+
+void SmartConfig_SuccessShow(void)
+{
+	Send_SetText(0x0001, textConfigNetOk, sizeof(textConfigNetOk));
+	Send_SetText(0x0002, text_wifi_connected, sizeof(text_wifi_connected));
+
+}
+
+void SmartConfig_ErrorShow(void)
+{
+	Send_SetText(0x0001, textConfigNetFail, sizeof(textConfigNetFail));
+}
+
+

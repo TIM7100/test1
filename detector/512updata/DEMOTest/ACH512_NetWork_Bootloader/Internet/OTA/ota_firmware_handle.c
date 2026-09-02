@@ -1,0 +1,290 @@
+#include "ota_firmware_handle.h"
+#include "ota_firmware_update.h"
+#include "ExternalFlash.h"
+#include "my_aes_ecb.h"
+#include "crc.h"
+#include "menu_show.h"
+#include "eflash.h"
+#include "ExternalFlash.h"
+#include "lcd.h"
+#include "UserFunctionInterface.h"
+#include "delay.h"
+#include "hmi_driver.h"
+
+extern firmware_info_t firmware_info;
+u8 eflashBuffer[512];
+
+/******************************************************************
+ * @brief    计算表头、代码区、数据区CRC，验证本次固件包下载是否正确
+ * @param
+ * @return   OTA_FIRMWARE_VERIFY_SUCCES：校验正确
+ *           OTA_FIRMWARE_VERIFY_ERROR:  校验错误
+********************************************************************/
+u8 VerifyFirmwareHandle(void)
+{
+    u8 encrypt_buffer[512];
+    u8 decrypt_buffer[512];
+    u32 code_partition_flash_start_address, code_partition_flash_end_address, code_partition_size;
+    u32 data_partition_flash_start_address, data_partition_flash_end_address, data_partition_size;
+    u32 decrypt_size, decrypt_count, decrypt_num;
+    u16 cal_crc;
+    u32 w25q_offset_addr;
+//     u8 percent;
+    RunningShow(UPDATE_RUNNING);
+    Timer0DelayMs(25);
+    Send_SetCtrVAL(2, 0);
+
+    w25q_offset_addr = GET_NEXT_FIRMWARE_WRITE_ADDRESS(firmware_info.FirmwareAreaFlag);
+
+    //获取固件包表头信息并校验
+    ExFlashRead(encrypt_buffer, w25q_offset_addr, ONCE_HANDLE_SIZE);
+    DecryptDataByAesECB(encrypt_buffer, ONCE_HANDLE_SIZE, decrypt_buffer);
+    cal_crc = GetCrc16((char*)decrypt_buffer, ONCE_HANDLE_SIZE - 2);
+    if (cal_crc != ((decrypt_buffer[ONCE_HANDLE_SIZE - 2] << 8) + decrypt_buffer[ONCE_HANDLE_SIZE - 1]))
+    {
+        return OTA_FIRMWARE_VERIFY_ERROR;
+    }
+
+    Send_SetCtrVAL(2, 33);
+
+    //获取W25Q中的真实地址
+    code_partition_flash_start_address = ((decrypt_buffer[0x1B] << 24) + (decrypt_buffer[0x1A] << 16) + (decrypt_buffer[0x19] << 8) + decrypt_buffer[0x18]) + w25q_offset_addr;
+    code_partition_flash_end_address = ((decrypt_buffer[0x1F] << 24) + (decrypt_buffer[0x1E] << 16) + (decrypt_buffer[0x1D] << 8) + decrypt_buffer[0x1C]) + w25q_offset_addr;
+    data_partition_flash_start_address = ((decrypt_buffer[0x4B] << 24) + (decrypt_buffer[0x4A] << 16) + (decrypt_buffer[0x39] << 8) + decrypt_buffer[0x38]) + w25q_offset_addr;
+    data_partition_flash_end_address = ((decrypt_buffer[0x3F] << 24) + (decrypt_buffer[0x3E] << 16) + (decrypt_buffer[0x3D] << 8) + decrypt_buffer[0x3C]) + w25q_offset_addr;
+    code_partition_size = code_partition_flash_end_address - code_partition_flash_start_address;  //上位机结束地址向后偏移1,相减得到真实长度
+    data_partition_size = data_partition_flash_end_address - data_partition_flash_start_address;
+    //校验程序区
+    if (code_partition_size % ONCE_HANDLE_SIZE)  //解密长度补齐至512的倍数
+    {
+        decrypt_size = code_partition_size + (ONCE_HANDLE_SIZE - code_partition_size % ONCE_HANDLE_SIZE);
+    }
+    else
+    {
+        decrypt_size = code_partition_size;
+    }
+    decrypt_count = decrypt_size / ONCE_HANDLE_SIZE;
+    cal_crc = 0;
+    for (decrypt_num = 0; decrypt_num < decrypt_count; decrypt_num++)
+    {
+        ExFlashRead(encrypt_buffer, code_partition_flash_start_address + decrypt_num * ONCE_HANDLE_SIZE, ONCE_HANDLE_SIZE);
+        DecryptDataByAesECB(encrypt_buffer, ONCE_HANDLE_SIZE, decrypt_buffer);
+        if (decrypt_num == (decrypt_count - 1))
+        {
+            if (code_partition_size % ONCE_HANDLE_SIZE)
+            {
+                cal_crc = GetTolCrc16(~cal_crc, (char *)decrypt_buffer, code_partition_size % ONCE_HANDLE_SIZE - 2);
+                if (cal_crc != ((decrypt_buffer[code_partition_size % ONCE_HANDLE_SIZE - 2] << 8) + decrypt_buffer[code_partition_size % ONCE_HANDLE_SIZE - 1]))
+                {
+                    return OTA_FIRMWARE_VERIFY_ERROR;
+                }
+            }
+            else
+            {
+                cal_crc = GetTolCrc16(~cal_crc, (char *)decrypt_buffer, ONCE_HANDLE_SIZE - 2);
+                if (cal_crc != ((decrypt_buffer[ONCE_HANDLE_SIZE - 2] << 8) + decrypt_buffer[ONCE_HANDLE_SIZE - 1]))
+                {
+                    return OTA_FIRMWARE_VERIFY_ERROR;
+                }
+            }
+        }
+        else
+        {
+            cal_crc = GetTolCrc16(~cal_crc, (char *)decrypt_buffer, ONCE_HANDLE_SIZE);
+        }
+
+    }
+
+    Send_SetCtrVAL(2, 66);
+    //校验数据区
+    if (data_partition_size % ONCE_HANDLE_SIZE)  //解密长度补齐至512的倍数
+    {
+        decrypt_size = data_partition_size + (ONCE_HANDLE_SIZE - data_partition_size % ONCE_HANDLE_SIZE);
+    }
+    else
+    {
+        decrypt_size = data_partition_size;
+    }
+    decrypt_count = decrypt_size / ONCE_HANDLE_SIZE;
+    cal_crc = 0;
+    for (decrypt_num = 0; decrypt_num < decrypt_count; decrypt_num++)
+    {
+        ExFlashRead(encrypt_buffer, data_partition_flash_start_address + decrypt_num * ONCE_HANDLE_SIZE, ONCE_HANDLE_SIZE);
+        DecryptDataByAesECB(encrypt_buffer, ONCE_HANDLE_SIZE, decrypt_buffer);
+        if (decrypt_num == (decrypt_count - 1))
+        {
+            if (data_partition_size % ONCE_HANDLE_SIZE)
+            {
+                cal_crc = GetTolCrc16(~cal_crc, (char *)decrypt_buffer, data_partition_size % ONCE_HANDLE_SIZE - 2);
+                if (cal_crc != ((decrypt_buffer[data_partition_size % ONCE_HANDLE_SIZE - 2] << 8) + decrypt_buffer[data_partition_size % ONCE_HANDLE_SIZE - 1]))
+                {
+                    return OTA_FIRMWARE_VERIFY_ERROR;
+                }
+            }
+            else
+            {
+                cal_crc = GetTolCrc16(~cal_crc, (char *)decrypt_buffer, ONCE_HANDLE_SIZE - 2);
+                if (cal_crc != ((decrypt_buffer[ONCE_HANDLE_SIZE - 2] << 8) + decrypt_buffer[ONCE_HANDLE_SIZE - 1]))
+                {
+                    return OTA_FIRMWARE_VERIFY_ERROR;
+                }
+            }
+        }
+        else
+        {
+            cal_crc = GetTolCrc16(~cal_crc, (char *)decrypt_buffer, ONCE_HANDLE_SIZE);
+        }
+    }
+    /*校验成功，改变表头信息*/
+    ExFlashRead(encrypt_buffer, w25q_offset_addr, ONCE_HANDLE_SIZE);
+    DecryptDataByAesECB(encrypt_buffer, ONCE_HANDLE_SIZE, decrypt_buffer);
+    cal_crc = GetCrc16((char*)decrypt_buffer, ONCE_HANDLE_SIZE - 2);
+    if (cal_crc != ((decrypt_buffer[ONCE_HANDLE_SIZE - 2] << 8) + decrypt_buffer[ONCE_HANDLE_SIZE - 1]))
+    {
+        return OTA_FIRMWARE_VERIFY_ERROR;
+    }
+    strncpy(firmware_info.local_firmware_version, firmware_info.firmware_version, 12);
+    if (UploadFirmwareVersion() != OTA_SUCCESS) /*确保云平台版本同步，先上传版本*/
+    {
+        strncpy(firmware_info.local_firmware_version, "000000000000", 12);
+        return OTA_LINK_CLOUD_ERROR;             /*上传失败，则认为更新不成功*/
+    }
+    /*替换表头数据区和代码区的版本信息*/
+    memcpy(&firmware_info, decrypt_buffer, 64);
+    firmware_info.code.partition_flash_start_address = code_partition_flash_start_address;
+    firmware_info.code.partition_flash_end_address   = code_partition_flash_end_address;
+    firmware_info.data.partition_flash_start_address = data_partition_flash_start_address;
+    firmware_info.data.partition_flash_end_address   = data_partition_flash_end_address;
+    firmware_info.FirmwareAreaFlag = GET_NEXT_FIRMWARE_AREA(firmware_info.FirmwareAreaFlag);
+
+
+    HandleFirmwareInfo();
+
+    Send_SetCtrVAL(2, 100);
+    return OTA_FIRMWARE_VERIFY_SUCCES;
+}
+
+/******************************************************************
+ * @brief    将APP区解密保存至内部Flash并跳转APP
+ * @param
+ * @return
+ *           OTA_FIRMWARE_EMPTY        : 没有固件
+ *           OTA_WRITE_FLASH_ERROR     : 写内部flash出现错误
+ *           OTA_JUMP_APP_ERROR        : 跳转失败
+********************************************************************/
+u8 JumpAppAfterDecrypt(void)
+{
+//     u8 encrypt_buffer[512];
+//     u8 decrypt_buffer[512];
+//     u32 code_partition_flash_start_address, code_partition_flash_end_address, code_partition_size;
+//     u32 decrypt_size, decrypt_count, decrypt_num;
+// 	
+// 	  u32 currByte;
+//     u32 currPercent;
+
+    RunningShow(JUMP_APP_RUNNING);
+
+    //判断是否有固件
+//     if (firmware_info.FirmwareAreaFlag == 0)
+//     {
+//         return OTA_FIRMWARE_EMPTY;
+
+//     }
+//     Send_SetCtrVAL(6, 0);
+//     //获取W25Q表头信息
+//     code_partition_flash_start_address = firmware_info.code.partition_flash_start_address;
+//     code_partition_flash_end_address = firmware_info.code.partition_flash_end_address;
+//     code_partition_size = code_partition_flash_end_address - code_partition_flash_start_address;
+
+//     if (code_partition_size % ONCE_HANDLE_SIZE)  //解密长度补齐至512的倍数
+//     {
+//         decrypt_size = code_partition_size + (ONCE_HANDLE_SIZE - code_partition_size % ONCE_HANDLE_SIZE);
+//     }
+//     else
+//     {
+//         decrypt_size = code_partition_size;
+//     }
+//     decrypt_count = decrypt_size / ONCE_HANDLE_SIZE;
+
+//     for (decrypt_num = 0; decrypt_num < decrypt_count; decrypt_num++)
+//     {
+//         ExFlashRead(encrypt_buffer, code_partition_flash_start_address + decrypt_num * ONCE_HANDLE_SIZE, ONCE_HANDLE_SIZE);
+//         DecryptDataByAesECB(encrypt_buffer, ONCE_HANDLE_SIZE, decrypt_buffer);
+//         if (decrypt_num == decrypt_count - 1)
+//         {
+//             if (code_partition_size % ONCE_HANDLE_SIZE)
+//             {
+//                 if (EflashWritePageHandle(APP_START_ADDR + decrypt_num * ONCE_HANDLE_SIZE, code_partition_size % ONCE_HANDLE_SIZE - 2, decrypt_buffer))
+//                 {
+//                     return OTA_WRITE_FLASH_ERROR;
+//                 }
+//             }
+//             else
+//             {
+//                 if (EflashWritePageHandle(APP_START_ADDR + decrypt_num * ONCE_HANDLE_SIZE, ONCE_HANDLE_SIZE - 2, decrypt_buffer))
+//                 {
+//                     return OTA_WRITE_FLASH_ERROR;
+//                 }
+//             }
+//         }
+//         else
+//         {
+//             if (EflashWritePageHandle(APP_START_ADDR + decrypt_num * ONCE_HANDLE_SIZE, ONCE_HANDLE_SIZE, decrypt_buffer))
+//             {
+//                 return OTA_WRITE_FLASH_ERROR;
+//             }
+//         }
+// 				
+// 				currByte = (decrypt_num + 1) * ONCE_HANDLE_SIZE;
+//         if(currByte > code_partition_size)
+//         {
+//         currByte = code_partition_size;
+//     }
+//         currPercent = (currByte * 100U) / code_partition_size;
+// 				Timer0DelayMs(20);
+// 				Send_SetCtrVAL(6, currPercent);
+//     }
+   
+	 
+	 
+    APPcomming();
+	
+    //跳转APP
+    IapLoadApp(APP_START_ADDR);
+
+    return OTA_JUMP_APP_ERROR;
+}
+
+iapfun RUN_MCUCODE;
+//设置栈顶地址
+//addr:栈顶地址
+__asm void MSR_MSP(u32 addr)
+{
+    MSR MSP, r0  //set Main Stack value
+    BX r14
+}
+
+void IapLoadApp(u32 Addr)
+{
+// 	  u8 errnet[] = "请检查网络状态";
+// 	  u8 errnet_en[] = "Please check network";
+    if ((((*(volatile u32*)(Addr + 4)) & 0xFF000000) == 0x00000000) && (((*(volatile u32*)Addr) & 0x2FFE0000) == 0x20000000)) //判断是否为0X00XXXXXX.检查栈顶地址是否合法.
+    {
+        //手动清理
+//        NVIC_DisableIRQ(UARTA_IRQn);
+//        NVIC_DisableIRQ(UARTB_IRQn);
+//        NVIC_ClearPendingIRQ(UARTA_IRQn);
+//        NVIC_ClearPendingIRQ(UARTB_IRQn);
+
+        __set_PRIMASK(1);
+        RUN_MCUCODE = (iapfun) * (volatile u32*)(Addr + 4);     //用户代码区第二个字为程序开始地址(复位地址)
+        MSR_MSP(*(volatile u32*)Addr);                          //初始化APP堆栈指针(用户代码区的第一个字用于存放栈顶地址)
+        RUN_MCUCODE();                                          //跳转到APP.
+// 			  Send_SetText(0x0001, errnet, sizeof(errnet));
+// 			  Send_SetText(0x0004, errnet_en, sizeof(errnet_en));
+        
+        __set_PRIMASK(0);
+    }
+}
+
+

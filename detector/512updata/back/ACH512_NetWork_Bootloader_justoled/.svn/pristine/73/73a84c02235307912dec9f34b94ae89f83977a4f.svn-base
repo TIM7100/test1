@@ -1,0 +1,230 @@
+#include "mqtt_client.h"
+#include "stdlib.h"
+#include "socket.h"
+#include "dns.h"
+#include "utils_hmac.h"
+#include "mqtt_fun.h"
+#include "w5500_user_conf.h"
+
+#define PACKET_TRY_COUNT	5				     //5s, 发送报文失败时，尝试的次数
+#define WAIT_RX_PACKET_TIME 10				     //单位 500ms，等待云平台报文时间，等待时间到后，发送一次心跳报文
+#define KEEP_ALIVE_COUNT	10 			         //发送周期 WAIT_RX_PACKET_TIME * 200 ms;当发送 KEEP_ALIVE_COUNT次 心跳报文后，还没接收到数据，代表云平台没有下发数据
+
+
+MQTT_PACKET_INFOR MqttPacket;
+
+/*******************************************************
+ * @brief    用于打印MQTT三元组信息，调试时使用，需要包含user_conf.h
+ * @param    MqttInfor：三元组的结构体类型的缓存区地址指针
+ * @return   无
+********************************************************/
+static void PrintfMQTTConnectPara(MQTT_INFOR *MqttInfor)
+{
+//	printfS("打印三元组信息\r\n");
+//	printfS("ClientID: \r\n");
+//	PrintfString(MqttInfor->ClientID, strlen((const char*)MqttInfor->ClientID));
+//	printfS("UserName: \r\n");
+//	PrintfString(MqttInfor->Username, strlen((const char*)MqttInfor->Username));
+//	printfS("Passward: \r\n");
+//	PrintfString(MqttInfor->Passward, strlen((const char*)MqttInfor->Passward));
+}
+
+/*******************************************************
+ * @brief    Mqtt连接参数配置（三元组）
+ * @param    MqttInfor： MQTT连接参数结构体类型的形参
+ * @return   无
+********************************************************/
+static void MqttParameterConfigure(MQTT_INFOR *MqttInfor)
+{
+	char Temp[128] = {0};						    //计算加密的时候，临时使用的缓冲区
+	u8 PasswordLen = 0; 
+	CLOUD_INFOR CloudInfor;
+	
+	CloudParameterInit(&CloudInfor);				//获取密钥和设备名，用于计算连接云平台的三元组
+	MqttParameterInit(MqttInfor);					//初始化三元组
+/* 根据云平台的规则，计算获取连接云平台的三元组：设备ID、用户名、密码 */                                                                                             
+    sprintf((char*)MqttInfor->ClientID, "%s%s", CloudInfor.ProductKey, CloudInfor.DeviceName);                                  //构建客户端ID，并存入缓冲区
+    sprintf((char*)MqttInfor->Username, "%s%s;12010126;11fd5;2779545600", CloudInfor.ProductKey, CloudInfor.DeviceName);        //构建用户名，并存入缓冲区，有效期至2058-01-30
+	memset(Temp, 0, 128);                                                                                                       //开始解析设备密钥, 获得密码, 临时缓冲区全部清零
+    PasswordLen = base64_decode((char*)CloudInfor.DeviceSecret, (unsigned char*)Temp);                                                      //对DeviceSecret进行base64解码
+	//PasswordLen = qcloud_iot_utils_base64decode(Temp, 128, CloudInfor.DeviceSecret, 16);
+	//以上一步的结果为秘钥对Username中的明文，进行hmacsha1加密，结果就是密码，并保存到缓冲区中
+    utils_hmac_sha1((const char*)MqttInfor->Username, strlen((const char*)MqttInfor->Username), (char*)MqttInfor->Passward, Temp, PasswordLen); 
+    strcat((char*)MqttInfor->Passward, ";hmacsha1"); 																	        //末尾追加字符串
+	PrintfMQTTConnectPara(MqttInfor);							                              //打印三元组信息
+}
+
+
+
+/*******************************************************
+ * @brief    连接云平台客户端，并订阅指定的主题
+ * @param    xxx:xxx
+ * @return   CONNECT_ERROR： 连接云平台时，出现错误
+			 SUB_TOPIC_ERROR：订阅主题时，出现错误
+			 MQTT_SUCCESS： 连接并订阅主题成功
+********************************************************/
+u8 ConnectMqttClient(void)
+{ 
+	u8 Timeout = PACKET_TRY_COUNT;
+	static MQTT_INFOR MqttInfor;					//不加static，程序运行会出现错误
+	
+/* 初始化报文参数 */
+	MqttParameterConfigure(&MqttInfor);				//配置三元组参数
+	MqttPackerParameterInit(&MqttPacket);	        //配置连接报文需要的参数
+/* 发送连接报文 */
+	Timeout = PACKET_TRY_COUNT;
+	printfS("发送连接报文\r\n");
+	while((ConnectMqttClientPacket(&MqttPacket, &MqttInfor) != PACKET_SUCCESS) && Timeout--)
+	{
+		if(Timeout == 0)
+		{
+			return CONNECT_ERROR;
+		}
+		Timer0DelayMs(1000);
+	}
+/* 发送订阅报文 */
+	Timeout = PACKET_TRY_COUNT;
+	printfS("发送订阅报文\r\n");
+	while((SubscribeTopicPacket(&MqttPacket) != PACKET_SUCCESS) && Timeout--)
+	{
+		if(Timeout == 0)
+		{
+			return SUB_TOPIC_ERROR;
+		}
+		Timer0DelayMs(1000);
+	}
+	return MQTT_SUCCESS;
+}
+
+/*******************************************************
+ * @brief    断开云平台的连接
+ * @param    无
+ * @return   DISCONNECT_ERROR：断开失败
+			 MQTT_SUCCESS：断开成功
+********************************************************/
+u8 DisconnectMqttClient(void)
+{
+	if ( DisconnectMqttClientPacket() <= 0)
+	{
+		return DISCONNECT_ERROR;
+	}
+	return MQTT_SUCCESS;
+}
+
+static u8 SendPubTopic(const char *PubTopicTemplate, const char* UploadDataTemplate)
+{
+    u8 QOS = 1;
+    u8 Timeout = PACKET_TRY_COUNT;
+    u16 RxPacketLen = 0;
+    
+    /* 发送报文前，需要更改发布主题, 并拼接包含版本的数据报, 和设置上传消息质量 */
+	MqttPubTopicInit(&MqttPacket, PubTopicTemplate);											            //设置发布的主题
+	memset(MqttPacket.UploadTemplate, 0, strlen(MqttPacket.UploadTemplate));
+	strncpy(MqttPacket.UploadTemplate, UploadDataTemplate, strlen(UploadDataTemplate));	
+	MqttPacket.Qos = QOS;																					//上发消息服务质量
+	PrintfString(MqttPacket.UploadTemplate, strlen((const char*)MqttPacket.UploadTemplate));				//打印待发送的数据包
+	
+    /* 发送发布报文，携带版本确认消息，来确认是否需要更新固件包 */
+	printfS("发送发布报文\r\n");
+	while ((PublishTopicPacket(&MqttPacket) != PACKET_SUCCESS) && Timeout--)
+	{
+		if (Timeout == 0)
+		{
+			return PUB_TOPIC_ERROR;
+		}
+		Timer0DelayMs(2000);
+	}
+    return MQTT_SUCCESS;
+//    Timeout = PACKET_TRY_COUNT;
+//    while(Timeout--)
+//    {
+//       RxPacketLen = WaitReceiveMsg(&MqttPacket);
+//       if(RxPacketLen > 0) 
+//       {
+//           printfS("Receive Pack:%s\r\n", MqttPacket.DataPacket + 8);
+//           if(strstr((const char*)MqttPacket.DataPacket + 8, "\"result_msg\":\"success\""))
+//           {
+//               return MQTT_SUCCESS;
+//           }
+//       }
+//    }
+}
+
+
+static u8 ReceiveSubTopic(const char* SubTopicTemplate, char* SubRxBuff)
+{
+    char *Point = NULL;
+    u16 RxPacketLen = 0;
+    u8 Timeout = 0;
+    u8 WaitTime = WAIT_RX_PACKET_TIME;
+    
+    Timeout = KEEP_ALIVE_COUNT;
+    printfS("等待接收云平台下传的报文\r\n");
+    while (Timeout--)
+    {
+        /* 规定时间内，没接收到数据，就发送一次保活心跳，若Timeout == 0则表示没有发送消息下来 */
+        while ((RxPacketLen < 10) && --WaitTime)
+        {
+            Timer0DelayMs(500);
+            RxPacketLen = WaitReceiveMsg(&MqttPacket);
+        }
+        /* 等待时间(WaitTime)不为0时跳出while循环，代表有接收到云平台下发的数据 */
+        if (WaitTime != 0)			
+        { 
+            /* 先判断接收到的消息是否是正确的 */   //加5，是跳过MQTT应答报文前面的非有效载荷报文
+            if(strstr((const char*)MqttPacket.DataPacket , SubTopicTemplate) || strstr((const char*)(MqttPacket.DataPacket + 5), SubTopicTemplate))
+            {
+                if(strstr((const char*)MqttPacket.DataPacket + 8, "\"result_msg\":\"success\"") == NULL)
+               {
+                   memcpy(SubRxBuff, MqttPacket.DataPacket + 5, strlen((char*)MqttPacket.DataPacket + 5));
+//                    printfS("Len:%d, %s\r\n", strlen((char*)MqttPacket.DataPacket + 5), MqttPacket.DataPacket + 5);
+                   return GET_SUB_TOPIC_DATA;
+               }
+            }
+            RxPacketLen = 0;
+        }
+        else
+        {
+            WaitTime = WAIT_RX_PACKET_TIME;
+            printfS("发送心跳报文\r\n");
+            KeppAlivePacket();
+        }
+    }
+	return DONT_SUB_TOPIC_DATA; 
+}
+
+/*****************************************************************************
+ * @brief    向主题上报并获取该主题下发的消息
+ * @param    PubTopic：发布主题
+             PubUploadData：主题发布时的数据格式
+             RxBuff：   订阅的主题下发数据的缓存区
+ * @return   PUB_TOPIC_ERROR：向主题发布消息失败
+			 GET_SUB_TOPIC_DATA：得到主题下发的数据
+			 DONT_SUB_TOPIC_DATA：主题没有下发数据
+******************************************************************************/
+u8 GetSubTopicInfo(const char* PubTopic, SUB_TOPIC_MAP_t SubTopicNum, const char* PubUploadData, char* RxBuff)
+{
+	//发布主题
+    if (SendPubTopic(PubTopic, PubUploadData) == PUB_TOPIC_ERROR)
+    {
+        return PUB_TOPIC_ERROR;
+    } 
+    //接收主题下发的信息
+    if (ReceiveSubTopic(MqttPacket.SubTopic[SubTopicNum], RxBuff) == GET_SUB_TOPIC_DATA)           
+    {
+        return GET_SUB_TOPIC_DATA;
+    }
+    return DONT_SUB_TOPIC_DATA;
+}
+
+
+/****************************************************************
+ * @brief    向指定发布主题上报消息
+ * @param    PubUploadData: 发布主题上报时的数据格式
+ * @return   PUB_TOPIC_ERROR：向主题发布消息失败
+ *           MQTT_SUCCESS: 发布消息成功
+****************************************************************/
+u8 SendPubTopicInfo(const char* PubTopic, const char* PubUploadData)
+{
+    return SendPubTopic(PubTopic, PubUploadData);
+}

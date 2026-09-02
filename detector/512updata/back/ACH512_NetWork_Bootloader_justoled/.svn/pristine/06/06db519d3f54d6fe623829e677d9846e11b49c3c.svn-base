@@ -1,0 +1,34 @@
+#include "gpio.h"
+#include "delay.h"
+
+int Keystatus;
+u32 key_data;
+
+void KeyInit(void)
+{
+    REG_SCU_MUXCTRLD &= ~(0xFF << 16);       //GPIO56,57,58,59
+    REG_GPIO_DIR(GPIOB) &= ~(0xF << 24);      //GPIO56,57,58,59 IN
+    REG_GPIO_IDATA(GPIOB) |= KEY_DATA;
+}
+
+u32 wait_Key(void)
+{
+    /* 1ms如果检测到还是低电平，则为按下*/
+    u32 key_data1, key_data2;
+
+    do
+    {
+        key_data1 = REG_GPIO_IDATA(GPIOB) & KEY_DATA;
+        Timer0DelayMs(1);
+        key_data2 = REG_GPIO_IDATA(GPIOB) & KEY_DATA;
+    }
+    while (!((key_data1 != KEY_DATA) && (key_data2 != KEY_DATA) && (key_data1 == key_data2)));
+// 		    while (((key_data1 != Key_Enter) && (key_data1 != Key_Esc) && (key_data1 != Key_Up) && (key_data1 != Key_Down) && (key_data1 == key_data2)));
+
+    if ((key_data1 == Key_Enter) || (key_data1 == Key_Esc))
+    {
+    }
+
+    return    key_data1;
+}
+

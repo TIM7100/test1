@@ -1,0 +1,1354 @@
+Component: Arm Compiler for Embedded 6.21 Tool: armlink [5ec1fa00]
+
+==============================================================================
+
+Section Cross References
+
+    startup_f4_f3.o(RESET) refers to startup_f4_f3.o(STACK) for __initial_sp
+    startup_f4_f3.o(RESET) refers to startup_f4_f3.o(.text) for Reset_Handler
+    startup_f4_f3.o(RESET) refers to system_f4_f3.o(.text.HardFault_Handler) for HardFault_Handler
+    startup_f4_f3.o(RESET) refers to system_f4_f3.o(.text.SysTick_Handler) for SysTick_Handler
+    startup_f4_f3.o(RESET) refers to uart.o(.text.UART3_IRQHandler) for UART3_IRQHandler
+    startup_f4_f3.o(RESET) refers to uart.o(.text.UART2_IRQHandler) for UART2_IRQHandler
+    startup_f4_f3.o(.text) refers to system_f4_f3.o(.text.System_Core_Config) for System_Core_Config
+    startup_f4_f3.o(.text) refers to entry.o(.ARM.Collect$$$$00000000) for __main
+    system_f4_f3.o(.ARM.exidx.text.HardFault_Handler) refers to system_f4_f3.o(.text.HardFault_Handler) for [Anonymous Symbol]
+    system_f4_f3.o(.text.SysTick_Handler) refers to system_f4_f3.o(.bss.gu32_SystemCount) for gu32_SystemCount
+    system_f4_f3.o(.ARM.exidx.text.SysTick_Handler) refers to system_f4_f3.o(.text.SysTick_Handler) for [Anonymous Symbol]
+    system_f4_f3.o(.text.System_SysTick_Init) refers to system_f4_f3.o(.bss.gu32_SystemCount) for gu32_SystemCount
+    system_f4_f3.o(.text.System_SysTick_Init) refers to system_f4_f3.o(.bss.gu32_SystemClock) for gu32_SystemClock
+    system_f4_f3.o(.text.System_SysTick_Init) refers to system_f4_f3.o(.text.SysTick_Config) for SysTick_Config
+    system_f4_f3.o(.ARM.exidx.text.System_SysTick_Init) refers to system_f4_f3.o(.text.System_SysTick_Init) for [Anonymous Symbol]
+    system_f4_f3.o(.text.SysTick_Config) refers to system_f4_f3.o(.text.__NVIC_SetPriority) for __NVIC_SetPriority
+    system_f4_f3.o(.ARM.exidx.text.SysTick_Config) refers to system_f4_f3.o(.text.SysTick_Config) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_SysTick_Off) refers to system_f4_f3.o(.text.System_SysTick_Off) for [Anonymous Symbol]
+    system_f4_f3.o(.text.System_Init) refers to system_f4_f3.o(.text.System_Set_Buzzer_Divider) for System_Set_Buzzer_Divider
+    system_f4_f3.o(.text.System_Init) refers to system_f4_f3.o(.text.__NVIC_SetPriorityGrouping) for __NVIC_SetPriorityGrouping
+    system_f4_f3.o(.text.System_Init) refers to system_f4_f3.o(.text.System_Clock_Init) for System_Clock_Init
+    system_f4_f3.o(.text.System_Init) refers to system_accelerate.o(.text.System_EnableIAccelerate) for System_EnableIAccelerate
+    system_f4_f3.o(.text.System_Init) refers to system_f4_f3.o(.text.System_SysTick_Init) for System_SysTick_Init
+    system_f4_f3.o(.ARM.exidx.text.System_Init) refers to system_f4_f3.o(.text.System_Init) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_Set_Buzzer_Divider) refers to system_f4_f3.o(.text.System_Set_Buzzer_Divider) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.__NVIC_SetPriorityGrouping) refers to system_f4_f3.o(.text.__NVIC_SetPriorityGrouping) for [Anonymous Symbol]
+    system_f4_f3.o(.text.System_Clock_Init) refers to system_f4_f3.o(.bss.gu32_SystemClock) for gu32_SystemClock
+    system_f4_f3.o(.text.System_Clock_Init) refers to system_f4_f3.o(.bss.gu32_APBClock) for gu32_APBClock
+    system_f4_f3.o(.text.System_Clock_Init) refers to fxx_eflash.o(.text.EFlash_Init) for EFlash_Init
+    system_f4_f3.o(.ARM.exidx.text.System_Clock_Init) refers to system_f4_f3.o(.text.System_Clock_Init) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_Core_Config) refers to system_f4_f3.o(.text.System_Core_Config) for [Anonymous Symbol]
+    system_f4_f3.o(.text.System_Get_SystemClock) refers to system_f4_f3.o(.bss.gu32_SystemClock) for gu32_SystemClock
+    system_f4_f3.o(.ARM.exidx.text.System_Get_SystemClock) refers to system_f4_f3.o(.text.System_Get_SystemClock) for [Anonymous Symbol]
+    system_f4_f3.o(.text.System_Get_APBClock) refers to system_f4_f3.o(.bss.gu32_APBClock) for gu32_APBClock
+    system_f4_f3.o(.ARM.exidx.text.System_Get_APBClock) refers to system_f4_f3.o(.text.System_Get_APBClock) for [Anonymous Symbol]
+    system_f4_f3.o(.text.System_Module_Reset) refers to system_f4_f3.o(.text.System_Delay) for System_Delay
+    system_f4_f3.o(.ARM.exidx.text.System_Module_Reset) refers to system_f4_f3.o(.text.System_Module_Reset) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_Delay) refers to system_f4_f3.o(.text.System_Delay) for [Anonymous Symbol]
+    system_f4_f3.o(.text.System_Module_Enable) refers to system_f4_f3.o(.text.System_Delay) for System_Delay
+    system_f4_f3.o(.ARM.exidx.text.System_Module_Enable) refers to system_f4_f3.o(.text.System_Module_Enable) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_Module_Disable) refers to system_f4_f3.o(.text.System_Module_Disable) for [Anonymous Symbol]
+    system_f4_f3.o(.text.System_Delay_MS) refers to system_f4_f3.o(.bss.gu32_SystemCount) for gu32_SystemCount
+    system_f4_f3.o(.ARM.exidx.text.System_Delay_MS) refers to system_f4_f3.o(.text.System_Delay_MS) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_Enable_RC32K) refers to system_f4_f3.o(.text.System_Enable_RC32K) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_Disable_RC32K) refers to system_f4_f3.o(.text.System_Disable_RC32K) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_Enable_XTAL) refers to system_f4_f3.o(.text.System_Enable_XTAL) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_Disable_XTAL) refers to system_f4_f3.o(.text.System_Disable_XTAL) for [Anonymous Symbol]
+    system_f4_f3.o(.text.System_Enable_Disable_RTC_Domain_Access) refers to system_f4_f3.o(.text.System_Delay) for System_Delay
+    system_f4_f3.o(.ARM.exidx.text.System_Enable_Disable_RTC_Domain_Access) refers to system_f4_f3.o(.text.System_Enable_Disable_RTC_Domain_Access) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_Enable_Disable_Reset) refers to system_f4_f3.o(.text.System_Enable_Disable_Reset) for [Anonymous Symbol]
+    system_f4_f3.o(.text.System_Reset_MCU) refers to system_f4_f3.o(.text.__NVIC_SystemReset) for __NVIC_SystemReset
+    system_f4_f3.o(.ARM.exidx.text.System_Reset_MCU) refers to system_f4_f3.o(.text.System_Reset_MCU) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.__NVIC_SystemReset) refers to system_f4_f3.o(.text.__NVIC_SystemReset) for [Anonymous Symbol]
+    system_f4_f3.o(.text.System_Enter_Standby_Mode) refers to system_f4_f3.o(.text.System_Delay) for System_Delay
+    system_f4_f3.o(.text.System_Enter_Standby_Mode) refers to system_f4_f3.o(.rodata.str1.1) for .L.str
+    system_f4_f3.o(.text.System_Enter_Standby_Mode) refers to printfa.o(i.__0printf) for printf
+    system_f4_f3.o(.ARM.exidx.text.System_Enter_Standby_Mode) refers to system_f4_f3.o(.text.System_Enter_Standby_Mode) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_Clear_Stop_Wakeup) refers to system_f4_f3.o(.text.System_Clear_Stop_Wakeup) for [Anonymous Symbol]
+    system_f4_f3.o(.text.System_Enter_Stop_Mode) refers to system_f4_f3.o(.text.System_SysTick_Off) for System_SysTick_Off
+    system_f4_f3.o(.text.System_Enter_Stop_Mode) refers to system_f4_f3.o(.text.System_SysTick_Init) for System_SysTick_Init
+    system_f4_f3.o(.ARM.exidx.text.System_Enter_Stop_Mode) refers to system_f4_f3.o(.text.System_Enter_Stop_Mode) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_Enter_Sleep_Mode) refers to system_f4_f3.o(.text.System_Enter_Sleep_Mode) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_Return_Last_Reset_Reason) refers to system_f4_f3.o(.text.System_Return_Last_Reset_Reason) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.System_USB_PHY_Config) refers to system_f4_f3.o(.text.System_USB_PHY_Config) for [Anonymous Symbol]
+    system_f4_f3.o(.text.assert_failed) refers to system_f4_f3.o(.rodata.str1.1) for .L.str.1
+    system_f4_f3.o(.text.assert_failed) refers to printfa.o(i.__0printf) for printf
+    system_f4_f3.o(.ARM.exidx.text.assert_failed) refers to system_f4_f3.o(.text.assert_failed) for [Anonymous Symbol]
+    system_f4_f3.o(.ARM.exidx.text.__NVIC_SetPriority) refers to system_f4_f3.o(.text.__NVIC_SetPriority) for [Anonymous Symbol]
+    fxx_eflash.o(.text.EFlash_Init) refers to hal_eflash_ex.o(.text.EFlash_Init_Para) for EFlash_Init_Para
+    fxx_eflash.o(.ARM.exidx.text.EFlash_Init) refers to fxx_eflash.o(.text.EFlash_Init) for [Anonymous Symbol]
+    fxx_eflash.o(.ARM.exidx.text.EFlash_ErasePage) refers to fxx_eflash.o(.text.EFlash_ErasePage) for [Anonymous Symbol]
+    fxx_eflash.o(.ARM.exidx.text.EFlash_Program_Word) refers to fxx_eflash.o(.text.EFlash_Program_Word) for [Anonymous Symbol]
+    fxx_gpio.o(.text.GPIO_Init) refers to fxx_gpio.o(.rodata.str1.1) for .L.str
+    fxx_gpio.o(.text.GPIO_Init) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_gpio.o(.ARM.exidx.text.GPIO_Init) refers to fxx_gpio.o(.text.GPIO_Init) for [Anonymous Symbol]
+    fxx_gpio.o(.text.GPIO_DeInit) refers to fxx_gpio.o(.rodata.str1.1) for .L.str
+    fxx_gpio.o(.text.GPIO_DeInit) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_gpio.o(.text.GPIO_DeInit) refers to system_f4_f3.o(.text.System_Module_Disable) for System_Module_Disable
+    fxx_gpio.o(.ARM.exidx.text.GPIO_DeInit) refers to fxx_gpio.o(.text.GPIO_DeInit) for [Anonymous Symbol]
+    fxx_gpio.o(.ARM.exidx.text.GPIO_StructInit) refers to fxx_gpio.o(.text.GPIO_StructInit) for [Anonymous Symbol]
+    fxx_gpio.o(.text.GPIO_ReadInputDataBit) refers to fxx_gpio.o(.rodata.str1.1) for .L.str
+    fxx_gpio.o(.text.GPIO_ReadInputDataBit) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_gpio.o(.ARM.exidx.text.GPIO_ReadInputDataBit) refers to fxx_gpio.o(.text.GPIO_ReadInputDataBit) for [Anonymous Symbol]
+    fxx_gpio.o(.text.GPIO_ReadInputData) refers to fxx_gpio.o(.rodata.str1.1) for .L.str
+    fxx_gpio.o(.text.GPIO_ReadInputData) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_gpio.o(.ARM.exidx.text.GPIO_ReadInputData) refers to fxx_gpio.o(.text.GPIO_ReadInputData) for [Anonymous Symbol]
+    fxx_gpio.o(.text.GPIO_ReadOutputDataBit) refers to fxx_gpio.o(.rodata.str1.1) for .L.str
+    fxx_gpio.o(.text.GPIO_ReadOutputDataBit) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_gpio.o(.ARM.exidx.text.GPIO_ReadOutputDataBit) refers to fxx_gpio.o(.text.GPIO_ReadOutputDataBit) for [Anonymous Symbol]
+    fxx_gpio.o(.text.GPIO_ReadOutputData) refers to fxx_gpio.o(.rodata.str1.1) for .L.str
+    fxx_gpio.o(.text.GPIO_ReadOutputData) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_gpio.o(.ARM.exidx.text.GPIO_ReadOutputData) refers to fxx_gpio.o(.text.GPIO_ReadOutputData) for [Anonymous Symbol]
+    fxx_gpio.o(.text.GPIO_SetBits) refers to fxx_gpio.o(.rodata.str1.1) for .L.str
+    fxx_gpio.o(.text.GPIO_SetBits) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_gpio.o(.ARM.exidx.text.GPIO_SetBits) refers to fxx_gpio.o(.text.GPIO_SetBits) for [Anonymous Symbol]
+    fxx_gpio.o(.text.GPIO_ResetBits) refers to fxx_gpio.o(.rodata.str1.1) for .L.str
+    fxx_gpio.o(.text.GPIO_ResetBits) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_gpio.o(.ARM.exidx.text.GPIO_ResetBits) refers to fxx_gpio.o(.text.GPIO_ResetBits) for [Anonymous Symbol]
+    fxx_gpio.o(.text.GPIO_WriteBit) refers to fxx_gpio.o(.rodata.str1.1) for .L.str
+    fxx_gpio.o(.text.GPIO_WriteBit) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_gpio.o(.ARM.exidx.text.GPIO_WriteBit) refers to fxx_gpio.o(.text.GPIO_WriteBit) for [Anonymous Symbol]
+    fxx_gpio.o(.text.GPIO_Write) refers to fxx_gpio.o(.rodata.str1.1) for .L.str
+    fxx_gpio.o(.text.GPIO_Write) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_gpio.o(.ARM.exidx.text.GPIO_Write) refers to fxx_gpio.o(.text.GPIO_Write) for [Anonymous Symbol]
+    fxx_gpio.o(.text.GPIO_ITConfig) refers to fxx_gpio.o(.rodata.str1.1) for .L.str
+    fxx_gpio.o(.text.GPIO_ITConfig) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_gpio.o(.ARM.exidx.text.GPIO_ITConfig) refers to fxx_gpio.o(.text.GPIO_ITConfig) for [Anonymous Symbol]
+    fxx_gpio.o(.text.GPIO_ITClear) refers to fxx_gpio.o(.rodata.str1.1) for .L.str
+    fxx_gpio.o(.text.GPIO_ITClear) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_gpio.o(.ARM.exidx.text.GPIO_ITClear) refers to fxx_gpio.o(.text.GPIO_ITClear) for [Anonymous Symbol]
+    fxx_gpio.o(.text.GPIO_GetITStatus) refers to fxx_gpio.o(.rodata.str1.1) for .L.str
+    fxx_gpio.o(.text.GPIO_GetITStatus) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_gpio.o(.ARM.exidx.text.GPIO_GetITStatus) refers to fxx_gpio.o(.text.GPIO_GetITStatus) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_Config) refers to fxx_rtc.o(.text.RTC_Config) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_EnterConfigMode) refers to fxx_rtc.o(.text.RTC_EnterConfigMode) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_ExitConfigMode) refers to fxx_rtc.o(.text.RTC_ExitConfigMode) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_GetFlagStatus) refers to fxx_rtc.o(.text.RTC_GetFlagStatus) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_ClearFlag) refers to fxx_rtc.o(.text.RTC_ClearFlag) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_ClearITPendingBit) refers to fxx_rtc.o(.text.RTC_ClearITPendingBit) for [Anonymous Symbol]
+    fxx_rtc.o(.text.RTC_SetTime) refers to fxx_rtc.o(.text.RTC_EnterConfigMode) for RTC_EnterConfigMode
+    fxx_rtc.o(.text.RTC_SetTime) refers to fxx_rtc.o(.text.RTC_ExitConfigMode) for RTC_ExitConfigMode
+    fxx_rtc.o(.ARM.exidx.text.RTC_SetTime) refers to fxx_rtc.o(.text.RTC_SetTime) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_GetTime) refers to fxx_rtc.o(.text.RTC_GetTime) for [Anonymous Symbol]
+    fxx_rtc.o(.text.RTC_SetDate) refers to fxx_rtc.o(.text.RTC_EnterConfigMode) for RTC_EnterConfigMode
+    fxx_rtc.o(.text.RTC_SetDate) refers to fxx_rtc.o(.text.RTC_ExitConfigMode) for RTC_ExitConfigMode
+    fxx_rtc.o(.ARM.exidx.text.RTC_SetDate) refers to fxx_rtc.o(.text.RTC_SetDate) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_GetDate) refers to fxx_rtc.o(.text.RTC_GetDate) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_SetAlarm) refers to fxx_rtc.o(.text.RTC_SetAlarm) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_AlarmEnable) refers to fxx_rtc.o(.text.RTC_AlarmEnable) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_AlarmDisable) refers to fxx_rtc.o(.text.RTC_AlarmDisable) for [Anonymous Symbol]
+    fxx_rtc.o(.text.RTC_Tamper) refers to system_f4_f3.o(.text.System_Delay) for System_Delay
+    fxx_rtc.o(.ARM.exidx.text.RTC_Tamper) refers to fxx_rtc.o(.text.RTC_Tamper) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_TamperEnable) refers to fxx_rtc.o(.text.RTC_TamperEnable) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_TamperDisable) refers to fxx_rtc.o(.text.RTC_TamperDisable) for [Anonymous Symbol]
+    fxx_rtc.o(.text.RTC_Standby_Wakeup) refers to system_f4_f3.o(.text.System_Enter_Standby_Mode) for System_Enter_Standby_Mode
+    fxx_rtc.o(.ARM.exidx.text.RTC_Standby_Wakeup) refers to fxx_rtc.o(.text.RTC_Standby_Wakeup) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_Get_StandbyStatus) refers to fxx_rtc.o(.text.RTC_Get_StandbyStatus) for [Anonymous Symbol]
+    fxx_rtc.o(.ARM.exidx.text.RTC_Get_StandbyWakeupSource) refers to fxx_rtc.o(.text.RTC_Get_StandbyWakeupSource) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_TimeBase_Init) refers to fxx_tim.o(.text.TIM_TimeBase_Init) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_ITConfig) refers to fxx_tim.o(.text.TIM_ITConfig) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_Cmd) refers to fxx_tim.o(.text.TIM_Cmd) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_OC1Init) refers to fxx_tim.o(.text.TIM_OC1Init) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_OC2Init) refers to fxx_tim.o(.text.TIM_OC2Init) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_OC3Init) refers to fxx_tim.o(.text.TIM_OC3Init) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_OC4Init) refers to fxx_tim.o(.text.TIM_OC4Init) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_CCxCmd) refers to fxx_tim.o(.text.TIM_CCxCmd) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_CCxNCmd) refers to fxx_tim.o(.text.TIM_CCxNCmd) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_CtrlPWMOutputs) refers to fxx_tim.o(.text.TIM_CtrlPWMOutputs) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIMER_IC1_SetConfig) refers to fxx_tim.o(.text.TIMER_IC1_SetConfig) for [Anonymous Symbol]
+    fxx_tim.o(.text.TIM_ICInit) refers to fxx_tim.o(.text.TIMER_IC1_SetConfig) for TIMER_IC1_SetConfig
+    fxx_tim.o(.text.TIM_ICInit) refers to fxx_tim.o(.text.TIMER_IC2_SetConfig) for TIMER_IC2_SetConfig
+    fxx_tim.o(.text.TIM_ICInit) refers to fxx_tim.o(.text.TIMER_IC3_SetConfig) for TIMER_IC3_SetConfig
+    fxx_tim.o(.text.TIM_ICInit) refers to fxx_tim.o(.text.TIMER_IC4_SetConfig) for TIMER_IC4_SetConfig
+    fxx_tim.o(.ARM.exidx.text.TIM_ICInit) refers to fxx_tim.o(.text.TIM_ICInit) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIMER_IC2_SetConfig) refers to fxx_tim.o(.text.TIMER_IC2_SetConfig) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIMER_IC3_SetConfig) refers to fxx_tim.o(.text.TIMER_IC3_SetConfig) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIMER_IC4_SetConfig) refers to fxx_tim.o(.text.TIMER_IC4_SetConfig) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_GetFlagStatus) refers to fxx_tim.o(.text.TIM_GetFlagStatus) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_ClearFlag) refers to fxx_tim.o(.text.TIM_ClearFlag) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_SelectMasterSlaveMode) refers to fxx_tim.o(.text.TIM_SelectMasterSlaveMode) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_SelectOutputTrigger) refers to fxx_tim.o(.text.TIM_SelectOutputTrigger) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_SelectInputTrigger) refers to fxx_tim.o(.text.TIM_SelectInputTrigger) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_SelectSlaveMode) refers to fxx_tim.o(.text.TIM_SelectSlaveMode) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_TI1FP1_ConfigInputStage) refers to fxx_tim.o(.text.TIM_TI1FP1_ConfigInputStage) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIMER_TI2FP2_ConfigInputStage) refers to fxx_tim.o(.text.TIMER_TI2FP2_ConfigInputStage) for [Anonymous Symbol]
+    fxx_tim.o(.ARM.exidx.text.TIM_ETR_SetConfig) refers to fxx_tim.o(.text.TIM_ETR_SetConfig) for [Anonymous Symbol]
+    fxx_uart.o(.ARM.exidx.text.UART_Cmd) refers to fxx_uart.o(.text.UART_Cmd) for [Anonymous Symbol]
+    fxx_uart.o(.text.UART_Init) refers to fxx_uart.o(.text.UART_Config_BaudRate) for UART_Config_BaudRate
+    fxx_uart.o(.text.UART_Init) refers to fxx_uart.o(.bss.Uart_Debug) for Uart_Debug
+    fxx_uart.o(.ARM.exidx.text.UART_Init) refers to fxx_uart.o(.text.UART_Init) for [Anonymous Symbol]
+    fxx_uart.o(.text.UART_Config_BaudRate) refers to system_f4_f3.o(.text.System_Get_APBClock) for System_Get_APBClock
+    fxx_uart.o(.text.UART_Config_BaudRate) refers to uldiv.o(.text) for __aeabi_uldivmod
+    fxx_uart.o(.ARM.exidx.text.UART_Config_BaudRate) refers to fxx_uart.o(.text.UART_Config_BaudRate) for [Anonymous Symbol]
+    fxx_uart.o(.ARM.exidx.text.UART_DeInit) refers to fxx_uart.o(.text.UART_DeInit) for [Anonymous Symbol]
+    fxx_uart.o(.ARM.exidx.text.UART_StructInit) refers to fxx_uart.o(.text.UART_StructInit) for [Anonymous Symbol]
+    fxx_uart.o(.ARM.exidx.text.UART_ITConfig) refers to fxx_uart.o(.text.UART_ITConfig) for [Anonymous Symbol]
+    fxx_uart.o(.ARM.exidx.text.UART_ClearITPendingBit) refers to fxx_uart.o(.text.UART_ClearITPendingBit) for [Anonymous Symbol]
+    fxx_uart.o(.ARM.exidx.text.UART_SendData) refers to fxx_uart.o(.text.UART_SendData) for [Anonymous Symbol]
+    fxx_uart.o(.text.UART_ReceiveData) refers to fxx_uart.o(.rodata.str1.1) for .L.str
+    fxx_uart.o(.text.UART_ReceiveData) refers to system_f4_f3.o(.text.assert_failed) for assert_failed
+    fxx_uart.o(.ARM.exidx.text.UART_ReceiveData) refers to fxx_uart.o(.text.UART_ReceiveData) for [Anonymous Symbol]
+    fxx_uart.o(.ARM.exidx.text.UART_GetITStatus) refers to fxx_uart.o(.text.UART_GetITStatus) for [Anonymous Symbol]
+    fxx_uart.o(.ARM.exidx.text.UART_DMACmd) refers to fxx_uart.o(.text.UART_DMACmd) for [Anonymous Symbol]
+    fxx_uart.o(.text.fputc) refers to fxx_uart.o(.bss.Uart_Debug) for Uart_Debug
+    fxx_uart.o(.ARM.exidx.text.fputc) refers to fxx_uart.o(.text.fputc) for [Anonymous Symbol]
+    fxx_i2c.o(.text._I2Cx_IRQHandler) refers to fxx_i2c.o(.text.I2C_GetFlagStatus) for I2C_GetFlagStatus
+    fxx_i2c.o(.text._I2Cx_IRQHandler) refers to fxx_i2c.o(.text.I2C_ClearFlag) for I2C_ClearFlag
+    fxx_i2c.o(.text._I2Cx_IRQHandler) refers to fxx_i2c.o(.text.I2C_ITConfig) for I2C_ITConfig
+    fxx_i2c.o(.ARM.exidx.text._I2Cx_IRQHandler) refers to fxx_i2c.o(.text._I2Cx_IRQHandler) for [Anonymous Symbol]
+    fxx_i2c.o(.ARM.exidx.text.I2C_GetFlagStatus) refers to fxx_i2c.o(.text.I2C_GetFlagStatus) for [Anonymous Symbol]
+    fxx_i2c.o(.ARM.exidx.text.I2C_ClearFlag) refers to fxx_i2c.o(.text.I2C_ClearFlag) for [Anonymous Symbol]
+    fxx_i2c.o(.ARM.exidx.text.I2C_ITConfig) refers to fxx_i2c.o(.text.I2C_ITConfig) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_Set_Clock_Speed) refers to system_f4_f3.o(.text.System_Get_APBClock) for System_Get_APBClock
+    fxx_i2c.o(.ARM.exidx.text.I2C_Set_Clock_Speed) refers to fxx_i2c.o(.text.I2C_Set_Clock_Speed) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_Init) refers to fxx_i2c.o(.text.I2C_Set_Clock_Speed) for I2C_Set_Clock_Speed
+    fxx_i2c.o(.ARM.exidx.text.I2C_Init) refers to fxx_i2c.o(.text.I2C_Init) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_DeInit) refers to system_f4_f3.o(.text.System_Module_Disable) for System_Module_Disable
+    fxx_i2c.o(.ARM.exidx.text.I2C_DeInit) refers to fxx_i2c.o(.text.I2C_DeInit) for [Anonymous Symbol]
+    fxx_i2c.o(.ARM.exidx.text.I2C_Cmd) refers to fxx_i2c.o(.text.I2C_Cmd) for [Anonymous Symbol]
+    fxx_i2c.o(.ARM.exidx.text.I2C_DMACmd) refers to fxx_i2c.o(.text.I2C_DMACmd) for [Anonymous Symbol]
+    fxx_i2c.o(.ARM.exidx.text.I2C_GenerateSTART) refers to fxx_i2c.o(.text.I2C_GenerateSTART) for [Anonymous Symbol]
+    fxx_i2c.o(.ARM.exidx.text.I2C_GenerateSTOP) refers to fxx_i2c.o(.text.I2C_GenerateSTOP) for [Anonymous Symbol]
+    fxx_i2c.o(.ARM.exidx.text.I2C_Send7bitAddress) refers to fxx_i2c.o(.text.I2C_Send7bitAddress) for [Anonymous Symbol]
+    fxx_i2c.o(.ARM.exidx.text.I2C_StretchClockCmd) refers to fxx_i2c.o(.text.I2C_StretchClockCmd) for [Anonymous Symbol]
+    fxx_i2c.o(.ARM.exidx.text.I2C_ReadRegister) refers to fxx_i2c.o(.text.I2C_ReadRegister) for [Anonymous Symbol]
+    fxx_i2c.o(.ARM.exidx.text.I2C_SendData) refers to fxx_i2c.o(.text.I2C_SendData) for [Anonymous Symbol]
+    fxx_i2c.o(.ARM.exidx.text.I2C_ReceiveData) refers to fxx_i2c.o(.text.I2C_ReceiveData) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_Mem_Write) refers to fxx_i2c.o(.text.I2C_GetFlagStatus) for I2C_GetFlagStatus
+    fxx_i2c.o(.text.I2C_Mem_Write) refers to fxx_i2c.o(.text.I2C_Master_Request_Write) for I2C_Master_Request_Write
+    fxx_i2c.o(.text.I2C_Mem_Write) refers to fxx_i2c.o(.text.I2C_SendData) for I2C_SendData
+    fxx_i2c.o(.text.I2C_Mem_Write) refers to fxx_i2c.o(.text.I2C_WaitOnFlagUntilTimeout) for I2C_WaitOnFlagUntilTimeout
+    fxx_i2c.o(.text.I2C_Mem_Write) refers to fxx_i2c.o(.text.I2C_ClearFlag) for I2C_ClearFlag
+    fxx_i2c.o(.text.I2C_Mem_Write) refers to fxx_i2c.o(.text.I2C_GenerateSTOP) for I2C_GenerateSTOP
+    fxx_i2c.o(.text.I2C_Mem_Write) refers to fxx_i2c.o(.text.I2C_Check_Device_Ready) for I2C_Check_Device_Ready
+    fxx_i2c.o(.ARM.exidx.text.I2C_Mem_Write) refers to fxx_i2c.o(.text.I2C_Mem_Write) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_Master_Request_Write) refers to fxx_i2c.o(.text.I2C_GenerateSTART) for I2C_GenerateSTART
+    fxx_i2c.o(.text.I2C_Master_Request_Write) refers to fxx_i2c.o(.text.I2C_ClearFlag) for I2C_ClearFlag
+    fxx_i2c.o(.text.I2C_Master_Request_Write) refers to fxx_i2c.o(.text.I2C_Send7bitAddress) for I2C_Send7bitAddress
+    fxx_i2c.o(.text.I2C_Master_Request_Write) refers to fxx_i2c.o(.text.I2C_WaitOnFlagUntilTimeout) for I2C_WaitOnFlagUntilTimeout
+    fxx_i2c.o(.text.I2C_Master_Request_Write) refers to fxx_i2c.o(.text.I2C_GetFlagStatus) for I2C_GetFlagStatus
+    fxx_i2c.o(.text.I2C_Master_Request_Write) refers to fxx_i2c.o(.text.I2C_GenerateSTOP) for I2C_GenerateSTOP
+    fxx_i2c.o(.ARM.exidx.text.I2C_Master_Request_Write) refers to fxx_i2c.o(.text.I2C_Master_Request_Write) for [Anonymous Symbol]
+    fxx_i2c.o(.ARM.exidx.text.I2C_WaitOnFlagUntilTimeout) refers to fxx_i2c.o(.text.I2C_WaitOnFlagUntilTimeout) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_Check_Device_Ready) refers to fxx_i2c.o(.text.I2C_GetFlagStatus) for I2C_GetFlagStatus
+    fxx_i2c.o(.text.I2C_Check_Device_Ready) refers to fxx_i2c.o(.text.I2C_GenerateSTART) for I2C_GenerateSTART
+    fxx_i2c.o(.text.I2C_Check_Device_Ready) refers to fxx_i2c.o(.text.I2C_WaitOnFlagUntilTimeout) for I2C_WaitOnFlagUntilTimeout
+    fxx_i2c.o(.text.I2C_Check_Device_Ready) refers to fxx_i2c.o(.text.I2C_ClearFlag) for I2C_ClearFlag
+    fxx_i2c.o(.text.I2C_Check_Device_Ready) refers to fxx_i2c.o(.text.I2C_GenerateSTOP) for I2C_GenerateSTOP
+    fxx_i2c.o(.ARM.exidx.text.I2C_Check_Device_Ready) refers to fxx_i2c.o(.text.I2C_Check_Device_Ready) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_Mem_Read) refers to fxx_i2c.o(.text.I2C_Master_Request_Write) for I2C_Master_Request_Write
+    fxx_i2c.o(.text.I2C_Mem_Read) refers to fxx_i2c.o(.text.I2C_WaitOnFlagUntilTimeout) for I2C_WaitOnFlagUntilTimeout
+    fxx_i2c.o(.text.I2C_Mem_Read) refers to fxx_i2c.o(.text.I2C_Master_Request_Read) for I2C_Master_Request_Read
+    fxx_i2c.o(.ARM.exidx.text.I2C_Mem_Read) refers to fxx_i2c.o(.text.I2C_Mem_Read) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_Master_Request_Read) refers to fxx_i2c.o(.text.I2C_GenerateSTART) for I2C_GenerateSTART
+    fxx_i2c.o(.text.I2C_Master_Request_Read) refers to fxx_i2c.o(.text.I2C_ClearFlag) for I2C_ClearFlag
+    fxx_i2c.o(.text.I2C_Master_Request_Read) refers to fxx_i2c.o(.text.I2C_Send7bitAddress) for I2C_Send7bitAddress
+    fxx_i2c.o(.text.I2C_Master_Request_Read) refers to fxx_i2c.o(.text.I2C_WaitOnFlagUntilTimeout) for I2C_WaitOnFlagUntilTimeout
+    fxx_i2c.o(.text.I2C_Master_Request_Read) refers to fxx_i2c.o(.text.I2C_GetFlagStatus) for I2C_GetFlagStatus
+    fxx_i2c.o(.text.I2C_Master_Request_Read) refers to fxx_i2c.o(.text.I2C_GenerateSTOP) for I2C_GenerateSTOP
+    fxx_i2c.o(.ARM.exidx.text.I2C_Master_Request_Read) refers to fxx_i2c.o(.text.I2C_Master_Request_Read) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_Master_Transmit) refers to fxx_i2c.o(.text.I2C_Master_Request_Write) for I2C_Master_Request_Write
+    fxx_i2c.o(.text.I2C_Master_Transmit) refers to fxx_i2c.o(.text.I2C_WaitOnFlagUntilTimeout) for I2C_WaitOnFlagUntilTimeout
+    fxx_i2c.o(.text.I2C_Master_Transmit) refers to fxx_i2c.o(.text.I2C_SendData) for I2C_SendData
+    fxx_i2c.o(.text.I2C_Master_Transmit) refers to fxx_i2c.o(.text.I2C_ClearFlag) for I2C_ClearFlag
+    fxx_i2c.o(.text.I2C_Master_Transmit) refers to fxx_i2c.o(.text.I2C_GetFlagStatus) for I2C_GetFlagStatus
+    fxx_i2c.o(.text.I2C_Master_Transmit) refers to fxx_i2c.o(.text.I2C_GenerateSTOP) for I2C_GenerateSTOP
+    fxx_i2c.o(.ARM.exidx.text.I2C_Master_Transmit) refers to fxx_i2c.o(.text.I2C_Master_Transmit) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_Master_Receive) refers to fxx_i2c.o(.text.I2C_Master_Request_Read) for I2C_Master_Request_Read
+    fxx_i2c.o(.text.I2C_Master_Receive) refers to fxx_i2c.o(.text.I2C_WaitOnFlagUntilTimeout) for I2C_WaitOnFlagUntilTimeout
+    fxx_i2c.o(.text.I2C_Master_Receive) refers to fxx_i2c.o(.text.I2C_ClearFlag) for I2C_ClearFlag
+    fxx_i2c.o(.text.I2C_Master_Receive) refers to fxx_i2c.o(.text.I2C_ReceiveData) for I2C_ReceiveData
+    fxx_i2c.o(.ARM.exidx.text.I2C_Master_Receive) refers to fxx_i2c.o(.text.I2C_Master_Receive) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_Slave_Transmit) refers to fxx_i2c.o(.text.I2C_ClearFlag) for I2C_ClearFlag
+    fxx_i2c.o(.text.I2C_Slave_Transmit) refers to fxx_i2c.o(.text.I2C_WaitOnFlagUntilTimeout) for I2C_WaitOnFlagUntilTimeout
+    fxx_i2c.o(.text.I2C_Slave_Transmit) refers to fxx_i2c.o(.text.I2C_GetFlagStatus) for I2C_GetFlagStatus
+    fxx_i2c.o(.text.I2C_Slave_Transmit) refers to fxx_i2c.o(.text.I2C_SendData) for I2C_SendData
+    fxx_i2c.o(.ARM.exidx.text.I2C_Slave_Transmit) refers to fxx_i2c.o(.text.I2C_Slave_Transmit) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_Slave_Receive) refers to fxx_i2c.o(.text.I2C_WaitOnFlagUntilTimeout) for I2C_WaitOnFlagUntilTimeout
+    fxx_i2c.o(.text.I2C_Slave_Receive) refers to fxx_i2c.o(.text.I2C_ClearFlag) for I2C_ClearFlag
+    fxx_i2c.o(.text.I2C_Slave_Receive) refers to fxx_i2c.o(.text.I2C_GetFlagStatus) for I2C_GetFlagStatus
+    fxx_i2c.o(.text.I2C_Slave_Receive) refers to fxx_i2c.o(.text.I2C_ReceiveData) for I2C_ReceiveData
+    fxx_i2c.o(.ARM.exidx.text.I2C_Slave_Receive) refers to fxx_i2c.o(.text.I2C_Slave_Receive) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_Slave_Transmit_IT) refers to fxx_i2c.o(.text.I2C_ClearFlag) for I2C_ClearFlag
+    fxx_i2c.o(.text.I2C_Slave_Transmit_IT) refers to fxx_i2c.o(.text.I2C_ITConfig) for I2C_ITConfig
+    fxx_i2c.o(.ARM.exidx.text.I2C_Slave_Transmit_IT) refers to fxx_i2c.o(.text.I2C_Slave_Transmit_IT) for [Anonymous Symbol]
+    fxx_i2c.o(.text.I2C_Slave_Receive_IT) refers to fxx_i2c.o(.text.I2C_ClearFlag) for I2C_ClearFlag
+    fxx_i2c.o(.text.I2C_Slave_Receive_IT) refers to fxx_i2c.o(.text.I2C_ITConfig) for I2C_ITConfig
+    fxx_i2c.o(.ARM.exidx.text.I2C_Slave_Receive_IT) refers to fxx_i2c.o(.text.I2C_Slave_Receive_IT) for [Anonymous Symbol]
+    main.o(.text.WiFi_IO_Init) refers to system_f4_f3.o(.text.System_Module_Enable) for System_Module_Enable
+    main.o(.text.WiFi_IO_Init) refers to fxx_gpio.o(.text.GPIO_Init) for GPIO_Init
+    main.o(.ARM.exidx.text.WiFi_IO_Init) refers to main.o(.text.WiFi_IO_Init) for [Anonymous Symbol]
+    main.o(.text.main) refers to system_f4_f3.o(.text.System_Init) for System_Init
+    main.o(.text.main) refers to uart.o(.text.UART3_Init) for UART3_Init
+    main.o(.text.main) refers to main.o(.text.WiFi_IO_Init) for WiFi_IO_Init
+    main.o(.text.main) refers to fxx_gpio.o(.text.GPIO_ResetBits) for GPIO_ResetBits
+    main.o(.text.main) refers to system_f4_f3.o(.text.System_Delay_MS) for System_Delay_MS
+    main.o(.text.main) refers to fxx_gpio.o(.text.GPIO_SetBits) for GPIO_SetBits
+    main.o(.text.main) refers to uart.o(.bss.i) for i
+    main.o(.text.main) refers to main.o(.data.timeout) for timeout
+    main.o(.text.main) refers to uart.o(.bss.Res) for Res
+    main.o(.text.main) refers to memseta.o(.text) for __aeabi_memclr
+    main.o(.text.main) refers to main.o(.rodata.str1.1) for .L.str
+    main.o(.text.main) refers to uart.o(.text.UART_printf) for UART_printf
+    main.o(.text.main) refers to strstr.o(.text) for strstr
+    main.o(.ARM.exidx.text.main) refers to main.o(.text.main) for [Anonymous Symbol]
+    uart.o(.text.UartInit) refers to system_f4_f3.o(.text.System_Module_Enable) for System_Module_Enable
+    uart.o(.text.UartInit) refers to uart.o(.bss.GPIO_InitStruct) for GPIO_InitStruct
+    uart.o(.text.UartInit) refers to fxx_gpio.o(.text.GPIO_Init) for GPIO_Init
+    uart.o(.text.UartInit) refers to uart.o(.bss.UART1_InitStruc) for UART1_InitStruc
+    uart.o(.text.UartInit) refers to fxx_uart.o(.text.UART_Init) for UART_Init
+    uart.o(.text.UartInit) refers to uart.o(.text.__NVIC_ClearPendingIRQ) for __NVIC_ClearPendingIRQ
+    uart.o(.text.UartInit) refers to uart.o(.text.__NVIC_SetPriority) for __NVIC_SetPriority
+    uart.o(.text.UartInit) refers to uart.o(.text.__NVIC_EnableIRQ) for __NVIC_EnableIRQ
+    uart.o(.text.UartInit) refers to fxx_uart.o(.text.UART_ITConfig) for UART_ITConfig
+    uart.o(.text.UartInit) refers to fxx_uart.o(.text.UART_Cmd) for UART_Cmd
+    uart.o(.text.UartInit) refers to delay.o(.text.Delay_ms) for Delay_ms
+    uart.o(.text.UartInit) refers to uart.o(.bss.UART2_InitStruc) for UART2_InitStruc
+    uart.o(.text.UartInit) refers to uart.o(.rodata.str1.1) for .L.str
+    uart.o(.text.UartInit) refers to printfa.o(i.__0printf) for printf
+    uart.o(.ARM.exidx.text.UartInit) refers to uart.o(.text.UartInit) for [Anonymous Symbol]
+    uart.o(.ARM.exidx.text.__NVIC_ClearPendingIRQ) refers to uart.o(.text.__NVIC_ClearPendingIRQ) for [Anonymous Symbol]
+    uart.o(.ARM.exidx.text.__NVIC_SetPriority) refers to uart.o(.text.__NVIC_SetPriority) for [Anonymous Symbol]
+    uart.o(.ARM.exidx.text.__NVIC_EnableIRQ) refers to uart.o(.text.__NVIC_EnableIRQ) for [Anonymous Symbol]
+    uart.o(.text.UART3_Init) refers to system_f4_f3.o(.text.System_Module_Enable) for System_Module_Enable
+    uart.o(.text.UART3_Init) refers to fxx_gpio.o(.text.GPIO_Init) for GPIO_Init
+    uart.o(.text.UART3_Init) refers to fxx_uart.o(.text.UART_Init) for UART_Init
+    uart.o(.text.UART3_Init) refers to fxx_uart.o(.text.UART_Cmd) for UART_Cmd
+    uart.o(.text.UART3_Init) refers to uart.o(.text.__NVIC_ClearPendingIRQ) for __NVIC_ClearPendingIRQ
+    uart.o(.text.UART3_Init) refers to uart.o(.text.__NVIC_SetPriority) for __NVIC_SetPriority
+    uart.o(.text.UART3_Init) refers to uart.o(.text.__NVIC_EnableIRQ) for __NVIC_EnableIRQ
+    uart.o(.text.UART3_Init) refers to fxx_uart.o(.text.UART_ITConfig) for UART_ITConfig
+    uart.o(.ARM.exidx.text.UART3_Init) refers to uart.o(.text.UART3_Init) for [Anonymous Symbol]
+    uart.o(.text.UART3_IRQHandler) refers to fxx_uart.o(.text.UART_GetITStatus) for UART_GetITStatus
+    uart.o(.text.UART3_IRQHandler) refers to fxx_uart.o(.text.UART_ReceiveData) for UART_ReceiveData
+    uart.o(.text.UART3_IRQHandler) refers to uart.o(.bss.i) for i
+    uart.o(.text.UART3_IRQHandler) refers to uart.o(.bss.Res) for Res
+    uart.o(.ARM.exidx.text.UART3_IRQHandler) refers to uart.o(.text.UART3_IRQHandler) for [Anonymous Symbol]
+    uart.o(.text.UART_printf) refers to printfa.o(i.__0vsnprintf) for vsnprintf
+    uart.o(.text.UART_printf) refers to fxx_uart.o(.text.UART_SendData) for UART_SendData
+    uart.o(.ARM.exidx.text.UART_printf) refers to uart.o(.text.UART_printf) for [Anonymous Symbol]
+    uart.o(.text.Uart1Init) refers to system_f4_f3.o(.text.System_Module_Enable) for System_Module_Enable
+    uart.o(.text.Uart1Init) refers to uart.o(.bss.GPIO_InitStruct) for GPIO_InitStruct
+    uart.o(.text.Uart1Init) refers to fxx_gpio.o(.text.GPIO_Init) for GPIO_Init
+    uart.o(.text.Uart1Init) refers to uart.o(.bss.UART1_InitStruc) for UART1_InitStruc
+    uart.o(.text.Uart1Init) refers to fxx_uart.o(.text.UART_Init) for UART_Init
+    uart.o(.text.Uart1Init) refers to uart.o(.text.__NVIC_ClearPendingIRQ) for __NVIC_ClearPendingIRQ
+    uart.o(.text.Uart1Init) refers to uart.o(.text.__NVIC_SetPriority) for __NVIC_SetPriority
+    uart.o(.text.Uart1Init) refers to uart.o(.text.__NVIC_EnableIRQ) for __NVIC_EnableIRQ
+    uart.o(.text.Uart1Init) refers to fxx_uart.o(.text.UART_ITConfig) for UART_ITConfig
+    uart.o(.text.Uart1Init) refers to fxx_uart.o(.text.UART_Cmd) for UART_Cmd
+    uart.o(.text.Uart1Init) refers to delay.o(.text.Delay_ms) for Delay_ms
+    uart.o(.ARM.exidx.text.Uart1Init) refers to uart.o(.text.Uart1Init) for [Anonymous Symbol]
+    uart.o(.text.CheckBusy) refers to uart.o(.bss.UartRxFinished) for UartRxFinished
+    uart.o(.text.CheckBusy) refers to uart.o(.bss.RX_BUF) for RX_BUF
+    uart.o(.text.CheckBusy) refers to uart.o(.bss.UartRxCount) for UartRxCount
+    uart.o(.ARM.exidx.text.CheckBusy) refers to uart.o(.text.CheckBusy) for [Anonymous Symbol]
+    uart.o(.text.UartSend) refers to fxx_uart.o(.text.UART_SendData) for UART_SendData
+    uart.o(.ARM.exidx.text.UartSend) refers to uart.o(.text.UartSend) for [Anonymous Symbol]
+    uart.o(.text.UART2_IRQHandler) refers to fxx_uart.o(.text.UART_GetITStatus) for UART_GetITStatus
+    uart.o(.text.UART2_IRQHandler) refers to fxx_uart.o(.text.UART_ReceiveData) for UART_ReceiveData
+    uart.o(.text.UART2_IRQHandler) refers to uart.o(.bss.UartRxFinished) for UartRxFinished
+    uart.o(.text.UART2_IRQHandler) refers to uart.o(.bss.UartRxCount) for UartRxCount
+    uart.o(.text.UART2_IRQHandler) refers to uart.o(.bss.RX_BUF) for RX_BUF
+    uart.o(.ARM.exidx.text.UART2_IRQHandler) refers to uart.o(.text.UART2_IRQHandler) for [Anonymous Symbol]
+    delay.o(.text.TIM6_Init) refers to system_f4_f3.o(.text.System_Get_APBClock) for System_Get_APBClock
+    delay.o(.text.TIM6_Init) refers to system_f4_f3.o(.text.System_Get_SystemClock) for System_Get_SystemClock
+    delay.o(.text.TIM6_Init) refers to delay.o(.bss.TIM_TimeBaseStructure) for TIM_TimeBaseStructure
+    delay.o(.text.TIM6_Init) refers to fxx_tim.o(.text.TIM_TimeBase_Init) for TIM_TimeBase_Init
+    delay.o(.ARM.exidx.text.TIM6_Init) refers to delay.o(.text.TIM6_Init) for [Anonymous Symbol]
+    delay.o(.text.NVIC_Configuration) refers to delay.o(.text.__NVIC_ClearPendingIRQ) for __NVIC_ClearPendingIRQ
+    delay.o(.text.NVIC_Configuration) refers to delay.o(.text.__NVIC_EnableIRQ) for __NVIC_EnableIRQ
+    delay.o(.ARM.exidx.text.NVIC_Configuration) refers to delay.o(.text.NVIC_Configuration) for [Anonymous Symbol]
+    delay.o(.ARM.exidx.text.__NVIC_ClearPendingIRQ) refers to delay.o(.text.__NVIC_ClearPendingIRQ) for [Anonymous Symbol]
+    delay.o(.ARM.exidx.text.__NVIC_EnableIRQ) refers to delay.o(.text.__NVIC_EnableIRQ) for [Anonymous Symbol]
+    delay.o(.text.Clock_Configuration) refers to system_f4_f3.o(.text.System_Module_Enable) for System_Module_Enable
+    delay.o(.ARM.exidx.text.Clock_Configuration) refers to delay.o(.text.Clock_Configuration) for [Anonymous Symbol]
+    delay.o(.text.Delay_ms) refers to delay.o(.bss.TIM_TimeBaseStructure) for TIM_TimeBaseStructure
+    delay.o(.text.Delay_ms) refers to fxx_tim.o(.text.TIM_TimeBase_Init) for TIM_TimeBase_Init
+    delay.o(.ARM.exidx.text.Delay_ms) refers to delay.o(.text.Delay_ms) for [Anonymous Symbol]
+    delay.o(.text.Delay_s) refers to delay.o(.bss.TIM_TimeBaseStructure) for TIM_TimeBaseStructure
+    delay.o(.text.Delay_s) refers to fxx_tim.o(.text.TIM_TimeBase_Init) for TIM_TimeBase_Init
+    delay.o(.ARM.exidx.text.Delay_s) refers to delay.o(.text.Delay_s) for [Anonymous Symbol]
+    delay.o(.text.Delay_us) refers to delay.o(.bss.TIM_TimeBaseStructure) for TIM_TimeBaseStructure
+    delay.o(.text.Delay_us) refers to fxx_tim.o(.text.TIM_TimeBase_Init) for TIM_TimeBase_Init
+    delay.o(.ARM.exidx.text.Delay_us) refers to delay.o(.text.Delay_us) for [Anonymous Symbol]
+    delay.o(.ARM.exidx.text.TimeDelay) refers to delay.o(.text.TimeDelay) for [Anonymous Symbol]
+    delay.o(.text.Fiic_delay_ms) refers to delay.o(.bss.TIM_TimeBaseStructure) for TIM_TimeBaseStructure
+    delay.o(.text.Fiic_delay_ms) refers to fxx_tim.o(.text.TIM_TimeBase_Init) for TIM_TimeBase_Init
+    delay.o(.ARM.exidx.text.Fiic_delay_ms) refers to delay.o(.text.Fiic_delay_ms) for [Anonymous Symbol]
+    delay.o(.text.Fiic_delay_us) refers to delay.o(.bss.TIM_TimeBaseStructure) for TIM_TimeBaseStructure
+    delay.o(.text.Fiic_delay_us) refers to fxx_tim.o(.text.TIM_TimeBase_Init) for TIM_TimeBase_Init
+    delay.o(.ARM.exidx.text.Fiic_delay_us) refers to delay.o(.text.Fiic_delay_us) for [Anonymous Symbol]
+    system_accelerate.o(.ARM.exidx.text.System_EnableIAccelerate) refers to system_accelerate.o(.text.System_EnableIAccelerate) for [Anonymous Symbol]
+    system_accelerate.o(.ARM.exidx.text.System_DisableIAccelerate) refers to system_accelerate.o(.text.System_DisableIAccelerate) for [Anonymous Symbol]
+    system_accelerate.o(.ARM.exidx.text.System_InvalidateIAccelerate) refers to system_accelerate.o(.text.System_InvalidateIAccelerate) for [Anonymous Symbol]
+    system_accelerate.o(.ARM.exidx.text.System_EnableDAccelerate) refers to system_accelerate.o(.text.System_EnableDAccelerate) for [Anonymous Symbol]
+    system_accelerate.o(.ARM.exidx.text.System_DisableDAccelerate) refers to system_accelerate.o(.text.System_DisableDAccelerate) for [Anonymous Symbol]
+    system_accelerate.o(.ARM.exidx.text.System_InvalidateDAccelerate) refers to system_accelerate.o(.text.System_InvalidateDAccelerate) for [Anonymous Symbol]
+    system_accelerate.o(.ARM.exidx.text.System_CleanDAccelerate) refers to system_accelerate.o(.text.System_CleanDAccelerate) for [Anonymous Symbol]
+    system_accelerate.o(.ARM.exidx.text.System_CleanInvalidateDAccelerate) refers to system_accelerate.o(.text.System_CleanInvalidateDAccelerate) for [Anonymous Symbol]
+    system_accelerate.o(.ARM.exidx.text.System_InvalidateDAccelerate_by_Addr) refers to system_accelerate.o(.text.System_InvalidateDAccelerate_by_Addr) for [Anonymous Symbol]
+    system_accelerate.o(.ARM.exidx.text.System_CleanDAccelerate_by_Addr) refers to system_accelerate.o(.text.System_CleanDAccelerate_by_Addr) for [Anonymous Symbol]
+    system_accelerate.o(.ARM.exidx.text.System_CleanInvalidateDAccelerate_by_Addr) refers to system_accelerate.o(.text.System_CleanInvalidateDAccelerate_by_Addr) for [Anonymous Symbol]
+    hal_eflash_ex.o(.text.EFlash_ReWrite_Word) refers to fxx_eflash.o(.text.EFlash_ErasePage) for EFlash_ErasePage
+    hal_eflash_ex.o(.text.EFlash_ReWrite_Word) refers to fxx_eflash.o(.text.EFlash_Program_Word) for EFlash_Program_Word
+    hal_eflash_ex.o(.ARM.exidx.text.EFlash_ReWrite_Word) refers to hal_eflash_ex.o(.text.EFlash_ReWrite_Word) for [Anonymous Symbol]
+    hal_eflash_ex.o(.text.EFlash_Return_to_Boot) refers to hal_eflash_ex.o(.text.EFlash_ReWrite_Word) for EFlash_ReWrite_Word
+    hal_eflash_ex.o(.ARM.exidx.text.EFlash_Return_to_Boot) refers to hal_eflash_ex.o(.text.EFlash_Return_to_Boot) for [Anonymous Symbol]
+    hal_eflash_ex.o(.ARM.exidx.text.HAL_Verify_Chip) refers to hal_eflash_ex.o(.text.HAL_Verify_Chip) for [Anonymous Symbol]
+    hal_eflash_ex.o(.text.EFlash_Init_Para) refers to hal_eflash_ex.o(.text.HAL_Verify_Chip) for HAL_Verify_Chip
+    hal_eflash_ex.o(.ARM.exidx.text.EFlash_Init_Para) refers to hal_eflash_ex.o(.text.EFlash_Init_Para) for [Anonymous Symbol]
+    hal_eflash_ex.o(.text.EFlash_ErasePage_EX) refers to system_accelerate.o(.text.System_InvalidateDAccelerate_by_Addr) for System_InvalidateDAccelerate_by_Addr
+    hal_eflash_ex.o(.ARM.exidx.text.EFlash_ErasePage_EX) refers to hal_eflash_ex.o(.text.EFlash_ErasePage_EX) for [Anonymous Symbol]
+    hal_eflash_ex.o(.text.EFlash_Program_Word_EX) refers to system_accelerate.o(.text.System_InvalidateDAccelerate_by_Addr) for System_InvalidateDAccelerate_by_Addr
+    hal_eflash_ex.o(.ARM.exidx.text.EFlash_Program_Word_EX) refers to hal_eflash_ex.o(.text.EFlash_Program_Word_EX) for [Anonymous Symbol]
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry10a.o(.ARM.Collect$$$$0000000D) for __rt_final_cpp
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry11a.o(.ARM.Collect$$$$0000000F) for __rt_final_exit
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry7b.o(.ARM.Collect$$$$00000008) for _main_clock
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry8b.o(.ARM.Collect$$$$0000000A) for _main_cpp_init
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry9a.o(.ARM.Collect$$$$0000000B) for _main_init
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry5.o(.ARM.Collect$$$$00000004) for _main_scatterload
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry2.o(.ARM.Collect$$$$00000001) for _main_stk
+    uldiv.o(.text) refers to llushr.o(.text) for __aeabi_llsr
+    uldiv.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    printfa.o(i.__0fprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0fprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0fprintf) refers to fxx_uart.o(.text.fputc) for fputc
+    printfa.o(i.__0printf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0printf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0printf) refers to fxx_uart.o(.text.fputc) for fputc
+    printfa.o(i.__0printf) refers to stdout.o(.data) for __stdout
+    printfa.o(i.__0snprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0snprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0snprintf) refers to printfa.o(i._snputc) for _snputc
+    printfa.o(i.__0sprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0sprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0sprintf) refers to printfa.o(i._sputc) for _sputc
+    printfa.o(i.__0vfprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0vfprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0vfprintf) refers to fxx_uart.o(.text.fputc) for fputc
+    printfa.o(i.__0vprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0vprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0vprintf) refers to fxx_uart.o(.text.fputc) for fputc
+    printfa.o(i.__0vprintf) refers to stdout.o(.data) for __stdout
+    printfa.o(i.__0vsnprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0vsnprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0vsnprintf) refers to printfa.o(i._snputc) for _snputc
+    printfa.o(i.__0vsprintf) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i.__0vsprintf) refers to printfa.o(i._printf_core) for _printf_core
+    printfa.o(i.__0vsprintf) refers to printfa.o(i._sputc) for _sputc
+    printfa.o(i._fp_digits) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._fp_digits) refers to dmul.o(.text) for __aeabi_dmul
+    printfa.o(i._fp_digits) refers to ddiv.o(.text) for __aeabi_ddiv
+    printfa.o(i._fp_digits) refers to cdrcmple.o(.text) for __aeabi_cdrcmple
+    printfa.o(i._fp_digits) refers to dadd.o(.text) for __aeabi_dadd
+    printfa.o(i._fp_digits) refers to dfixul.o(.text) for __aeabi_d2ulz
+    printfa.o(i._fp_digits) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printfa.o(i._printf_core) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._printf_core) refers to printfa.o(i._printf_pre_padding) for _printf_pre_padding
+    printfa.o(i._printf_core) refers to uldiv.o(.text) for __aeabi_uldivmod
+    printfa.o(i._printf_core) refers to printfa.o(i._printf_post_padding) for _printf_post_padding
+    printfa.o(i._printf_core) refers to printfa.o(i._fp_digits) for _fp_digits
+    printfa.o(i._printf_core) refers to uidiv.o(.text) for __aeabi_uidivmod
+    printfa.o(i._printf_post_padding) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._printf_pre_padding) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._snputc) refers (Special) to iusefp.o(.text) for __I$use$fp
+    printfa.o(i._sputc) refers (Special) to iusefp.o(.text) for __I$use$fp
+    entry2.o(.ARM.Collect$$$$00000001) refers to entry2.o(.ARM.Collect$$$$00002712) for __lit__00000000
+    entry2.o(.ARM.Collect$$$$00002712) refers to startup_f4_f3.o(STACK) for __initial_sp
+    entry2.o(__vectab_stack_and_reset_area) refers to startup_f4_f3.o(STACK) for __initial_sp
+    entry2.o(__vectab_stack_and_reset_area) refers to entry.o(.ARM.Collect$$$$00000000) for __main
+    entry5.o(.ARM.Collect$$$$00000004) refers to init.o(.text) for __scatterload
+    entry9a.o(.ARM.Collect$$$$0000000B) refers to main.o(.text.main) for main
+    entry9b.o(.ARM.Collect$$$$0000000C) refers to main.o(.text.main) for main
+    dadd.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dadd.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    dadd.o(.text) refers to llsshr.o(.text) for __aeabi_lasr
+    dadd.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    dmul.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dmul.o(.text) refers to depilogue.o(.text) for _double_epilogue
+    ddiv.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    ddiv.o(.text) refers to depilogue.o(.text) for _double_round
+    dfixul.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    dfixul.o(.text) refers to llushr.o(.text) for __aeabi_llsr
+    dfixul.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    cdrcmple.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    init.o(.text) refers to entry5.o(.ARM.Collect$$$$00000004) for __main_after_scatterload
+    depilogue.o(.text) refers (Special) to iusefp.o(.text) for __I$use$fp
+    depilogue.o(.text) refers to llshl.o(.text) for __aeabi_llsl
+    depilogue.o(.text) refers to llushr.o(.text) for __aeabi_llsr
+
+
+==============================================================================
+
+Removing Unused input sections from the image.
+
+    Removing startup_f4_f3.o(HEAP), (0 bytes).
+    Removing system_f4_f3.o(.text), (0 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.HardFault_Handler), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.SysTick_Handler), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_SysTick_Init), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.SysTick_Config), (8 bytes).
+    Removing system_f4_f3.o(.text.System_SysTick_Off), (14 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_SysTick_Off), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Init), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Set_Buzzer_Divider), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.__NVIC_SetPriorityGrouping), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Clock_Init), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Core_Config), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Get_SystemClock), (12 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Get_SystemClock), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Get_APBClock), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Module_Reset), (136 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Module_Reset), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Delay), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Module_Enable), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Module_Disable), (76 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Module_Disable), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Delay_MS), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Enable_RC32K), (40 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Enable_RC32K), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Disable_RC32K), (18 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Disable_RC32K), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Enable_XTAL), (66 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Enable_XTAL), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Disable_XTAL), (18 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Disable_XTAL), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Enable_Disable_RTC_Domain_Access), (80 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Enable_Disable_RTC_Domain_Access), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Enable_Disable_Reset), (88 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Enable_Disable_Reset), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Reset_MCU), (84 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Reset_MCU), (8 bytes).
+    Removing system_f4_f3.o(.text.__NVIC_SystemReset), (38 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.__NVIC_SystemReset), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Enter_Standby_Mode), (90 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Enter_Standby_Mode), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Clear_Stop_Wakeup), (62 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Clear_Stop_Wakeup), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Enter_Stop_Mode), (88 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Enter_Stop_Mode), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Enter_Sleep_Mode), (46 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Enter_Sleep_Mode), (8 bytes).
+    Removing system_f4_f3.o(.text.System_Return_Last_Reset_Reason), (198 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_Return_Last_Reset_Reason), (8 bytes).
+    Removing system_f4_f3.o(.text.System_USB_PHY_Config), (66 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.System_USB_PHY_Config), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.assert_failed), (8 bytes).
+    Removing system_f4_f3.o(.ARM.exidx.text.__NVIC_SetPriority), (8 bytes).
+    Removing fxx_eflash.o(.text), (0 bytes).
+    Removing fxx_eflash.o(.ARM.exidx.text.EFlash_Init), (8 bytes).
+    Removing fxx_eflash.o(.text.EFlash_ErasePage), (74 bytes).
+    Removing fxx_eflash.o(.ARM.exidx.text.EFlash_ErasePage), (8 bytes).
+    Removing fxx_eflash.o(.text.EFlash_Program_Word), (104 bytes).
+    Removing fxx_eflash.o(.ARM.exidx.text.EFlash_Program_Word), (8 bytes).
+    Removing fxx_gpio.o(.text), (0 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_Init), (8 bytes).
+    Removing fxx_gpio.o(.text.GPIO_DeInit), (150 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_DeInit), (8 bytes).
+    Removing fxx_gpio.o(.text.GPIO_StructInit), (32 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_StructInit), (8 bytes).
+    Removing fxx_gpio.o(.text.GPIO_ReadInputDataBit), (270 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_ReadInputDataBit), (8 bytes).
+    Removing fxx_gpio.o(.text.GPIO_ReadInputData), (248 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_ReadInputData), (8 bytes).
+    Removing fxx_gpio.o(.text.GPIO_ReadOutputDataBit), (270 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_ReadOutputDataBit), (8 bytes).
+    Removing fxx_gpio.o(.text.GPIO_ReadOutputData), (248 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_ReadOutputData), (8 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_SetBits), (8 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_ResetBits), (8 bytes).
+    Removing fxx_gpio.o(.text.GPIO_WriteBit), (314 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_WriteBit), (8 bytes).
+    Removing fxx_gpio.o(.text.GPIO_Write), (218 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_Write), (8 bytes).
+    Removing fxx_gpio.o(.text.GPIO_ITConfig), (276 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_ITConfig), (8 bytes).
+    Removing fxx_gpio.o(.text.GPIO_ITClear), (248 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_ITClear), (8 bytes).
+    Removing fxx_gpio.o(.text.GPIO_GetITStatus), (276 bytes).
+    Removing fxx_gpio.o(.ARM.exidx.text.GPIO_GetITStatus), (8 bytes).
+    Removing fxx_rtc.o(.text), (0 bytes).
+    Removing fxx_rtc.o(.text.RTC_Config), (210 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_Config), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_EnterConfigMode), (20 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_EnterConfigMode), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_ExitConfigMode), (14 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_ExitConfigMode), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_GetFlagStatus), (52 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_GetFlagStatus), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_ClearFlag), (24 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_ClearFlag), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_ClearITPendingBit), (24 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_ClearITPendingBit), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_SetTime), (60 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_SetTime), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_GetTime), (50 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_GetTime), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_SetDate), (74 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_SetDate), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_GetDate), (64 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_GetDate), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_SetAlarm), (158 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_SetAlarm), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_AlarmEnable), (18 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_AlarmEnable), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_AlarmDisable), (18 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_AlarmDisable), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_Tamper), (712 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_Tamper), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_TamperEnable), (54 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_TamperEnable), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_TamperDisable), (54 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_TamperDisable), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_Standby_Wakeup), (320 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_Standby_Wakeup), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_Get_StandbyStatus), (42 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_Get_StandbyStatus), (8 bytes).
+    Removing fxx_rtc.o(.text.RTC_Get_StandbyWakeupSource), (12 bytes).
+    Removing fxx_rtc.o(.ARM.exidx.text.RTC_Get_StandbyWakeupSource), (8 bytes).
+    Removing fxx_tim.o(.text), (0 bytes).
+    Removing fxx_tim.o(.text.TIM_TimeBase_Init), (282 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_TimeBase_Init), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_ITConfig), (54 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_ITConfig), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_Cmd), (180 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_Cmd), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_OC1Init), (360 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_OC1Init), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_OC2Init), (378 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_OC2Init), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_OC3Init), (378 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_OC3Init), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_OC4Init), (220 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_OC4Init), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_CCxCmd), (124 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_CCxCmd), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_CCxNCmd), (124 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_CCxNCmd), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_CtrlPWMOutputs), (44 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_CtrlPWMOutputs), (8 bytes).
+    Removing fxx_tim.o(.text.TIMER_IC1_SetConfig), (150 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIMER_IC1_SetConfig), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_ICInit), (198 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_ICInit), (8 bytes).
+    Removing fxx_tim.o(.text.TIMER_IC2_SetConfig), (150 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIMER_IC2_SetConfig), (8 bytes).
+    Removing fxx_tim.o(.text.TIMER_IC3_SetConfig), (150 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIMER_IC3_SetConfig), (8 bytes).
+    Removing fxx_tim.o(.text.TIMER_IC4_SetConfig), (150 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIMER_IC4_SetConfig), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_GetFlagStatus), (52 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_GetFlagStatus), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_ClearFlag), (26 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_ClearFlag), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_SelectMasterSlaveMode), (34 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_SelectMasterSlaveMode), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_SelectOutputTrigger), (34 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_SelectOutputTrigger), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_SelectInputTrigger), (60 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_SelectInputTrigger), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_SelectSlaveMode), (34 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_SelectSlaveMode), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_TI1FP1_ConfigInputStage), (104 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_TI1FP1_ConfigInputStage), (8 bytes).
+    Removing fxx_tim.o(.text.TIMER_TI2FP2_ConfigInputStage), (104 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIMER_TI2FP2_ConfigInputStage), (8 bytes).
+    Removing fxx_tim.o(.text.TIM_ETR_SetConfig), (44 bytes).
+    Removing fxx_tim.o(.ARM.exidx.text.TIM_ETR_SetConfig), (8 bytes).
+    Removing fxx_uart.o(.text), (0 bytes).
+    Removing fxx_uart.o(.ARM.exidx.text.UART_Cmd), (8 bytes).
+    Removing fxx_uart.o(.ARM.exidx.text.UART_Init), (8 bytes).
+    Removing fxx_uart.o(.ARM.exidx.text.UART_Config_BaudRate), (8 bytes).
+    Removing fxx_uart.o(.text.UART_DeInit), (8 bytes).
+    Removing fxx_uart.o(.ARM.exidx.text.UART_DeInit), (8 bytes).
+    Removing fxx_uart.o(.text.UART_StructInit), (44 bytes).
+    Removing fxx_uart.o(.ARM.exidx.text.UART_StructInit), (8 bytes).
+    Removing fxx_uart.o(.ARM.exidx.text.UART_ITConfig), (8 bytes).
+    Removing fxx_uart.o(.text.UART_ClearITPendingBit), (34 bytes).
+    Removing fxx_uart.o(.ARM.exidx.text.UART_ClearITPendingBit), (8 bytes).
+    Removing fxx_uart.o(.ARM.exidx.text.UART_SendData), (8 bytes).
+    Removing fxx_uart.o(.ARM.exidx.text.UART_ReceiveData), (8 bytes).
+    Removing fxx_uart.o(.ARM.exidx.text.UART_GetITStatus), (8 bytes).
+    Removing fxx_uart.o(.text.UART_DMACmd), (46 bytes).
+    Removing fxx_uart.o(.ARM.exidx.text.UART_DMACmd), (8 bytes).
+    Removing fxx_uart.o(.ARM.exidx.text.fputc), (8 bytes).
+    Removing fxx_i2c.o(.text), (0 bytes).
+    Removing fxx_i2c.o(.text._I2Cx_IRQHandler), (414 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text._I2Cx_IRQHandler), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_GetFlagStatus), (40 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_GetFlagStatus), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_ClearFlag), (26 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_ClearFlag), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_ITConfig), (54 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_ITConfig), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Set_Clock_Speed), (34 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Set_Clock_Speed), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Init), (186 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Init), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_DeInit), (42 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_DeInit), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Cmd), (44 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Cmd), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_DMACmd), (44 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_DMACmd), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_GenerateSTART), (44 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_GenerateSTART), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_GenerateSTOP), (44 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_GenerateSTOP), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Send7bitAddress), (60 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Send7bitAddress), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_StretchClockCmd), (44 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_StretchClockCmd), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_ReadRegister), (34 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_ReadRegister), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_SendData), (20 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_SendData), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_ReceiveData), (14 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_ReceiveData), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Mem_Write), (462 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Mem_Write), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Master_Request_Write), (146 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Master_Request_Write), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_WaitOnFlagUntilTimeout), (122 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_WaitOnFlagUntilTimeout), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Check_Device_Ready), (184 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Check_Device_Ready), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Mem_Read), (566 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Mem_Read), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Master_Request_Read), (146 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Master_Request_Read), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Master_Transmit), (246 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Master_Transmit), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Master_Receive), (336 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Master_Receive), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Slave_Transmit), (200 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Slave_Transmit), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Slave_Receive), (240 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Slave_Receive), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Slave_Transmit_IT), (122 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Slave_Transmit_IT), (8 bytes).
+    Removing fxx_i2c.o(.text.I2C_Slave_Receive_IT), (94 bytes).
+    Removing fxx_i2c.o(.ARM.exidx.text.I2C_Slave_Receive_IT), (8 bytes).
+    Removing main.o(.text), (0 bytes).
+    Removing main.o(.ARM.exidx.text.WiFi_IO_Init), (8 bytes).
+    Removing main.o(.ARM.exidx.text.main), (8 bytes).
+    Removing main.o(.ARM.use_no_argv), (4 bytes).
+    Removing uart.o(.text), (0 bytes).
+    Removing uart.o(.text.UartInit), (318 bytes).
+    Removing uart.o(.ARM.exidx.text.UartInit), (8 bytes).
+    Removing uart.o(.ARM.exidx.text.__NVIC_ClearPendingIRQ), (8 bytes).
+    Removing uart.o(.ARM.exidx.text.__NVIC_SetPriority), (8 bytes).
+    Removing uart.o(.ARM.exidx.text.__NVIC_EnableIRQ), (8 bytes).
+    Removing uart.o(.ARM.exidx.text.UART3_Init), (8 bytes).
+    Removing uart.o(.ARM.exidx.text.UART3_IRQHandler), (8 bytes).
+    Removing uart.o(.ARM.exidx.text.UART_printf), (8 bytes).
+    Removing uart.o(.text.Uart1Init), (152 bytes).
+    Removing uart.o(.ARM.exidx.text.Uart1Init), (8 bytes).
+    Removing uart.o(.text.CheckBusy), (144 bytes).
+    Removing uart.o(.ARM.exidx.text.CheckBusy), (8 bytes).
+    Removing uart.o(.text.UartSend), (66 bytes).
+    Removing uart.o(.ARM.exidx.text.UartSend), (8 bytes).
+    Removing uart.o(.ARM.exidx.text.UART2_IRQHandler), (8 bytes).
+    Removing uart.o(.bss.rx_flag), (1 bytes).
+    Removing uart.o(.bss.rx_count), (1 bytes).
+    Removing uart.o(.bss.GPIO_InitStruct), (16 bytes).
+    Removing uart.o(.bss.UART1_InitStruc), (24 bytes).
+    Removing uart.o(.bss.UART2_InitStruc), (24 bytes).
+    Removing uart.o(.rodata.str1.1), (4 bytes).
+    Removing delay.o(.text), (0 bytes).
+    Removing delay.o(.text.TIM6_Init), (108 bytes).
+    Removing delay.o(.ARM.exidx.text.TIM6_Init), (8 bytes).
+    Removing delay.o(.text.NVIC_Configuration), (22 bytes).
+    Removing delay.o(.ARM.exidx.text.NVIC_Configuration), (8 bytes).
+    Removing delay.o(.text.__NVIC_ClearPendingIRQ), (48 bytes).
+    Removing delay.o(.ARM.exidx.text.__NVIC_ClearPendingIRQ), (8 bytes).
+    Removing delay.o(.text.__NVIC_EnableIRQ), (48 bytes).
+    Removing delay.o(.ARM.exidx.text.__NVIC_EnableIRQ), (8 bytes).
+    Removing delay.o(.text.Clock_Configuration), (10 bytes).
+    Removing delay.o(.ARM.exidx.text.Clock_Configuration), (8 bytes).
+    Removing delay.o(.text.Delay_ms), (128 bytes).
+    Removing delay.o(.ARM.exidx.text.Delay_ms), (8 bytes).
+    Removing delay.o(.text.Delay_s), (112 bytes).
+    Removing delay.o(.ARM.exidx.text.Delay_s), (8 bytes).
+    Removing delay.o(.text.Delay_us), (126 bytes).
+    Removing delay.o(.ARM.exidx.text.Delay_us), (8 bytes).
+    Removing delay.o(.text.TimeDelay), (28 bytes).
+    Removing delay.o(.ARM.exidx.text.TimeDelay), (8 bytes).
+    Removing delay.o(.text.Fiic_delay_ms), (116 bytes).
+    Removing delay.o(.ARM.exidx.text.Fiic_delay_ms), (8 bytes).
+    Removing delay.o(.text.Fiic_delay_us), (118 bytes).
+    Removing delay.o(.ARM.exidx.text.Fiic_delay_us), (8 bytes).
+    Removing delay.o(.bss.TIM_TimeBaseStructure), (20 bytes).
+    Removing system_accelerate.o(.text), (0 bytes).
+    Removing system_accelerate.o(.ARM.exidx.text.System_EnableIAccelerate), (8 bytes).
+    Removing system_accelerate.o(.text.System_DisableIAccelerate), (46 bytes).
+    Removing system_accelerate.o(.ARM.exidx.text.System_DisableIAccelerate), (8 bytes).
+    Removing system_accelerate.o(.text.System_InvalidateIAccelerate), (30 bytes).
+    Removing system_accelerate.o(.ARM.exidx.text.System_InvalidateIAccelerate), (8 bytes).
+    Removing system_accelerate.o(.text.System_EnableDAccelerate), (130 bytes).
+    Removing system_accelerate.o(.ARM.exidx.text.System_EnableDAccelerate), (8 bytes).
+    Removing system_accelerate.o(.text.System_DisableDAccelerate), (130 bytes).
+    Removing system_accelerate.o(.ARM.exidx.text.System_DisableDAccelerate), (8 bytes).
+    Removing system_accelerate.o(.text.System_InvalidateDAccelerate), (110 bytes).
+    Removing system_accelerate.o(.ARM.exidx.text.System_InvalidateDAccelerate), (8 bytes).
+    Removing system_accelerate.o(.text.System_CleanDAccelerate), (110 bytes).
+    Removing system_accelerate.o(.ARM.exidx.text.System_CleanDAccelerate), (8 bytes).
+    Removing system_accelerate.o(.text.System_CleanInvalidateDAccelerate), (110 bytes).
+    Removing system_accelerate.o(.ARM.exidx.text.System_CleanInvalidateDAccelerate), (8 bytes).
+    Removing system_accelerate.o(.text.System_InvalidateDAccelerate_by_Addr), (74 bytes).
+    Removing system_accelerate.o(.ARM.exidx.text.System_InvalidateDAccelerate_by_Addr), (8 bytes).
+    Removing system_accelerate.o(.text.System_CleanDAccelerate_by_Addr), (74 bytes).
+    Removing system_accelerate.o(.ARM.exidx.text.System_CleanDAccelerate_by_Addr), (8 bytes).
+    Removing system_accelerate.o(.text.System_CleanInvalidateDAccelerate_by_Addr), (74 bytes).
+    Removing system_accelerate.o(.ARM.exidx.text.System_CleanInvalidateDAccelerate_by_Addr), (8 bytes).
+    Removing hal_eflash_ex.o(.text), (0 bytes).
+    Removing hal_eflash_ex.o(.text.EFlash_ReWrite_Word), (74 bytes).
+    Removing hal_eflash_ex.o(.ARM.exidx.text.EFlash_ReWrite_Word), (8 bytes).
+    Removing hal_eflash_ex.o(.text.EFlash_Return_to_Boot), (20 bytes).
+    Removing hal_eflash_ex.o(.ARM.exidx.text.EFlash_Return_to_Boot), (8 bytes).
+    Removing hal_eflash_ex.o(.ARM.exidx.text.HAL_Verify_Chip), (8 bytes).
+    Removing hal_eflash_ex.o(.ARM.exidx.text.EFlash_Init_Para), (8 bytes).
+    Removing hal_eflash_ex.o(.text.EFlash_ErasePage_EX), (100 bytes).
+    Removing hal_eflash_ex.o(.ARM.exidx.text.EFlash_ErasePage_EX), (8 bytes).
+    Removing hal_eflash_ex.o(.text.EFlash_Program_Word_EX), (86 bytes).
+    Removing hal_eflash_ex.o(.ARM.exidx.text.EFlash_Program_Word_EX), (8 bytes).
+
+330 unused section(s) (total 17700 bytes) removed from the image.
+
+==============================================================================
+
+Image Symbol Table
+
+    Local Symbols
+
+    Symbol Name                              Value     Ov Type        Size  Object(Section)
+
+    ../clib/division.s                       0x00000000   Number         0  aeabi_sdiv.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
+    ../clib/microlib/stdio/streams.c         0x00000000   Number         0  stdout.o ABSOLUTE
+    ../clib/microlib/string/memset.c         0x00000000   Number         0  memseta.o ABSOLUTE
+    ../clib/microlib/string/strstr.c         0x00000000   Number         0  strstr.o ABSOLUTE
+    ../clib/microlib/stubs.s                 0x00000000   Number         0  iusefp.o ABSOLUTE
+    ../fplib/microlib/fpadd.c                0x00000000   Number         0  dadd.o ABSOLUTE
+    ../fplib/microlib/fpdiv.c                0x00000000   Number         0  ddiv.o ABSOLUTE
+    ../fplib/microlib/fpepilogue.c           0x00000000   Number         0  depilogue.o ABSOLUTE
+    ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixul.o ABSOLUTE
+    ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
+    HAL_EFlash_Ex.c                          0x00000000   Number         0  hal_eflash_ex.o ABSOLUTE
+    Libraries/Device/startup_f4_f3.s         0x00000000   Number         0  startup_f4_f3.o ABSOLUTE
+    System_Accelerate.c                      0x00000000   Number         0  system_accelerate.o ABSOLUTE
+    cdrcmple.s                               0x00000000   Number         0  cdrcmple.o ABSOLUTE
+    dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
+    delay.c                                  0x00000000   Number         0  delay.o ABSOLUTE
+    fxx_eflash.c                             0x00000000   Number         0  fxx_eflash.o ABSOLUTE
+    fxx_gpio.c                               0x00000000   Number         0  fxx_gpio.o ABSOLUTE
+    fxx_i2c.c                                0x00000000   Number         0  fxx_i2c.o ABSOLUTE
+    fxx_rtc.c                                0x00000000   Number         0  fxx_rtc.o ABSOLUTE
+    fxx_tim.c                                0x00000000   Number         0  fxx_tim.o ABSOLUTE
+    fxx_uart.c                               0x00000000   Number         0  fxx_uart.o ABSOLUTE
+    handlers.s                               0x00000000   Number         0  handlers.o ABSOLUTE
+    init.s                                   0x00000000   Number         0  init.o ABSOLUTE
+    main.c                                   0x00000000   Number         0  main.o ABSOLUTE
+    system_f4_f3.c                           0x00000000   Number         0  system_f4_f3.o ABSOLUTE
+    uart.c                                   0x00000000   Number         0  uart.o ABSOLUTE
+    RESET                                    0x00000000   Section      228  startup_f4_f3.o(RESET)
+    .ARM.Collect$$$$00000000                 0x000000e4   Section        0  entry.o(.ARM.Collect$$$$00000000)
+    .ARM.Collect$$$$00000001                 0x000000e4   Section        4  entry2.o(.ARM.Collect$$$$00000001)
+    .ARM.Collect$$$$00000004                 0x000000e8   Section        4  entry5.o(.ARM.Collect$$$$00000004)
+    .ARM.Collect$$$$00000008                 0x000000ec   Section        0  entry7b.o(.ARM.Collect$$$$00000008)
+    .ARM.Collect$$$$0000000A                 0x000000ec   Section        0  entry8b.o(.ARM.Collect$$$$0000000A)
+    .ARM.Collect$$$$0000000B                 0x000000ec   Section        8  entry9a.o(.ARM.Collect$$$$0000000B)
+    __lit__00000000                          0x000000f4   Data           4  entry2.o(.ARM.Collect$$$$00002712)
+    .ARM.Collect$$$$0000000D                 0x000000f4   Section        0  entry10a.o(.ARM.Collect$$$$0000000D)
+    .ARM.Collect$$$$0000000F                 0x000000f4   Section        0  entry11a.o(.ARM.Collect$$$$0000000F)
+    .ARM.Collect$$$$00002712                 0x000000f4   Section        4  entry2.o(.ARM.Collect$$$$00002712)
+    $v0                                      0x000000f8   Number         0  startup_f4_f3.o(.text)
+    .text                                    0x000000f8   Section       36  startup_f4_f3.o(.text)
+    .text                                    0x0000011c   Section        0  uldiv.o(.text)
+    .text                                    0x0000017e   Section        0  memseta.o(.text)
+    .text                                    0x000001a2   Section        0  strstr.o(.text)
+    .text                                    0x000001c6   Section        0  uidiv.o(.text)
+    .text                                    0x000001f2   Section        0  llshl.o(.text)
+    .text                                    0x00000210   Section        0  llushr.o(.text)
+    .text                                    0x00000230   Section        0  iusefp.o(.text)
+    .text                                    0x00000230   Section        0  dadd.o(.text)
+    .text                                    0x0000037e   Section        0  dmul.o(.text)
+    .text                                    0x00000462   Section        0  ddiv.o(.text)
+    .text                                    0x00000540   Section        0  dfixul.o(.text)
+    .text                                    0x00000570   Section       48  cdrcmple.o(.text)
+    .text                                    0x000005a0   Section       48  init.o(.text)
+    .text                                    0x000005d0   Section        0  llsshr.o(.text)
+    .text                                    0x000005f4   Section        0  depilogue.o(.text)
+    [Anonymous Symbol]                       0x000006b0   Section        0  fxx_eflash.o(.text.EFlash_Init)
+    [Anonymous Symbol]                       0x000006c0   Section        0  hal_eflash_ex.o(.text.EFlash_Init_Para)
+    [Anonymous Symbol]                       0x000007dc   Section        0  fxx_gpio.o(.text.GPIO_Init)
+    [Anonymous Symbol]                       0x00000d6c   Section        0  fxx_gpio.o(.text.GPIO_ResetBits)
+    [Anonymous Symbol]                       0x00000e64   Section        0  fxx_gpio.o(.text.GPIO_SetBits)
+    [Anonymous Symbol]                       0x00000f5c   Section        0  hal_eflash_ex.o(.text.HAL_Verify_Chip)
+    [Anonymous Symbol]                       0x00000f70   Section        0  system_f4_f3.o(.text.HardFault_Handler)
+    SysTick_Config                           0x00000f75   Thumb Code    84  system_f4_f3.o(.text.SysTick_Config)
+    [Anonymous Symbol]                       0x00000f74   Section        0  system_f4_f3.o(.text.SysTick_Config)
+    [Anonymous Symbol]                       0x00000fc8   Section        0  system_f4_f3.o(.text.SysTick_Handler)
+    [Anonymous Symbol]                       0x00000fd8   Section        0  system_f4_f3.o(.text.System_Clock_Init)
+    [Anonymous Symbol]                       0x000013f0   Section        0  system_f4_f3.o(.text.System_Core_Config)
+    [Anonymous Symbol]                       0x00001410   Section        0  system_f4_f3.o(.text.System_Delay)
+    [Anonymous Symbol]                       0x00001428   Section        0  system_f4_f3.o(.text.System_Delay_MS)
+    [Anonymous Symbol]                       0x00001458   Section        0  system_accelerate.o(.text.System_EnableIAccelerate)
+    [Anonymous Symbol]                       0x00001490   Section        0  system_f4_f3.o(.text.System_Get_APBClock)
+    [Anonymous Symbol]                       0x0000149c   Section        0  system_f4_f3.o(.text.System_Init)
+    [Anonymous Symbol]                       0x000014dc   Section        0  system_f4_f3.o(.text.System_Module_Enable)
+    [Anonymous Symbol]                       0x00001530   Section        0  system_f4_f3.o(.text.System_Set_Buzzer_Divider)
+    [Anonymous Symbol]                       0x00001578   Section        0  system_f4_f3.o(.text.System_SysTick_Init)
+    [Anonymous Symbol]                       0x000015a4   Section        0  uart.o(.text.UART2_IRQHandler)
+    [Anonymous Symbol]                       0x00001684   Section        0  uart.o(.text.UART3_IRQHandler)
+    [Anonymous Symbol]                       0x000016c4   Section        0  uart.o(.text.UART3_Init)
+    [Anonymous Symbol]                       0x00001744   Section        0  fxx_uart.o(.text.UART_Cmd)
+    UART_Config_BaudRate                     0x00001771   Thumb Code   168  fxx_uart.o(.text.UART_Config_BaudRate)
+    [Anonymous Symbol]                       0x00001770   Section        0  fxx_uart.o(.text.UART_Config_BaudRate)
+    [Anonymous Symbol]                       0x00001818   Section        0  fxx_uart.o(.text.UART_GetITStatus)
+    [Anonymous Symbol]                       0x00001880   Section        0  fxx_uart.o(.text.UART_ITConfig)
+    [Anonymous Symbol]                       0x000018d8   Section        0  fxx_uart.o(.text.UART_Init)
+    [Anonymous Symbol]                       0x00001954   Section        0  fxx_uart.o(.text.UART_ReceiveData)
+    [Anonymous Symbol]                       0x000019c8   Section        0  fxx_uart.o(.text.UART_SendData)
+    [Anonymous Symbol]                       0x000019ec   Section        0  uart.o(.text.UART_printf)
+    [Anonymous Symbol]                       0x00001a44   Section        0  main.o(.text.WiFi_IO_Init)
+    __NVIC_ClearPendingIRQ                   0x00001a6d   Thumb Code    48  uart.o(.text.__NVIC_ClearPendingIRQ)
+    [Anonymous Symbol]                       0x00001a6c   Section        0  uart.o(.text.__NVIC_ClearPendingIRQ)
+    __NVIC_EnableIRQ                         0x00001a9d   Thumb Code    48  uart.o(.text.__NVIC_EnableIRQ)
+    [Anonymous Symbol]                       0x00001a9c   Section        0  uart.o(.text.__NVIC_EnableIRQ)
+    __NVIC_SetPriority                       0x00001acd   Thumb Code    66  system_f4_f3.o(.text.__NVIC_SetPriority)
+    [Anonymous Symbol]                       0x00001acc   Section        0  system_f4_f3.o(.text.__NVIC_SetPriority)
+    __NVIC_SetPriority                       0x00001b11   Thumb Code    66  uart.o(.text.__NVIC_SetPriority)
+    [Anonymous Symbol]                       0x00001b10   Section        0  uart.o(.text.__NVIC_SetPriority)
+    __NVIC_SetPriorityGrouping               0x00001b55   Thumb Code    60  system_f4_f3.o(.text.__NVIC_SetPriorityGrouping)
+    [Anonymous Symbol]                       0x00001b54   Section        0  system_f4_f3.o(.text.__NVIC_SetPriorityGrouping)
+    [Anonymous Symbol]                       0x00001b90   Section        0  system_f4_f3.o(.text.assert_failed)
+    [Anonymous Symbol]                       0x00001bac   Section        0  fxx_uart.o(.text.fputc)
+    [Anonymous Symbol]                       0x00001bf8   Section        0  main.o(.text.main)
+    i.__0printf                              0x00001f5c   Section        0  printfa.o(i.__0printf)
+    i.__0vsnprintf                           0x00001f7c   Section        0  printfa.o(i.__0vsnprintf)
+    i.__scatterload_copy                     0x00001fb0   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x00001fbe   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x00001fc0   Section       14  handlers.o(i.__scatterload_zeroinit)
+    _fp_digits                               0x00001fd1   Thumb Code   366  printfa.o(i._fp_digits)
+    i._fp_digits                             0x00001fd0   Section        0  printfa.o(i._fp_digits)
+    _printf_core                             0x00002155   Thumb Code  1744  printfa.o(i._printf_core)
+    i._printf_core                           0x00002154   Section        0  printfa.o(i._printf_core)
+    _printf_post_padding                     0x00002831   Thumb Code    36  printfa.o(i._printf_post_padding)
+    i._printf_post_padding                   0x00002830   Section        0  printfa.o(i._printf_post_padding)
+    _printf_pre_padding                      0x00002855   Thumb Code    46  printfa.o(i._printf_pre_padding)
+    i._printf_pre_padding                    0x00002854   Section        0  printfa.o(i._printf_pre_padding)
+    _snputc                                  0x00002883   Thumb Code    22  printfa.o(i._snputc)
+    i._snputc                                0x00002882   Section        0  printfa.o(i._snputc)
+    .L.str                                   0x00002898   Data          29  system_f4_f3.o(.rodata.str1.1)
+    .L.str.1                                 0x00002898   Data          45  system_f4_f3.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x00002898   Section        0  system_f4_f3.o(.rodata.str1.1)
+    .L.str                                   0x000028e2   Data          42  fxx_gpio.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x000028e2   Section        0  fxx_gpio.o(.rodata.str1.1)
+    .L.str                                   0x0000290c   Data          42  fxx_uart.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x0000290c   Section        0  fxx_uart.o(.rodata.str1.1)
+    .L.str.6                                 0x00002936   Data          32  main.o(.rodata.str1.1)
+    [Anonymous Symbol]                       0x00002936   Section        0  main.o(.rodata.str1.1)
+    .L.str.4                                 0x00002956   Data          18  main.o(.rodata.str1.1)
+    .L.str.2                                 0x00002968   Data           7  main.o(.rodata.str1.1)
+    .L.str.3                                 0x0000296f   Data          14  main.o(.rodata.str1.1)
+    .L.str.7                                 0x0000297d   Data          12  main.o(.rodata.str1.1)
+    .L.str.5                                 0x00002989   Data          11  main.o(.rodata.str1.1)
+    .L.str                                   0x00002994   Data           5  main.o(.rodata.str1.1)
+    .L.str.1                                 0x00002999   Data           3  main.o(.rodata.str1.1)
+    .data                                    0x20000000   Section        4  stdout.o(.data)
+    STACK                                    0x20001028   Section     2048  startup_f4_f3.o(STACK)
+
+    Global Symbols
+
+    Symbol Name                              Value     Ov Type        Size  Object(Section)
+
+    BuildAttributes$$THM_ISAv4$E$P$D$K$B$S$7EM$8M$VFPi5$EXTD16$VFPS$VFMA$PE$A:L22UL41UL21$X:L11$S22US41US21$IEEE1$IW$~IW$USESV6$~STKCKD$USESV7$~SHL$OTIME$ROPI$EBA8$MICROLIB$REQ8$PRES8$EABIv2 0x00000000   Number         0  anon$$obj.o ABSOLUTE
+    __Vectors                                0x00000000   Data           0  startup_f4_f3.o(RESET)
+    __cpp_initialize__aeabi_                  - Undefined Weak Reference
+    __cxa_finalize                            - Undefined Weak Reference
+    __decompress                              - Undefined Weak Reference
+    _clock_init                               - Undefined Weak Reference
+    _microlib_exit                            - Undefined Weak Reference
+    __main                                   0x000000e5   Thumb Code     0  entry.o(.ARM.Collect$$$$00000000)
+    _main_stk                                0x000000e5   Thumb Code     0  entry2.o(.ARM.Collect$$$$00000001)
+    _main_scatterload                        0x000000e9   Thumb Code     0  entry5.o(.ARM.Collect$$$$00000004)
+    __main_after_scatterload                 0x000000ed   Thumb Code     0  entry5.o(.ARM.Collect$$$$00000004)
+    _main_clock                              0x000000ed   Thumb Code     0  entry7b.o(.ARM.Collect$$$$00000008)
+    _main_cpp_init                           0x000000ed   Thumb Code     0  entry8b.o(.ARM.Collect$$$$0000000A)
+    _main_init                               0x000000ed   Thumb Code     0  entry9a.o(.ARM.Collect$$$$0000000B)
+    __rt_final_cpp                           0x000000f5   Thumb Code     0  entry10a.o(.ARM.Collect$$$$0000000D)
+    __rt_final_exit                          0x000000f5   Thumb Code     0  entry11a.o(.ARM.Collect$$$$0000000F)
+    Reset_Handler                            0x000000f9   Thumb Code     8  startup_f4_f3.o(.text)
+    NMI_Handler                              0x00000101   Thumb Code     2  startup_f4_f3.o(.text)
+    MemManage_Handler                        0x00000105   Thumb Code     2  startup_f4_f3.o(.text)
+    BusFault_Handler                         0x00000107   Thumb Code     2  startup_f4_f3.o(.text)
+    UsageFault_Handler                       0x00000109   Thumb Code     2  startup_f4_f3.o(.text)
+    SVC_Handler                              0x0000010b   Thumb Code     2  startup_f4_f3.o(.text)
+    DebugMon_Handler                         0x0000010d   Thumb Code     2  startup_f4_f3.o(.text)
+    PendSV_Handler                           0x0000010f   Thumb Code     2  startup_f4_f3.o(.text)
+    ADC_IRQHandler                           0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    AES_IRQHandler                           0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    CAN1_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    CAN2_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    CLKRDY_IRQHandler                        0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    DAC_IRQHandler                           0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    DMA_IRQHandler                           0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    EFC_IRQHandler                           0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    EXTI_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    FPU_IRQHandler                           0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    GPIOAB_IRQHandler                        0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    GPIOCD_IRQHandler                        0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    GPIOEF_IRQHandler                        0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    I2C1_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    I2C2_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    I2S_IRQHandler                           0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    LPUART_IRQHandler                        0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    RSV_IRQHandler                           0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    RTC_IRQHandler                           0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    SPI1_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    SPI2_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    SPI3_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    SPI4_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    SRAM_PARITY_IRQHandler                   0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    TIM14_IRQHandler                         0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    TIM15_IRQHandler                         0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    TIM16_IRQHandler                         0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    TIM17_IRQHandler                         0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    TIM1_BRK_UP_TRG_COM_IRQHandler           0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    TIM1_CC_IRQHandler                       0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    TIM2_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    TIM3_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    TIM4_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    TIM6_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    TIM7_IRQHandler                          0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    UART1_IRQHandler                         0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    UART4_IRQHandler                         0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    USB_IRQHandler                           0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    WDT_IRQHandler                           0x00000113   Thumb Code     0  startup_f4_f3.o(.text)
+    __aeabi_uldivmod                         0x0000011d   Thumb Code    98  uldiv.o(.text)
+    __aeabi_memset                           0x0000017f   Thumb Code    14  memseta.o(.text)
+    __aeabi_memset4                          0x0000017f   Thumb Code     0  memseta.o(.text)
+    __aeabi_memset8                          0x0000017f   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr                           0x0000018d   Thumb Code     4  memseta.o(.text)
+    __aeabi_memclr4                          0x0000018d   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr8                          0x0000018d   Thumb Code     0  memseta.o(.text)
+    _memset$wrapper                          0x00000191   Thumb Code    18  memseta.o(.text)
+    strstr                                   0x000001a3   Thumb Code    36  strstr.o(.text)
+    __aeabi_uidiv                            0x000001c7   Thumb Code     0  uidiv.o(.text)
+    __aeabi_uidivmod                         0x000001c7   Thumb Code    44  uidiv.o(.text)
+    __aeabi_llsl                             0x000001f3   Thumb Code    30  llshl.o(.text)
+    _ll_shift_l                              0x000001f3   Thumb Code     0  llshl.o(.text)
+    __aeabi_llsr                             0x00000211   Thumb Code    32  llushr.o(.text)
+    _ll_ushift_r                             0x00000211   Thumb Code     0  llushr.o(.text)
+    __I$use$fp                               0x00000231   Thumb Code     0  iusefp.o(.text)
+    __aeabi_dadd                             0x00000231   Thumb Code   322  dadd.o(.text)
+    __aeabi_dsub                             0x00000373   Thumb Code     6  dadd.o(.text)
+    __aeabi_drsub                            0x00000379   Thumb Code     6  dadd.o(.text)
+    __aeabi_dmul                             0x0000037f   Thumb Code   228  dmul.o(.text)
+    __aeabi_ddiv                             0x00000463   Thumb Code   222  ddiv.o(.text)
+    __aeabi_d2ulz                            0x00000541   Thumb Code    48  dfixul.o(.text)
+    __aeabi_cdrcmple                         0x00000571   Thumb Code    48  cdrcmple.o(.text)
+    __scatterload                            0x000005a1   Thumb Code    38  init.o(.text)
+    __scatterload_rt2                        0x000005a1   Thumb Code     0  init.o(.text)
+    __aeabi_lasr                             0x000005d1   Thumb Code    36  llsshr.o(.text)
+    _ll_sshift_r                             0x000005d1   Thumb Code     0  llsshr.o(.text)
+    _double_round                            0x000005f5   Thumb Code    30  depilogue.o(.text)
+    _double_epilogue                         0x00000613   Thumb Code   156  depilogue.o(.text)
+    EFlash_Init                              0x000006b1   Thumb Code    16  fxx_eflash.o(.text.EFlash_Init)
+    EFlash_Init_Para                         0x000006c1   Thumb Code   284  hal_eflash_ex.o(.text.EFlash_Init_Para)
+    GPIO_Init                                0x000007dd   Thumb Code  1424  fxx_gpio.o(.text.GPIO_Init)
+    GPIO_ResetBits                           0x00000d6d   Thumb Code   248  fxx_gpio.o(.text.GPIO_ResetBits)
+    GPIO_SetBits                             0x00000e65   Thumb Code   248  fxx_gpio.o(.text.GPIO_SetBits)
+    HAL_Verify_Chip                          0x00000f5d   Thumb Code    18  hal_eflash_ex.o(.text.HAL_Verify_Chip)
+    HardFault_Handler                        0x00000f71   Thumb Code     4  system_f4_f3.o(.text.HardFault_Handler)
+    SysTick_Handler                          0x00000fc9   Thumb Code    16  system_f4_f3.o(.text.SysTick_Handler)
+    System_Clock_Init                        0x00000fd9   Thumb Code  1048  system_f4_f3.o(.text.System_Clock_Init)
+    System_Core_Config                       0x000013f1   Thumb Code    30  system_f4_f3.o(.text.System_Core_Config)
+    System_Delay                             0x00001411   Thumb Code    22  system_f4_f3.o(.text.System_Delay)
+    System_Delay_MS                          0x00001429   Thumb Code    46  system_f4_f3.o(.text.System_Delay_MS)
+    System_EnableIAccelerate                 0x00001459   Thumb Code    54  system_accelerate.o(.text.System_EnableIAccelerate)
+    System_Get_APBClock                      0x00001491   Thumb Code    12  system_f4_f3.o(.text.System_Get_APBClock)
+    System_Init                              0x0000149d   Thumb Code    62  system_f4_f3.o(.text.System_Init)
+    System_Module_Enable                     0x000014dd   Thumb Code    84  system_f4_f3.o(.text.System_Module_Enable)
+    System_Set_Buzzer_Divider                0x00001531   Thumb Code    72  system_f4_f3.o(.text.System_Set_Buzzer_Divider)
+    System_SysTick_Init                      0x00001579   Thumb Code    44  system_f4_f3.o(.text.System_SysTick_Init)
+    UART2_IRQHandler                         0x000015a5   Thumb Code   224  uart.o(.text.UART2_IRQHandler)
+    UART3_IRQHandler                         0x00001685   Thumb Code    62  uart.o(.text.UART3_IRQHandler)
+    UART3_Init                               0x000016c5   Thumb Code   128  uart.o(.text.UART3_Init)
+    UART_Cmd                                 0x00001745   Thumb Code    44  fxx_uart.o(.text.UART_Cmd)
+    UART_GetITStatus                         0x00001819   Thumb Code   102  fxx_uart.o(.text.UART_GetITStatus)
+    UART_ITConfig                            0x00001881   Thumb Code    86  fxx_uart.o(.text.UART_ITConfig)
+    UART_Init                                0x000018d9   Thumb Code   122  fxx_uart.o(.text.UART_Init)
+    UART_ReceiveData                         0x00001955   Thumb Code   114  fxx_uart.o(.text.UART_ReceiveData)
+    UART_SendData                            0x000019c9   Thumb Code    36  fxx_uart.o(.text.UART_SendData)
+    UART_printf                              0x000019ed   Thumb Code    86  uart.o(.text.UART_printf)
+    WiFi_IO_Init                             0x00001a45   Thumb Code    40  main.o(.text.WiFi_IO_Init)
+    assert_failed                            0x00001b91   Thumb Code    28  system_f4_f3.o(.text.assert_failed)
+    fputc                                    0x00001bad   Thumb Code    76  fxx_uart.o(.text.fputc)
+    main                                     0x00001bf9   Thumb Code   868  main.o(.text.main)
+    __0printf                                0x00001f5d   Thumb Code    22  printfa.o(i.__0printf)
+    __1printf                                0x00001f5d   Thumb Code     0  printfa.o(i.__0printf)
+    __2printf                                0x00001f5d   Thumb Code     0  printfa.o(i.__0printf)
+    __c89printf                              0x00001f5d   Thumb Code     0  printfa.o(i.__0printf)
+    printf                                   0x00001f5d   Thumb Code     0  printfa.o(i.__0printf)
+    __0vsnprintf                             0x00001f7d   Thumb Code    46  printfa.o(i.__0vsnprintf)
+    __1vsnprintf                             0x00001f7d   Thumb Code     0  printfa.o(i.__0vsnprintf)
+    __2vsnprintf                             0x00001f7d   Thumb Code     0  printfa.o(i.__0vsnprintf)
+    __c89vsnprintf                           0x00001f7d   Thumb Code     0  printfa.o(i.__0vsnprintf)
+    vsnprintf                                0x00001f7d   Thumb Code     0  printfa.o(i.__0vsnprintf)
+    __scatterload_copy                       0x00001fb1   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x00001fbf   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x00001fc1   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    Region$$Table$$Base                      0x0000299c   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x000029bc   Number         0  anon$$obj.o(Region$$Table)
+    __stdout                                 0x20000000   Data           4  stdout.o(.data)
+    timeout                                  0x20000004   Data           2  main.o(.data.timeout)
+    RX_BUF                                   0x20000008   Data           3  uart.o(.bss.RX_BUF)
+    Res                                      0x2000000b   Data        4096  uart.o(.bss.Res)
+    UartRxCount                              0x2000100b   Data           1  uart.o(.bss.UartRxCount)
+    UartRxFinished                           0x2000100c   Data           1  uart.o(.bss.UartRxFinished)
+    Uart_Debug                               0x20001010   Data           4  fxx_uart.o(.bss.Uart_Debug)
+    gu32_APBClock                            0x20001014   Data           4  system_f4_f3.o(.bss.gu32_APBClock)
+    gu32_SystemClock                         0x20001018   Data           4  system_f4_f3.o(.bss.gu32_SystemClock)
+    gu32_SystemCount                         0x2000101c   Data           4  system_f4_f3.o(.bss.gu32_SystemCount)
+    i                                        0x20001020   Data           2  uart.o(.bss.i)
+    __initial_sp                             0x20001828   Data           0  startup_f4_f3.o(STACK)
+
+
+
+==============================================================================
+
+Memory Map of the image
+
+  Image Entry point : 0x000000e5
+
+  Load Region LR_IROM1 (Base: 0x00000000, Size: 0x000029c8, Max: 0x00080000, ABSOLUTE)
+
+    Execution Region ER_IROM1 (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x000029bc, Max: 0x00080000, ABSOLUTE)
+
+    Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x00000000   0x00000000   0x000000e4   Data   RO            3    RESET               startup_f4_f3.o
+    0x000000e4   0x000000e4   0x00000000   Code   RO          465  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x000000e4   0x000000e4   0x00000004   Code   RO          502    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x000000e8   0x000000e8   0x00000004   Code   RO          505    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x000000ec   0x000000ec   0x00000000   Code   RO          507    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x000000ec   0x000000ec   0x00000000   Code   RO          509    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x000000ec   0x000000ec   0x00000008   Code   RO          510    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x000000f4   0x000000f4   0x00000000   Code   RO          512    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x000000f4   0x000000f4   0x00000000   Code   RO          514    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x000000f4   0x000000f4   0x00000004   Code   RO          503    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x000000f8   0x000000f8   0x00000024   Code   RO            4    .text               startup_f4_f3.o
+    0x0000011c   0x0000011c   0x00000062   Code   RO          468    .text               mc_w.l(uldiv.o)
+    0x0000017e   0x0000017e   0x00000024   Code   RO          470    .text               mc_w.l(memseta.o)
+    0x000001a2   0x000001a2   0x00000024   Code   RO          472    .text               mc_w.l(strstr.o)
+    0x000001c6   0x000001c6   0x0000002c   Code   RO          526    .text               mc_w.l(uidiv.o)
+    0x000001f2   0x000001f2   0x0000001e   Code   RO          528    .text               mc_w.l(llshl.o)
+    0x00000210   0x00000210   0x00000020   Code   RO          530    .text               mc_w.l(llushr.o)
+    0x00000230   0x00000230   0x00000000   Code   RO          532    .text               mc_w.l(iusefp.o)
+    0x00000230   0x00000230   0x0000014e   Code   RO          533    .text               mf_w.l(dadd.o)
+    0x0000037e   0x0000037e   0x000000e4   Code   RO          535    .text               mf_w.l(dmul.o)
+    0x00000462   0x00000462   0x000000de   Code   RO          537    .text               mf_w.l(ddiv.o)
+    0x00000540   0x00000540   0x00000030   Code   RO          539    .text               mf_w.l(dfixul.o)
+    0x00000570   0x00000570   0x00000030   Code   RO          541    .text               mf_w.l(cdrcmple.o)
+    0x000005a0   0x000005a0   0x00000030   Code   RO          543    .text               mc_w.l(init.o)
+    0x000005d0   0x000005d0   0x00000024   Code   RO          545    .text               mc_w.l(llsshr.o)
+    0x000005f4   0x000005f4   0x000000ba   Code   RO          547    .text               mf_w.l(depilogue.o)
+    0x000006ae   0x000006ae   0x00000002   PAD
+    0x000006b0   0x000006b0   0x00000010   Code   RO           88    .text.EFlash_Init   fxx_eflash.o
+    0x000006c0   0x000006c0   0x0000011c   Code   RO          452    .text.EFlash_Init_Para  fxx_eflash_ex.lib(hal_eflash_ex.o)
+    0x000007dc   0x000007dc   0x00000590   Code   RO          101    .text.GPIO_Init     fxx_gpio.o
+    0x00000d6c   0x00000d6c   0x000000f8   Code   RO          117    .text.GPIO_ResetBits  fxx_gpio.o
+    0x00000e64   0x00000e64   0x000000f8   Code   RO          115    .text.GPIO_SetBits  fxx_gpio.o
+    0x00000f5c   0x00000f5c   0x00000012   Code   RO          450    .text.HAL_Verify_Chip  fxx_eflash_ex.lib(hal_eflash_ex.o)
+    0x00000f6e   0x00000f6e   0x00000002   PAD
+    0x00000f70   0x00000f70   0x00000004   Code   RO           11    .text.HardFault_Handler  system_f4_f3.o
+    0x00000f74   0x00000f74   0x00000054   Code   RO           17    .text.SysTick_Config  system_f4_f3.o
+    0x00000fc8   0x00000fc8   0x00000010   Code   RO           13    .text.SysTick_Handler  system_f4_f3.o
+    0x00000fd8   0x00000fd8   0x00000418   Code   RO           27    .text.System_Clock_Init  system_f4_f3.o
+    0x000013f0   0x000013f0   0x0000001e   Code   RO           29    .text.System_Core_Config  system_f4_f3.o
+    0x0000140e   0x0000140e   0x00000002   PAD
+    0x00001410   0x00001410   0x00000016   Code   RO           37    .text.System_Delay  system_f4_f3.o
+    0x00001426   0x00001426   0x00000002   PAD
+    0x00001428   0x00001428   0x0000002e   Code   RO           43    .text.System_Delay_MS  system_f4_f3.o
+    0x00001456   0x00001456   0x00000002   PAD
+    0x00001458   0x00001458   0x00000036   Code   RO          417    .text.System_EnableIAccelerate  system_accelerate.lib(system_accelerate.o)
+    0x0000148e   0x0000148e   0x00000002   PAD
+    0x00001490   0x00001490   0x0000000c   Code   RO           33    .text.System_Get_APBClock  system_f4_f3.o
+    0x0000149c   0x0000149c   0x0000003e   Code   RO           21    .text.System_Init   system_f4_f3.o
+    0x000014da   0x000014da   0x00000002   PAD
+    0x000014dc   0x000014dc   0x00000054   Code   RO           39    .text.System_Module_Enable  system_f4_f3.o
+    0x00001530   0x00001530   0x00000048   Code   RO           23    .text.System_Set_Buzzer_Divider  system_f4_f3.o
+    0x00001578   0x00001578   0x0000002c   Code   RO           15    .text.System_SysTick_Init  system_f4_f3.o
+    0x000015a4   0x000015a4   0x000000e0   Code   RO          367    .text.UART2_IRQHandler  uart.o
+    0x00001684   0x00001684   0x0000003e   Code   RO          357    .text.UART3_IRQHandler  uart.o
+    0x000016c2   0x000016c2   0x00000002   PAD
+    0x000016c4   0x000016c4   0x00000080   Code   RO          355    .text.UART3_Init    uart.o
+    0x00001744   0x00001744   0x0000002c   Code   RO          237    .text.UART_Cmd      fxx_uart.o
+    0x00001770   0x00001770   0x000000a8   Code   RO          241    .text.UART_Config_BaudRate  fxx_uart.o
+    0x00001818   0x00001818   0x00000066   Code   RO          255    .text.UART_GetITStatus  fxx_uart.o
+    0x0000187e   0x0000187e   0x00000002   PAD
+    0x00001880   0x00001880   0x00000056   Code   RO          247    .text.UART_ITConfig  fxx_uart.o
+    0x000018d6   0x000018d6   0x00000002   PAD
+    0x000018d8   0x000018d8   0x0000007a   Code   RO          239    .text.UART_Init     fxx_uart.o
+    0x00001952   0x00001952   0x00000002   PAD
+    0x00001954   0x00001954   0x00000072   Code   RO          253    .text.UART_ReceiveData  fxx_uart.o
+    0x000019c6   0x000019c6   0x00000002   PAD
+    0x000019c8   0x000019c8   0x00000024   Code   RO          251    .text.UART_SendData  fxx_uart.o
+    0x000019ec   0x000019ec   0x00000056   Code   RO          359    .text.UART_printf   uart.o
+    0x00001a42   0x00001a42   0x00000002   PAD
+    0x00001a44   0x00001a44   0x00000028   Code   RO          333    .text.WiFi_IO_Init  main.o
+    0x00001a6c   0x00001a6c   0x00000030   Code   RO          349    .text.__NVIC_ClearPendingIRQ  uart.o
+    0x00001a9c   0x00001a9c   0x00000030   Code   RO          353    .text.__NVIC_EnableIRQ  uart.o
+    0x00001acc   0x00001acc   0x00000042   Code   RO           75    .text.__NVIC_SetPriority  system_f4_f3.o
+    0x00001b0e   0x00001b0e   0x00000002   PAD
+    0x00001b10   0x00001b10   0x00000042   Code   RO          351    .text.__NVIC_SetPriority  uart.o
+    0x00001b52   0x00001b52   0x00000002   PAD
+    0x00001b54   0x00001b54   0x0000003c   Code   RO           25    .text.__NVIC_SetPriorityGrouping  system_f4_f3.o
+    0x00001b90   0x00001b90   0x0000001c   Code   RO           73    .text.assert_failed  system_f4_f3.o
+    0x00001bac   0x00001bac   0x0000004c   Code   RO          259    .text.fputc         fxx_uart.o
+    0x00001bf8   0x00001bf8   0x00000364   Code   RO          335    .text.main          main.o
+    0x00001f5c   0x00001f5c   0x00000020   Code   RO          475    i.__0printf         mc_w.l(printfa.o)
+    0x00001f7c   0x00001f7c   0x00000034   Code   RO          480    i.__0vsnprintf      mc_w.l(printfa.o)
+    0x00001fb0   0x00001fb0   0x0000000e   Code   RO          551    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x00001fbe   0x00001fbe   0x00000002   Code   RO          552    i.__scatterload_null  mc_w.l(handlers.o)
+    0x00001fc0   0x00001fc0   0x0000000e   Code   RO          553    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x00001fce   0x00001fce   0x00000002   PAD
+    0x00001fd0   0x00001fd0   0x00000184   Code   RO          482    i._fp_digits        mc_w.l(printfa.o)
+    0x00002154   0x00002154   0x000006dc   Code   RO          483    i._printf_core      mc_w.l(printfa.o)
+    0x00002830   0x00002830   0x00000024   Code   RO          484    i._printf_post_padding  mc_w.l(printfa.o)
+    0x00002854   0x00002854   0x0000002e   Code   RO          485    i._printf_pre_padding  mc_w.l(printfa.o)
+    0x00002882   0x00002882   0x00000016   Code   RO          486    i._snputc           mc_w.l(printfa.o)
+    0x00002898   0x00002898   0x0000004a   Data   RO           80    .rodata.str1.1      system_f4_f3.o
+    0x000028e2   0x000028e2   0x0000002a   Data   RO          129    .rodata.str1.1      fxx_gpio.o
+    0x0000290c   0x0000290c   0x0000002a   Data   RO          262    .rodata.str1.1      fxx_uart.o
+    0x00002936   0x00002936   0x00000066   Data   RO          338    .rodata.str1.1      main.o
+    0x0000299c   0x0000299c   0x00000020   Data   RO          550    Region$$Table       anon$$obj.o
+
+
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x000029c0, Size: 0x00001828, Max: 0x00020000, ABSOLUTE)
+
+    Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
+
+    0x20000000   0x000029c0   0x00000004   Data   RW          516    .data               mc_w.l(stdout.o)
+    0x20000004   0x000029c4   0x00000002   Data   RW          337    .data.timeout       main.o
+    0x20000006   0x000029c6   0x00000002   PAD
+    0x20000008        -       0x00000003   Zero   RW          379    .bss.RX_BUF         uart.o
+    0x2000000b        -       0x00001000   Zero   RW          378    .bss.Res            uart.o
+    0x2000100b        -       0x00000001   Zero   RW          370    .bss.UartRxCount    uart.o
+    0x2000100c        -       0x00000001   Zero   RW          369    .bss.UartRxFinished  uart.o
+    0x2000100d   0x000029c6   0x00000003   PAD
+    0x20001010        -       0x00000004   Zero   RW          261    .bss.Uart_Debug     fxx_uart.o
+    0x20001014        -       0x00000004   Zero   RW           79    .bss.gu32_APBClock  system_f4_f3.o
+    0x20001018        -       0x00000004   Zero   RW           78    .bss.gu32_SystemClock  system_f4_f3.o
+    0x2000101c        -       0x00000004   Zero   RW           77    .bss.gu32_SystemCount  system_f4_f3.o
+    0x20001020        -       0x00000002   Zero   RW          377    .bss.i              uart.o
+    0x20001022   0x000029c6   0x00000006   PAD
+    0x20001028        -       0x00000800   Zero   RW            1    STACK               startup_f4_f3.o
+
+
+==============================================================================
+
+Image component sizes
+
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
+
+        16          0          0          0          0       1433   fxx_eflash.o
+      1920          0         42          0          0       8128   fxx_gpio.o
+       748          0         42          0          4       4372   fxx_uart.o
+       908          0        102          2          0       2878   main.o
+        36          8        228          0       2048        852   startup_f4_f3.o
+      1678          0         74          0         12      13573   system_f4_f3.o
+       662          0          0          0       4103       7169   uart.o
+
+    ----------------------------------------------------------------------
+      5992          8        520          4       6176      38405   Object Totals
+         0          0         32          0          0          0   (incl. Generated)
+        24          0          0          2          9          0   (incl. Padding)
+
+    ----------------------------------------------------------------------
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Member Name
+
+       302          0          0          0          0       4317   hal_eflash_ex.o
+         0          0          0          0          0          0   entry.o
+         0          0          0          0          0          0   entry10a.o
+         0          0          0          0          0          0   entry11a.o
+         8          4          0          0          0          0   entry2.o
+         4          0          0          0          0          0   entry5.o
+         0          0          0          0          0          0   entry7b.o
+         0          0          0          0          0          0   entry8b.o
+         8          4          0          0          0          0   entry9a.o
+        30          0          0          0          0          0   handlers.o
+        48         10          0          0          0         68   init.o
+         0          0          0          0          0          0   iusefp.o
+        30          0          0          0          0         68   llshl.o
+        36          0          0          0          0         68   llsshr.o
+        32          0          0          0          0         68   llushr.o
+        36          0          0          0          0        108   memseta.o
+      2332         96          0          0          0        600   printfa.o
+         0          0          0          4          0          0   stdout.o
+        36          0          0          0          0         80   strstr.o
+        44          0          0          0          0         80   uidiv.o
+        98          0          0          0          0         92   uldiv.o
+        48          0          0          0          0         68   cdrcmple.o
+       334          0          0          0          0        148   dadd.o
+       222          0          0          0          0        100   ddiv.o
+       186          0          0          0          0        176   depilogue.o
+        48          0          0          0          0         68   dfixul.o
+       228          0          0          0          0         96   dmul.o
+        54          0          0          0          0       3896   system_accelerate.o
+
+    ----------------------------------------------------------------------
+      4172        114          0          4          0      10101   Library Totals
+         8          0          0          0          0          0   (incl. Padding)
+
+    ----------------------------------------------------------------------
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Name
+
+       302          0          0          0          0       4317   fxx_eflash_ex.lib
+      2742        114          0          4          0       1232   mc_w.l
+      1066          0          0          0          0        656   mf_w.l
+        54          0          0          0          0       3896   system_accelerate.lib
+
+    ----------------------------------------------------------------------
+      4172        114          0          4          0      10101   Library Totals
+
+    ----------------------------------------------------------------------
+
+==============================================================================
+
+
+      Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
+
+     10164        122        520          8       6176      47606   Grand Totals
+     10164        122        520          8       6176      47606   ELF Image Totals
+     10164        122        520          8          0          0   ROM Totals
+
+==============================================================================
+
+    Total RO  Size (Code + RO Data)                10684 (  10.43kB)
+    Total RW  Size (RW Data + ZI Data)              6184 (   6.04kB)
+    Total ROM Size (Code + RO Data + RW Data)      10692 (  10.44kB)
+
+==============================================================================
+

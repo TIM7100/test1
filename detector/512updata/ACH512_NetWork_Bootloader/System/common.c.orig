@@ -1,0 +1,142 @@
+/***********************************************************************
+ * Copyright (c)  2008 - 2016, Shanghai AisinoChip Co.,Ltd .
+ * All rights reserved.
+ * Filename    : common.c
+ * Description : conmmon source file
+ * Author(s)   : Eric
+ * version     : V1.0
+ * Modify date : 2016-03-24
+ ***********************************************************************/
+#include  "common.h"
+
+extern volatile u32 Offset;
+#ifdef DEBUG
+/************************************************************************
+ * function   : printf_buff_byte
+ * Description: printf data block by byte
+ * input :
+ *         UINT8* buff: buff
+ *         UINT32 length: byte length
+ * return: none
+ ************************************************************************/
+void printf_buff_byte(UINT8* buff, UINT32 length)
+{
+    UINT32 i;
+
+    for (i = 0; i < length; i++)
+    {
+        printf("%.2x ", buff[i]);
+    }
+    printf("\n");
+}
+
+/************************************************************************
+ * function   : printf_buff_word
+ * Description: printf data block by word
+ * input :
+ *         UINT8* buff: buff
+ *         UINT32 length: word length
+ * return: none
+ ************************************************************************/
+void printf_buff_word(UINT32* buff, UINT32 length)
+{
+    UINT32 i;
+
+    for (i = 0; i < length; i++)
+    {
+        printf("%.8x ", buff[i]);
+    }
+    printf("\n");
+}
+#endif
+
+// void delay(UINT32 count)
+// {
+//     while(count--);
+// }
+
+//一个字内大小端转换
+void reverse_DWORD(UINT32 *var)
+{
+    UINT8 *P = (UINT8 *)var;
+    UINT8 tmp;
+
+    tmp = P[0];
+    P[0] = P[3];
+    P[3] = tmp;
+    tmp = P[1];
+    P[1] = P[2];
+    P[2] = tmp;
+}
+
+//整批数据前后大小端转换
+void reverse_memory(UINT8 *buff, UINT32 length)
+{
+    UINT8 temp;
+    UINT8 *buff_start = buff;
+    UINT8 *buff_end = buff + length - 1;
+
+    while (buff_end > buff_start)
+    {
+        temp = *buff_start;
+        *buff_start++ = *buff_end;
+        *buff_end-- = temp;
+    }
+}
+
+void TransformMainCount(u32 Hex_in, u8*Array_Out)
+{
+    Array_Out[0] = (u8)(Hex_in >> 24);
+    Array_Out[1] = (u8)(Hex_in >> 16);
+    Array_Out[2] = (u8)(Hex_in >> 8);
+    Array_Out[3] = (u8)(Hex_in);
+}
+
+void TransformNumber(u32 Number, u8* NumberBuf)
+{
+    NumberBuf[0] = (u8)(Number >> 24);
+    NumberBuf[1] = (u8)(Number >> 16);
+    NumberBuf[2] = (u8)(Number >> 8);
+    NumberBuf[3] = (u8)(Number);
+}
+
+void TransformVersion(u8* EFlashBuf, u8* EXFlashBuf)//将12字节的版本转换为6字节存放
+{
+		u8 TransI;
+	
+		for(TransI=0;TransI<6;TransI++)
+		{
+				EFlashBuf[TransI] = ((EXFlashBuf[TransI*2]-0x30) << 4) + (EXFlashBuf[TransI*2+1]-0x30);
+		}
+}
+
+void VersionLoad(u8* VersionBuff, u32 VersionNumber, u8* RecordBuff)//填充版本日期
+{
+    u8 LoadI;
+
+    for (LoadI = 0; LoadI < 12; LoadI++)
+    {
+        RecordBuff[8 + VersionNumber * 16 + LoadI] = VersionBuff[LoadI];
+    }
+
+    Offset = VersionNumber * 5 + 4;
+    TransformNumber(Offset, RecordBuff + 8 + VersionNumber * 16 + 12);
+}
+
+void MemcpyData(u8* des, u8* src, u32 len)
+{
+    int i;
+    for (i = 0; i < len; i++)
+    {
+        des[i] = src[i];
+    }
+}
+
+void MemsetData(u8* des, u8 src, u32 len)
+{
+    int i;
+    for (i = 0; i < len; i++)
+    {
+        des[i] = src;
+    }
+}

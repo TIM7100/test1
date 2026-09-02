@@ -1,0 +1,15 @@
+.\Out_Files\menu.o: Menu\menu.c
+.\Out_Files\menu.o: Menu\menu.h
+.\Out_Files\menu.o: .\System\inc\common.h
+.\Out_Files\menu.o: .\System\inc\stdio.h
+.\Out_Files\menu.o: C:\keil\ARM\RV31\Inc\string.h
+.\Out_Files\menu.o: .\System\inc\types.h
+.\Out_Files\menu.o: .\System\inc\sys_config.h
+.\Out_Files\menu.o: .\System\inc\ach512.h
+.\Out_Files\menu.o: .\System\inc\core_cm3.h
+.\Out_Files\menu.o: C:\keil\ARM\RV31\Inc\stdint.h
+.\Out_Files\menu.o: .\System\inc\core_cmInstr.h
+.\Out_Files\menu.o: .\System\inc\cmsis_armcc.h
+.\Out_Files\menu.o: .\System\inc\core_cmFunc.h
+.\Out_Files\menu.o: .\System\inc\system_ach512.h
+.\Out_Files\menu.o: .\System\inc\common.h

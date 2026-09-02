@@ -1,0 +1,14 @@
+.\Out_Files\common.o: system\common.c
+.\Out_Files\common.o: .\System\inc\common.h
+.\Out_Files\common.o: .\System\inc\stdio.h
+.\Out_Files\common.o: C:\keil\ARM\RV31\Inc\string.h
+.\Out_Files\common.o: .\System\inc\types.h
+.\Out_Files\common.o: .\System\inc\sys_config.h
+.\Out_Files\common.o: .\System\inc\ach512.h
+.\Out_Files\common.o: .\System\inc\core_cm3.h
+.\Out_Files\common.o: C:\keil\ARM\RV31\Inc\stdint.h
+.\Out_Files\common.o: .\System\inc\core_cmInstr.h
+.\Out_Files\common.o: .\System\inc\cmsis_armcc.h
+.\Out_Files\common.o: .\System\inc\core_cmFunc.h
+.\Out_Files\common.o: .\System\inc\system_ach512.h
+.\Out_Files\common.o: .\System\inc\common.h

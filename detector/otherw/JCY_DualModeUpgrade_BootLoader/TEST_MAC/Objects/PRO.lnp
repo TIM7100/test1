@@ -1,0 +1,18 @@
+--cpu=Cortex-M33
+".\objects\startup_f4_f3.o"
+".\Libraries\Device\system_accelerate.lib"
+".\objects\system_f4_f3.o"
+".\objects\fxx_eflash.o"
+".\Libraries\StdPeriph_Driver\Src\fxx_eflash_ex.lib"
+".\objects\fxx_gpio.o"
+".\objects\fxx_rtc.o"
+".\objects\fxx_tim.o"
+".\objects\fxx_uart.o"
+".\objects\fxx_i2c.o"
+".\objects\main.o"
+".\objects\uart.o"
+".\objects\delay.o"
+--library_type=microlib --strict --scatter ".\Objects\PRO.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\PRO.map" -o .\Objects\PRO.axf

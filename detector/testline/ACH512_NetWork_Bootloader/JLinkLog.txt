@@ -1,0 +1,35 @@
+
+T6968 000:196 SEGGER J-Link V6.30d Log File (0000ms, 0017ms total)
+T6968 000:196 DLL Compiled: Feb 16 2018 13:30:32 (0000ms, 0017ms total)
+T6968 000:196 Logging started @ 2026-02-09 19:42 (0000ms, 0017ms total)
+T6968 000:196 JLINK_SetWarnOutHandler(...) (0000ms, 0017ms total)
+T6968 000:196 JLINK_OpenEx(...)
+Firmware: J-Link ARM-OB STM32 compiled Aug 22 2012 19:52:04
+Hardware: V7.00
+S/N: 20090928
+Feature(s): FlashBP
+TELNET listener socket opened on port 19021WEBSRV 
+Starting webserver (0010ms, 0027ms total)
+T6968 000:196 WEBSRV Webserver running on local port 19080 (0010ms, 0027ms total)
+T6968 000:196   returns O.K. (0010ms, 0027ms total)
+T6968 000:206 JLINK_SetErrorOutHandler(...) (0000ms, 0027ms total)
+T6968 000:206 JLINK_ExecCommand("Device = Cortex-M3", ...). Device "CORTEX-M3" selected.  returns 0x00 (0069ms, 0096ms total)
+T6968 000:275 JLINK_ExecCommand("ProjectFile = "F:\ACH512_IAP\ACH512_NetWork_Bootloader\JLinkSettings.ini"", ...).   returns 0x00 (0000ms, 0096ms total)
+T6968 000:275 JLINK_ExecCommand("DisableConnectionTimeout", ...).   returns 0x01 (0000ms, 0096ms total)
+T6968 000:275 JLINK_TIF_Select(JLINKARM_TIF_SWD)  returns 0x00 (0001ms, 0097ms total)
+T6968 000:276 JLINK_SetSpeed(2000) (0000ms, 0097ms total)
+T6968 000:276 JLINK_GetHardwareVersion()  returns 0x11170 (0000ms, 0097ms total)
+T6968 000:276 JLINK_GetDLLVersion()  returns 63004 (0000ms, 0097ms total)
+T6968 000:276 JLINK_GetFirmwareString(...) (0000ms, 0097ms total)
+T6968 000:276 JLINK_GetDLLVersion()  returns 63004 (0000ms, 0097ms total)
+T6968 000:276 JLINK_GetCompileDateTime() (0000ms, 0097ms total)
+T6968 000:276 JLINK_GetFirmwareString(...) (0000ms, 0097ms total)
+T6968 000:276 JLINK_GetHardwareVersion()  returns 0x11170 (0000ms, 0097ms total)
+T6968 000:276 JLINK_SetResetType(JLINKARM_RESET_TYPE_NORMAL)  returns JLINKARM_RESET_TYPE_NORMAL (0000ms, 0097ms total)
+T6968 000:276 JLINK_Reset() >0x10B TIF> >0x10F TIF> >0x10B TIF> >0x10F TIF> >0x10B TIF> >0x10F TIF> >0x10B TIF> >0x10F TIF> >0x10B TIF> >0x10F TIF> >0x10B TIF> >0x10F TIF> >0x10B TIF> >0x10F TIF> >0x10B TIF> >0x10F TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x10B TIF> >0x10F TIF> >0x10B TIF> >0x10F TIF>JLINK_GetId() >0x10B TIF> >0x10F TIF> >0x10B TIF> >0x10F TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF>
+ >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x10B TIF> >0x10F TIF> >0x10B TIF> >0x10F TIF>  returns 0x00000000 (0267ms, 0942ms total)
+T6968 001:121 JLINK_GetId() >0x10B TIF> >0x10F TIF> >0x10B TIF> >0x10F TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x0D TIF> >0x10B TIF> >0x10F TIF> >0x10B TIF> >0x10F TIF>  returns 0x00000000 (0268ms, 1210ms total)
+T6968 001:402 JLINK_GetFirmwareString(...) (0000ms, 1210ms total)
+T6968 002:540 JLINK_Close() (0007ms, 1217ms total)
+T6968 002:540  (0007ms, 1217ms total)
+T6968 002:540 Closed (0007ms, 1217ms total)

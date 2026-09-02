@@ -1,0 +1,17 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+E:\detector\512updata\ACH512_NetWork_Bootloader\ACH512.uvproj
+Project File Date:  08/05/2026
+
+<h2>Output:</h2>
+Build target 'project'
+compiling esp8266_config.c...
+WiFi\esp8266_config.c(386): warning:  #177-D: function "WiFi_QuitTrans" was declared but never referenced
+linking...
+Program Size: Code=166664 RO-data=17472 RW-data=960 ZI-data=94936  
+FromELF: creating hex file...
+User command #2: fromelf.exe --bin -o "E:\detector\512updata\ACH512_NetWork_Bootloader\Out_Files\IAP.bin" "E:\detector\512updata\ACH512_NetWork_Bootloader\Out_Files\IAP.axf"
+".\Out_Files\IAP.axf" - 0 Error(s), 1 Warning(s).

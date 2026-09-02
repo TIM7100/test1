@@ -1,0 +1,49 @@
+/*
+  ******************************************************************************
+  * @file    main.c
+  * @brief   main source File.
+  ******************************************************************************
+*/
+
+#include "uart.h"
+#include "lcd.h"
+#include  "user_os.h"
+#include "iic.h"
+#include "Sx_Check.h"
+
+char Version[13] = "202406271012";                //当前版本号
+/*********************************************************************************
+* Function    : main
+* Description :
+* Input       :
+* Output      :
+**********************************************************************************/
+int main(void)
+{
+
+    u32 Value;
+
+    System_Init();
+
+    UartInit(115200);
+    KeyInit();
+    //User_IIC_Init();
+		soft_iic_init();
+	TIM6_Init();
+    MainpageShow(Version);
+    while (1)
+    {
+//        OperatingSystem(MainMenu);
+
+        Value = 0x0000;
+        Value = WaitKey();
+        if (Value == Key_Enter)
+        {
+            AutoTest();
+						Delay_ms(500);
+        }
+			
+
+    }
+}
+

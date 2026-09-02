@@ -1,0 +1,15 @@
+.\Out_Files\aes.o: Mbedtls\library\aes.c
+.\Out_Files\aes.o: .\Mbedtls\include\mbedtls\config.h
+.\Out_Files\aes.o: .\Mbedtls\include\mbedtls\check_config.h
+.\Out_Files\aes.o: C:\keil\ARM\RV31\Inc\limits.h
+.\Out_Files\aes.o: C:\keil\ARM\RV31\Inc\string.h
+.\Out_Files\aes.o: .\Mbedtls\include\mbedtls\aes.h
+.\Out_Files\aes.o: C:\keil\ARM\RV31\Inc\stddef.h
+.\Out_Files\aes.o: C:\keil\ARM\RV31\Inc\stdint.h
+.\Out_Files\aes.o: .\Mbedtls\include\mbedtls\platform.h
+.\Out_Files\aes.o: .\Mbedtls\include\mbedtls\platform_time.h
+.\Out_Files\aes.o: C:\keil\ARM\RV31\Inc\time.h
+.\Out_Files\aes.o: C:\keil\ARM\RV31\Inc\stdio.h
+.\Out_Files\aes.o: C:\keil\ARM\RV31\Inc\stdlib.h
+.\Out_Files\aes.o: .\Mbedtls\include\mbedtls\platform_util.h
+.\Out_Files\aes.o: .\Mbedtls\include\mbedtls\error.h

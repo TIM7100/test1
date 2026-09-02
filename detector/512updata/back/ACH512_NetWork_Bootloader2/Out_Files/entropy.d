@@ -1,0 +1,12 @@
+.\Out_Files\entropy.o: Mbedtls\library\entropy.c
+.\Out_Files\entropy.o: .\Mbedtls\include\mbedtls\config.h
+.\Out_Files\entropy.o: .\Mbedtls\include\mbedtls\check_config.h
+.\Out_Files\entropy.o: C:\keil\ARM\RV31\Inc\limits.h
+.\Out_Files\entropy.o: .\Mbedtls\include\mbedtls\entropy.h
+.\Out_Files\entropy.o: C:\keil\ARM\RV31\Inc\stddef.h
+.\Out_Files\entropy.o: .\Mbedtls\include\mbedtls\sha512.h
+.\Out_Files\entropy.o: C:\keil\ARM\RV31\Inc\stdint.h
+.\Out_Files\entropy.o: .\Mbedtls\include\mbedtls\entropy_poll.h
+.\Out_Files\entropy.o: .\Mbedtls\include\mbedtls\platform_util.h
+.\Out_Files\entropy.o: .\Mbedtls\include\mbedtls\error.h
+.\Out_Files\entropy.o: C:\keil\ARM\RV31\Inc\string.h

@@ -1,0 +1,101 @@
+#include "aes.h"
+#include "my_aes_cbc.h"
+
+//解密密钥, 需要同上位机的密钥保持一致
+u8 KEY[16] = { 0x2F, 0x2F, 0x62, 0x32, 0x33, 0x2E, 0x74, 0x76, 0x2F, 0x74, 0x6A, 0x79, 0x37, 0x56, 0x7A, 0x42 };
+
+/*******************************************************
+ * @brief    对输入的数据进行加密
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 EncryptDataByAesECB(u8 *InData, u16 DataLength, u8 *OutEncryptedData)
+{
+    mbedtls_aes_context AesContext;
+    int Result = 0;
+    int Padding = 0;
+	u32 EncryCount;
+	u32 EncryNum;
+	
+    Padding = 16 - (DataLength % 16);
+    if (Padding != 16)
+    {
+        printfS("Failed to Padding\r\n");
+        return Padding_ERR;
+    }
+	EncryCount = DataLength / 16;
+    //配置参数
+    mbedtls_aes_init(&AesContext);                                                //初始化
+    Result = mbedtls_aes_setkey_enc(&AesContext, KEY, 128);             //设置加密密钥
+    if (Result != 0)
+    {
+        printfS("failed to set key:");
+        mbedtls_aes_free(&AesContext);
+        return SET_KEY_ERR;
+    }
+	
+    //开始加密
+	for(EncryNum = 0; EncryNum < EncryCount; EncryNum++)
+	{
+		Result = mbedtls_aes_crypt_ecb(&AesContext, MBEDTLS_AES_ENCRYPT, (const unsigned char*)&InData[EncryNum * 16], (unsigned char*)&OutEncryptedData[EncryNum * 16]);
+		if (Result != 0)
+		{
+			printfS("failed to encrypt data:");
+			mbedtls_aes_free(&AesContext);
+			return ENC_CBC_ERR;
+		}
+	}
+    
+    mbedtls_aes_free(&AesContext);
+    //返回密文长度
+    return DataLength;
+}
+
+
+/*******************************************************
+ * @brief    对输入的数据进行解密
+ * @param    xxx:xxx
+ * @return
+********************************************************/
+u8 DecryptDataByAesECB(u8 *InData, u16 DataLength, u8 *OutDecryptedData)
+{
+    mbedtls_aes_context AesContext;
+    int Result = 0;
+    int Padding = 0;
+	u32 DecryptCount;
+	u32 DecryptNum;
+	
+    Padding = 16 - (DataLength % 16);
+    if (Padding != 16)
+    {
+        printfS("Failed to Padding\r\n");
+        return Padding_ERR;
+    }
+	DecryptCount = DataLength / 16;
+    //配置参数
+    mbedtls_aes_init(&AesContext);                                                  //初始化
+    Result = mbedtls_aes_setkey_dec(&AesContext, KEY, 128);              //设置解密密钥
+    if (Result != 0)
+    {
+        printfS("failed to set key:");
+        mbedtls_aes_free(&AesContext);
+        return SET_KEY_ERR;
+    }
+
+    //开始解密
+	for(DecryptNum = 0; DecryptNum < DecryptCount; DecryptNum++)
+	{
+		Result = mbedtls_aes_crypt_ecb(&AesContext, MBEDTLS_AES_DECRYPT, (const unsigned char*)&InData[DecryptNum * 16 ], (unsigned char*)&OutDecryptedData[DecryptNum * 16]);
+		if (Result != 0)
+		{
+			printfS("failed to encrypt data:");
+			mbedtls_aes_free(&AesContext);
+			return DEC_CBC_ERR;
+		}
+	}
+    
+    mbedtls_aes_free(&AesContext);
+    //返回明文长度
+    return DataLength;
+}
+
